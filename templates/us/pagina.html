@@ -1,0 +1,77 @@
+<!-- BEGIN: main -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es" lang="es">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>RF Group: {TITULO}</title>
+
+    <link rel="stylesheet" href="estilo.css" type="text/css" media="screen" />
+
+    <!-- BEGIN: javascript -->
+    <script type="text/javascript" src="common/jquery.js"></script>
+    <script type="text/javascript" src="scripts/{JAVASCRIPT}.js"></script>
+    <!-- END: javascript -->
+
+    <!-- NOTA: sistema de menus si publica o intranet -->
+</head>
+
+<body>
+
+<div style="width: 100%; text-align: right; margin: 0 10px 0 0;">
+    <!-- BEGIN: idioma -->
+        <!-- BEGIN: siguiente -->
+        &nbsp;/&nbsp;
+        <!-- END: siguiente -->
+    <a href="{URL}lang={CLAVE}">{IDIOMA}</a>
+    <!-- END:  idioma -->
+</div>
+
+
+<h1>
+{NOMBRES.GRUPO}<br />
+{NOMBRES.DPTO}<br />
+{NOMBRES.UNIV}<br />
+</h1>
+
+<div style="width: 100%; text-align: right; margin: 0 10px 5px 0;">
+    <!-- BEGIN: miembro -->
+    <a href="miembro_ver_ficha.php?idm={USUARIO.IDM}">{USUARIO.NOMBRE}</a>
+    &nbsp;-&nbsp;
+    <a href="presentacion.php?rol=1">Change rol to {ROL}</a>
+    &nbsp;-&nbsp;
+    <a href="salir.php">Exit</a>
+    <!-- END:  miembro -->
+    <!-- BEGIN: acceder -->
+    <a href="{URL}login=1">Access to Intranet</a>
+    <!-- END: acceder -->
+</div>
+
+
+<!-- Menu lateral -->
+<div class="menu">
+<!-- <h2>{TITULO_MENU}</h2> -->
+<ul style="margin-left: 0;">
+    <li><a href="presentacion.php">Introduction</a></li>
+    <li><a href="#" class="disabled">Teaching</a></li>
+    <li><a href="#" class="disabled">Offers</a></li>
+    <li><a href="miembros.php">Members</a></li>
+    <li><a href="publicaciones.php">Publications</a></li>
+    <li><a href="lineas.php">Research Topics</a></li>
+    <li><a href="proyectos.php">Projects</a></li>
+    <li><a href="#" class="disabled">Collaborators</a></li>
+    <li><a href="#" class="disabled">Software</a></li>
+    <!-- BEGIN: intranet -->
+    <li><a href="#" class="disabled">Report of the group</a></li>
+    <li><a href="#" class="disabled">Features</a></li>
+    <!-- END: intranet -->
+</ul>
+</div>
+
+<!-- Pagina principal -->
+<div class="principal">
+{CONTENIDO}
+</div>
+
+</body>
+</html>
+<!-- END: main -->

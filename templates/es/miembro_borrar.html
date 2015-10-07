@@ -1,0 +1,37 @@
+<!-- BEGIN: content -->
+<h2>Informaci&oacute;n de Miembro</h2>
+
+<!-- BEGIN: menu -->
+<ul id="submenu">
+  <li><a href="miembro_ver_ficha.php?idm={ID_MIEMBRO}">[Ver Ficha]</a></li>
+  <li><a href="miembro_editar.php?idm={ID_MIEMBRO}">[Editar Datos]</a></li>
+  <li><a href="miembro_editar_bibtex.php?idm={ID_MIEMBRO}">[Referencias Bibtex]</a></li>
+  <!-- <a href="miembro_editar_formato.php?idm={IDM}">[Editar Formato]</a>&nbsp; -->
+  <li><a href="miembro_editar_web.php?idm={ID_MIEMBRO}">[Cuenta de Acceso]</a></li>
+  <!-- BEGIN: borrar -->
+  <li><a href="miembro_borrar.php?idm={ID_MIEMBRO}">[Eliminar Miembro]</a></li>
+  <!-- END: borrar -->
+</ul>
+<!-- END: menu -->
+
+<h3>&nbsp;Eliminar Miembro</h3>
+
+  <!-- BEGIN: confirmar -->
+  <p>¿Está seguro que desea eliminar a
+  <strong>{MIEMBRO.NOMBRE}</strong> de la web?</p>
+
+  <form action="miembro_borrar.php" method="post">
+    <input type="hidden" name="id_miembro" value="{MIEMBRO.ID_MIEMBRO}" />
+    <input type="hidden" name="borrar" value="1" />
+    <input type="button" value="Volver"
+           onclick="javascript:document.location = 'miembro_ver_ficha.php?idm={MIEMBRO.ID_MIEMBRO}'" />
+    <input type="submit" value="Eliminar Miembro" />
+  </form>
+  <!-- END: confirmar -->
+
+  <!-- BEGIN: borrado -->
+  <p>El miembro se ha borrado correctamente</p>
+  <p><a href="miembros.php">[Volver]</a></p>
+  <!-- END: borrado -->
+
+<!-- END: content -->

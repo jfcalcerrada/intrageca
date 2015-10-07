@@ -1,0 +1,111 @@
+<!-- BEGIN: main -->
+<html>
+<head>
+<title>Grupo GECA: Editar paquetes de software</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<LINK REL=StyleSheet HREF="estilo.css" TYPE="text/css" MEDIA=screen>
+</head>
+<body>
+<table>
+<tr>
+ <th colspan=2> <H2> Grupo de Electromagnetismo Computacional Avanzado (G.E.C.A.) </H2></th>
+</tr>
+<tr valign="top">
+<!-- Menu lateral -->
+<td align="left" class="menu">
+<h4>INTRANET</h4>
+<ul type=disc>
+ <li><a href="miembros.php">Miembros</a></li>
+ <li><a href="publicaciones.php">Publicaciones</a></li>
+ <li><a href="proyectos.php">Proyectos</a></li>
+ <li><a href="colaboradores.php">Colaboradores</a></li>
+ <li><a href="software.php">Software</a></li>
+</ul>
+</td>
+<!-- Pagina principal -->
+<td class="principal">
+<table width="100%"><tr>
+  <td>
+   <H3>Informaci&oacute;n de Software</H3>
+  </td>
+  </tr>
+</table>    
+<hr> 
+<!-- BEGIN: form_paquetes -->
+<a href="software_editar.php?ids={IDS}">[Datos]</a> &nbsp;
+<a href="software_editar_paq.php?ids={IDS}">[Paquetes]</a> &nbsp;
+<br><br>
+<form action="software_editar_paq.php" name="editar" method=POST enctype="multipart/form-data" >
+<input type=hidden name="ids" value="{IDS}">
+<table width="100%">
+   <tr>
+     <td colspan=2><b>Nuevo paquete:</b>&nbsp
+     <input type=text name="nuevo_paq" size=20 maxlength=20 value="" onChange="this.form.modificado.checked=true">
+     &nbsp;&nbsp;&nbsp;<button type=submit>Nuevo</button>
+     </td>
+   </tr>
+   <tr><td colspan=3><hr></td></tr>
+   <tr>
+     <td colspan=3 class="cabecera1">Lista de paquetes</td>
+   </tr>
+   <!-- BEGIN: fila_paquete -->
+   <tr>
+     <td class="cabecera2" colspan=2>Nombre:&nbsp
+     <input type=text name="{LISTA.PQ_NOMBRE}" size=20 maxlength=20 value="{LISTA.NOMBRE}" onChange="this.form.modificado.checked=true">
+     <input type=hidden name="{LISTA.PQ_ID_SW}" value="{LISTA.ID_SW}">
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     <b>Borrar:</b>&nbsp;<input type=checkbox name="{LISTA.PQ_BORRAR}" value=1 onChange="this.form.modificado.checked=true">
+     </td>
+   </tr>
+   <tr>
+    <td><b>Versi&oacute;n:</b>&nbsp;</td>
+    <td>
+      <input type=text name="{LISTA.PQ_VERSION}" size=10 maxlength=10 value="{LISTA.VERSION}" onChange="this.form.modificado.checked=true"></td>
+   </tr>
+   <tr>
+     <td><b>Fecha:</b></td>
+     <td>
+      <select name="{LISTA.PQ_DIA}" onChange="this.form.modificado.checked=true">
+      <!-- BEGIN: fila_dia_inc -->
+        <option value="{VAL}" {SELEC}>{VAL}</option>
+      <!-- END: fila_dia_inc -->
+      </select>&nbsp;/&nbsp;
+      <select name="{LISTA.PQ_MES}" onChange="this.form.modificado.checked=true">
+      <!-- BEGIN: fila_mes_inc -->
+        <option value="{VAL}" {SELEC}>{VAL}</option>
+      <!-- END: fila_mes_inc -->
+      </select>&nbsp;/&nbsp;
+      <select name="{LISTA.PQ_ANYO}" onChange="this.form.modificado.checked=true">
+      <!-- BEGIN: fila_anyo_inc -->
+        <option value="{VAL}" {SELEC}>{VAL}</option>
+      <!-- END: fila_anyo_inc -->
+      </select>
+     </td>
+   </tr>
+   <tr>
+    <td><b>Importar:</b>&nbsp;</td>
+    <td>
+      <input type=file name="{LISTA.PQ_FILE}" size=30 value="" onChange="this.form.modificado.checked=true">
+      <input type=hidden name="{LISTA.PQ_LINK}" value="{LISTA.FILE}">
+      <a href="{LISTA.LINK_FILE}">[{LISTA.FILE}]</a></td>
+   </tr>
+   <!-- END: fila_paquete -->
+   <tr><td><br></td></tr>
+   <tr>
+    <td colspan=2 align=center>
+    <b>Registro Modificado:</b>
+    <input type=hidden name="numero_paq" value="{NUM_PAQUETES}">
+    <input type=checkbox onClick="this.form.modificado.checked=true" name="modificado" value=1>
+    &nbsp;&nbsp; 
+     <button type=submit>Actualizar</button>
+    </td>
+   </tr>  
+</table>
+</form>
+<!-- END: form_paquetes -->
+<br>
+</td>
+</tr>
+</body>
+</html>
+<!-- END: main -->

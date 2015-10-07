@@ -1,0 +1,9 @@
+# --------------------------------------------------------
+# Creación de usuario de consulta web
+# --------------------------------------------------------
+GRANT SELECT ON webgeca.* TO 'webuser'@'localhost';
+GRANT ALL ON webgeca.software_usuarios TO 'webuser'@'localhost';
+GRANT ALL ON webgeca.* TO 'importuser'@'localhost';
+UPDATE user SET password=old_password('webuser') WHERE user='webuser';
+UPDATE user SET password=old_password('importuser') WHERE user='importuser';
+flush privileges;

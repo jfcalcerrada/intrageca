@@ -1,0 +1,84 @@
+<!-- BEGIN: content -->
+<h2>Informaci&oacute;n de proyecto</h2>
+
+<!-- BEGIN: menu -->
+<p>
+  <a href="docencia_borrar.php?idp={IDA}">[Eliminar Asignatura]</a>
+</p>
+<!-- END: menu -->
+
+<!-- BEGIN: asignatura -->
+<form method="post" enctype="multipart/form-data" action="docencia_editar.php">
+  <input type="hidden" name="id_asignatura" value="{ASIGNATURA.ID_ASIGNATURA}">
+
+  <h3>&nbsp;Idioma</h3>
+  <p><strong>Seleccione Idioma:</strong>
+    <input name="idioma" type="hidden" value="{COD_IDIOMA}" />
+    <select name="idioma_actual" onChange="javascript:this.form.submit();">
+      <!-- BEGIN: idioma -->
+      <option value="{IDIOMA.CLAVE}" {IDIOMA.SELECCIONADO}>{IDIOMA.TEXTO}</option>
+      <!-- END: idioma -->
+    </select>
+  </p>
+  <p>Los campos marcados con (*) son dependientes del idioma seleccionado</p>
+
+  <!-- BEGIN: datos -->
+  <h3>&nbsp;Datos de la Asignatura</h3>
+  <ul>
+    <li>
+      <label for="nombre">Nombre: *</label>
+      <input type="text" name="nombre" size="43" maxlength="50" value="{ASIGNATURA.NOMBRE}" />
+    </li>
+    <li>
+      <label for="link">Enlace: </label>
+      <input type="text" name="link" size="43" maxlength="128" value="{ASIGNATURA.LINK}" />
+    </li>
+    <li>
+      <label for="publico">P&uacute;blico: </label>
+      <input type="checkbox" name="publico" value="1" {ASIGNATURA.PUBLICO} />
+    </li>
+  </ul>
+  <!-- END: datos -->
+
+  <!-- BEGIN: miembros -->
+  <h3>&nbsp;Miembros</h3>
+  <table>
+    <tr>
+      <th class="center">Borrar</th>
+      <th class="center">Nombre</th>
+      <th class="center">Coordinador</th>
+    </tr>
+
+    <!-- BEGIN: miembro -->
+    <tr>
+      <input type="hidden" name="id_miembro_{MIEMBRO.INDICE}" value="{MIEMBRO.ID_MIEMBRO}" />
+      <td class="center"><input type="checkbox" name="borrar_{MIEMBRO.INDICE}" value="1"></td>
+      <td class="nombre">{MIEMBRO.APELLIDOS}, {MIEMBRO.NOMBRE}</td>
+      <td class="center"><input type="checkbox" name="coor_{MIEMBRO.INDICE}" value="1" {MIEMBRO.COORDINADOR}></td>
+    </tr>
+    <!-- END: miembro -->
+
+    <tr>
+      <input type="hidden" name="numero" value="{NUMERO_MIEMBROS}" />
+      <td>Nuevo: </td>
+      <td>
+        <select name="nuevo_miembro">
+          <option value=""> - Seleccione un Miembro - </option>
+          <!-- BEGIN: seleccion -->
+          <option value="{MIEMBRO.ID_MIEMBRO}">{MIEMBRO.APELLIDOS}, {MIEMBRO.NOMBRE}</option>
+          <!-- END: seleccion -->
+        </select>
+      </td>
+      <td class="center"><input type="checkbox" name="coor_nuevo" value="1"></td>
+    </tr>
+  </table>
+  <!-- END: miembros -->
+
+  <div style="text-align: center">
+    <input type="hidden" name="actualizar" value="1" />
+    <input type="submit" value="Actualizar" />
+  </div>
+</form>
+<!-- END: asignatura -->
+
+<!-- END: content -->

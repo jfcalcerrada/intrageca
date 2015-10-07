@@ -1,0 +1,40 @@
+<!-- BEGIN: content -->
+<h2>Lista de proyectos del grupo</h2>
+
+<!-- BEGIN: proyectos -->
+
+<!-- BEGIN: concedido -->
+<h3>&nbsp;Concedidos</h3>
+<!-- END: concedido -->
+
+<!-- BEGIN: encurso -->
+<h3>&nbsp;En curso</h3>
+<!-- END: encurso -->
+
+<!-- BEGIN: terminado -->
+<h3>&nbsp;Terminado</h3>
+<!-- END: terminado -->
+
+<!-- BEGIN: cab_nopublico -->
+<h4>&nbsp;No publicados</h4>
+<!-- END: cab_nopublico -->
+
+<ul>
+  <!-- BEGIN: proyecto -->
+  <li>
+    <a href="proyecto_ver_ficha.php?idp={PROYECTO.ID_PROYECTO}" style="font-weight: bold;">
+      {PROYECTO.TITULO}</a>:&nbsp;{PROYECTO.DESCRIP_CORTA}
+  </li>
+  <!-- END: proyecto -->
+</ul>
+<br />
+<!-- END: proyectos -->
+
+<!-- BEGIN: anyadir -->
+<form action="proyecto_editar.php" method="get">
+  <input type="hidden" name="idp" value="0" />
+  <input type="submit" value="Añadir Nuevo Proyecto" />
+</form>
+<!-- END: anyadir -->
+
+<!-- END: content -->

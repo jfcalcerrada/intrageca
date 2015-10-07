@@ -1,0 +1,133 @@
+<!-- BEGIN: content -->
+<h2>Member Information</h2>
+
+<!-- BEGIN: menu -->
+<p>
+    <a href="miembro_ver_ficha.php?idm={ID_MIEMBRO}">[Ver Ficha]</a>&nbsp;
+    <a href="miembro_editar.php?idm={ID_MIEMBRO}">[Editar Datos]</a>&nbsp;
+    <a href="miembro_editar_bibtex.php?idm={ID_MIEMBRO}">[Referencias Bibtex]</a>&nbsp;
+    <!-- <a href="miembro_editar_formato.php?idm={IDM}">[Editar Formato]</a>&nbsp; -->
+    <a href="miembro_editar_web.php?idm={ID_MIEMBRO}">[Cuenta de Acceso]</a>&nbsp;
+    <!-- BEGIN: borrar -->
+    <a href="miembro_borrar.php?idm={ID_MIEMBRO}">[Eliminar Miembro]</a>
+    <!-- END: borrar -->
+</p>
+<!-- END: menu -->
+
+<strong>{MENSAJE}</strong>
+
+<!-- BEGIN: ficha -->
+<form method="post" enctype="multipart/form-data" action="miembro_editar.php">
+    <input type=hidden name="id_miembro" value="{MIEMBRO.ID_MIEMBRO}">
+
+    <h3>&nbsp;Idioma</h3>
+    <p><strong>Seleccione Idioma:</strong>
+        <input name="idioma" type="hidden" value="{COD_IDIOMA}" />
+        <select name="idioma_cambio" onChange="javascript:this.form.submit();">
+        <!-- BEGIN: idioma -->
+            <option value="{IDIOMA.CLAVE}" {IDIOMA.SELECCIONADO}>
+            {IDIOMA.TEXTO}</option>
+        <!-- END: idioma -->
+        </select>
+    </p>
+    <p>Los campos marcados con (*) son dependientes del idioma seleccionado</p>
+
+
+<h3>&nbsp;Identificaci&oacute;n</h3>
+<p>
+    <label for="nombre">Nombre: </label>
+    <input type="text" id="nombre" name="nombre" size="50" maxlength="50"
+    value="{MIEMBRO.NOMBRE}" />
+    <br />
+
+    <label for="foto">Foto: </label>
+    <img alt="Foto" width="80" src="{MIEMBRO.LINK_FOTO}">
+    <br />
+    <input type="file" name="foto" />
+    <br />
+</p>
+
+<h3>&nbsp;Adscripción</h3>
+<p>
+    <label for="categoria">Categor&iacute;a:</label>
+    <select name="categoria" onChange="this.form.actualizar.checked=true">
+        <!-- BEGIN: categoria -->
+        <option value="{CATEGORIA.CLAVE}" {CATEGORIA.SELECCIONADO}>
+        {CATEGORIA.TEXTO}</option>
+        <!-- END: categoria -->
+    </select>
+    <br />
+
+    <label for="puesto">Puesto: *</label>
+    <input type="text" name="puesto" size="50" maxlength="50"
+    value="{MIEMBRO.PUESTO}" />
+    <br />
+
+    <label for="">Afiliaci&oacute;n: *</label>
+    <input type="text" name="afiliacion" size="50" maxlength="100"
+    value="{MIEMBRO.AFILIACION}" />
+    <br />
+
+    <label for="fecha_inc">Fecha Incorporaci&oacute;n: </label>
+    <input type="hidden" name="fecha_inc" value="{MIEMBRO.FECHA_INC}" />
+    Dia: <input type="text" name="dia_inc" size="1" maxlength="2"
+    value="{MIEMBRO.DIA}" {DISABLED} />
+    Mes: <input type="text" name="mes_inc" size="1" maxlength="2"
+    value="{MIEMBRO.MES}" {DISABLED} />
+    Año: <input type="text" name="anyo_inc" size="3" maxlength="4"
+    value="{MIEMBRO.ANYO}" {DISABLED} />
+    <br />
+
+    <label for="">Activo:</label>
+    <input type="checkbox" name="activo" value="1"
+    {MIEMBRO.ACTIVO} />
+    <br />
+</p>
+
+<h3>&nbsp;Datos de Contacto</h3>
+<p>
+    <label for="direccion">Direcci&oacute;n: </label>
+    <textarea name="direccion" cols="60" rows="3"
+    onChange="this.form.actualizar.checked=true">{MIEMBRO.DIRECCION}</textarea>
+    <br />
+
+    <label for="telefono">Tel&eacute;fono: </label>
+    <input type="text" name="telefono" size="17" maxlength="17"
+    value="{MIEMBRO.TELEFONO}" />
+    <br />
+
+    <label for="fax">Fax: </label>
+    <input type="text" name="fax" size="17" maxlength="17"
+    value="{MIEMBRO.FAX}" />
+    <br />
+
+    <label for="email">Email: </label>
+    <input type="text" name="email" size="40" maxlength="40"
+    value="{MIEMBRO.EMAIL}" />
+    <br />
+</p>
+
+<h3>&nbsp;Curr&iacute;culum</h3>
+<p>
+    <label for="cv">Curriculum: *</label>
+    <!-- BEGIN: curriculum -->
+    <a href="{MIEMBRO.LINK_CURRICULUM}">Actual</a>
+    <!-- END: curriculum -->
+    <br />
+
+    <input type="file" name="cv" />
+    <br />
+
+    <label for>Texto de Curriculum: *</label>
+    <textarea name="curriculum" cols="60" rows="10">{MIEMBRO.CURRICULUM}</textarea>
+    <br />
+</p>
+
+<div style="text-align: center">
+    <input type="hidden" name="actualizar" value="1" />
+    <input type="submit" value="Actualizar" />
+</div>
+</form>
+<!-- BEGIN:ficha -->
+
+<!-- END: content -->

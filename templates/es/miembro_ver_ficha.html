@@ -1,0 +1,57 @@
+<!-- BEGIN: content -->
+<h2>Informaci&oacute;n de Miembro</h2>
+
+<!-- BEGIN: submenu -->
+<ul id="submenu">
+    <li><a href="miembro_ver_ficha.php?id_miembro={MIEMBRO.ID_MIEMBRO}">[Ver Ficha]</a></li>
+    <li><a href="miembro_editar.php?id_miembro={MIEMBRO.ID_MIEMBRO}">[Editar Datos]</a></li>
+    <li><a href="miembro_editar_bibtex.php?id_miembro={MIEMBRO.ID_MIEMBRO}">[Referencias Bibtex]</a></li>
+    <li><a href="miembro_editar_web.php?id_miembro={MIEMBRO.ID_MIEMBRO}">[Cuenta de Acceso]</a></li>
+    <!-- BEGIN: borrar -->
+    <li><a href="miembro_borrar.php?id_miembro={MIEMBRO.ID_MIEMBRO}">[Eliminar Miembro]</a></li>
+    <!-- END: borrar -->
+</ul>
+<!-- END: submenu -->
+
+<!-- BEGIN: datos -->
+<div style="font-weight: bold; text-align: center; width: 100%;">
+    {MIEMBRO.NOMBRE} {MIEMBRO.APELLIDOS}
+    <!-- BEGIN: foto -->
+    <img alt="Foto" src="{MIEMBRO.LINK_FOTO}" style="width: 80px; vertical-align: middle;" />
+    <!-- END: foto -->
+</div><br />
+
+<h3><span>Adscripción</span></h3>
+<ul>
+    <li>Grupo: {MIEMBRO.CATEGORIA}</li>
+    <li>Puesto: {MIEMBRO.PUESTO}</li>
+    <li>Afiliación: {MIEMBRO.AFILIACION}</li>
+    <!-- BEGIN: incorporacion -->
+    <li>Fecha Incorporaci&oacute;n: {MIEMBRO.FECHA_INCORPORACION}</li>
+    <!-- END: incorporacion -->
+</ul>
+
+<h3><span>Datos de Contacto</span></h3>
+<ul>
+    <li>
+        Direcci&oacute;n: <br />
+        <div style="padding-left: 2em">{MIEMBRO.DIRECCION}</div>
+    </li>
+    <li>Tel&eacute;fono: {MIEMBRO.TELEFONO}</li>
+    <li>Fax: {MIEMBRO.FAX}</li>
+    <li>Email: {MIEMBRO.EMAIL}</li>
+</ul>
+<!-- END: datos -->
+
+<!-- BEGIN: docencia -->
+<h3><span><a href="docencia.php?id_miembro={MIEMBRO.ID_MIEMBRO}">Docencia</a></span></h3>
+<!-- END: docencia -->
+
+<!-- BEGIN: publicaciones -->
+<h3><span><a href="public_busqueda.php?{PUBLICACIONES}">Lista de publicaciones</a></span></h3>
+<!-- END: publicaciones -->
+
+<!-- BEGIN: curriculum -->
+<h3><span><a href="miembro_ver_cur.php?id_miembro={MIEMBRO.ID_MIEMBRO}">Curr&iacute;culum</a></span></h3>
+<!-- END: curriculum -->
+<!-- END: content -->

@@ -1,0 +1,55 @@
+<!-- BEGIN: content -->
+<h2>Informaci&oacute;n de Miembro</h2>
+
+<!-- BEGIN: menu -->
+<ul id="submenu">
+  <li><a href="miembro_ver_ficha.php?idm={ID_MIEMBRO}">[Ver Ficha]</a></li>
+  <li><a href="miembro_editar.php?idm={ID_MIEMBRO}">[Editar Datos]</a></li>
+  <li><a href="miembro_editar_bibtex.php?idm={ID_MIEMBRO}">[Referencias Bibtex]</a></li>
+  <!-- <a href="miembro_editar_formato.php?idm={IDM}">[Editar Formato]</a>&nbsp; -->
+  <li><a href="miembro_editar_web.php?idm={ID_MIEMBRO}">[Cuenta de Acceso]</a></li>
+  <!-- BEGIN: borrar -->
+  <li><a href="miembro_borrar.php?idm={ID_MIEMBRO}">[Eliminar Miembro]</a></li>
+  <!-- END: borrar -->
+</ul>
+<!-- END: menu -->
+
+<div id="mensaje">{MENSAJE}</div>
+
+<!-- BEGIN: acceso -->
+<form method="post" enctype="multipart/form-data" action="miembro_editar_web.php">
+  <input type=hidden name="id_miembro" value="{USUARIO.ID_MIEMBRO}" />
+
+  <h3>&nbsp;Cuenta de acceso al web</h3>
+  <ul>
+    <li>
+      <label for="usuario_web">Usuario:</label>
+      <input type=text name="usuario_web" size="18" maxlength="16" value="{USUARIO.USUARIO_WEB}" />
+    </li>
+
+    <!-- BEGIN: anterior -->
+    <li>
+      <label for="anterior">Contrase&ntilde;a anterior:</label>
+      <input type="password" name="anterior" size="18" maxlength="16" />
+    </li>
+    <!-- END: anterior -->
+
+    <li>
+      <label for="password_web">Contrase&ntilde;a nueva:</label>
+      <input type="password" name="password_web" size="18" maxlength="16" />
+    </li>
+
+    <li>
+      <label for="repetir">Confirmar contrase&ntilde;a:</label>
+      <input type=password name="repetir" size="18" maxlength="15" />
+    </li>
+  </ul>
+  
+<div style="text-align: center">
+    <input type="hidden" name="actualizar" value="1" />
+    <input type="submit" value="Actualizar" />
+</div>
+</form>
+<!-- BEGIN: acceso -->
+
+<!-- END: content -->

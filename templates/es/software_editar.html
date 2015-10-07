@@ -1,0 +1,142 @@
+<!-- BEGIN: main -->
+<html>
+<head>
+<title>Grupo GECA: Editar software</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<LINK REL=StyleSheet HREF="estilo.css" TYPE="text/css" MEDIA=screen>
+</head>
+<body>
+<table>
+<tr>
+ <th colspan=2> <H2> Grupo de Electromagnetismo Computacional Avanzado (G.E.C.A.) </H2></th>
+</tr>
+<tr valign="top">
+<!-- Menu lateral -->
+<td align="left" class="menu">
+<h4>INTRANET</h4>
+<ul type=disc>
+ <li><a href="miembros.php">Miembros</a></li>
+ <li><a href="publicaciones.php">Publicaciones</a></li>
+ <li><a href="proyectos.php">Proyectos</a></li>
+ <li><a href="colaboradores.php">Colaboradores</a></li>
+ <li><a href="software.php">Software</a></li>
+</ul>
+</td>
+<!-- Pagina principal -->
+<td class="principal">
+<table width="100%"><tr>
+  <td>
+   <H3>Informaci&oacute;n de Software</H3>
+  </td>
+<!-- BEGIN: form_borrar -->
+  <td align=right width=20>
+       <form action="software_borrar.php" method=GET>
+        <input type=hidden name=ids value={IDS}>
+        <BUTTON type="submit">Eliminar Software</BUTTON>
+       </form>
+  </td>
+<!-- END: form_borrar -->
+</tr>
+</table>    
+<hr> 
+<!-- BEGIN: form_software -->
+<a href="software_editar.php?ids={LISTA.IDS}">[Datos]</a> &nbsp;
+<!-- BEGIN: acceso_relaciones -->
+<a href="software_editar_paq.php?ids={IDS}">[Paquetes]</a> &nbsp;
+<!-- END: acceso_relaciones -->
+<br><br>
+<form action="software_editar.php" name="editar" method=POST>
+<input type=hidden name="ids" value="{LISTA.IDS}">
+<table width="100%">
+   <tr>
+     <td class="cabecera1" colspan=2>Idioma</td>
+   </tr>
+   <tr>
+     <td colspan=2><b>Seleccione Idioma:</b> 
+     <select name="idioma" onChange="javascript:this.form.submit();">
+     <!-- BEGIN: fila_idioma -->
+     <option value="{LISTA.COD_IDIOMA}" {LISTA.SELECTED}>{LISTA.IDIOMA}</option>
+     <!-- END: fila_idioma -->
+     </select></td>
+   </tr>
+   <tr>
+     <td colspan=2>Los campos marcados con (*) son dependientes del idioma seleccionado</td>
+   </tr>
+   <tr>
+     <td class="cabecera1" colspan=2>Identificaci&oacute;n</td>
+   </tr>
+   <tr>
+    <td><b>T&iacute;tulo:</b>&nbsp;(*)</td>
+    <td>
+      <input type=text name="titulo" size=50 maxlength=80 value="{LISTA.TITULO}" onChange="this.form.modificado.checked=true"></td>
+   </tr>
+   <tr>
+    <td><b>Descripci&oacute;n Corta:</b>&nbsp;(*)</td>
+    <td>
+      <input type=text name="desc_corta" size=50 maxlength=255 value="{LISTA.DESC_CORTA}" onChange="this.form.modificado.checked=true"></td>
+   </tr>
+   <tr>
+   <tr>
+     <td class="cabecera1" colspan=2>Datos Operativos</td>
+   </tr>
+   <tr>
+     <td><b>P&uacute;blico:</b></td>
+     <td>
+       <input type=checkbox name="publico" value="1" {LISTA.PUBL} onClick="this.form.modificado.checked=true">
+     </td>
+   </tr> 
+   <tr>
+    <td><b>Sistema Operativo:</b>&nbsp;</td>
+    <td>
+      <input type=text name="sist_oper" size=50 maxlength=128 value="{LISTA.SIST_OPER}" onChange="this.form.modificado.checked=true"></td>
+   </tr>   
+   <tr>
+    <td><b>Licencia:</b>&nbsp;</td>
+    <td>
+      <input type=text name="licencia" size=50 maxlength=80 value="{LISTA.LICENCIA}" onChange="this.form.modificado.checked=true"></td>
+   </tr>
+   <tr>
+    <td><b>Link Licencia:</b>&nbsp;</td>
+    <td>
+      <input type=text name="link_licencia" size=50 maxlength=128 value="{LISTA.LINK_LICENCIA}" onChange="this.form.modificado.checked=true"></td>
+   </tr>  
+   <tr>
+     <td class="cabecera1" colspan=2>Enlaces</td>
+   </tr>
+   <tr>
+    <td><b>Email de Soporte:</b>&nbsp;</td>
+    <td>
+      <input type=text name="email" size=30 maxlength=30 value="{LISTA.EMAIL}" onChange="this.form.modificado.checked=true"></td>
+   </tr>
+   <tr>
+    <td><b>Campo OPTprograma:</b>&nbsp;</td>
+    <td>
+      <input type=text name="id_bibtex" size=50 maxlength=50 value="{LISTA.ID_BIBTEX}" onChange="this.form.modificado.checked=true"></td>
+   </tr>
+   <tr>
+    <td><b>P&aacute;gina principal:</b>&nbsp;</td>
+    <td>
+      <input type=text name="homepage" size=50 maxlength=128 value="{LISTA.HOMEPAGE}" onChange="this.form.modificado.checked=true"></td>
+   </tr>
+   <tr><td class="cabecera1" colspan=2>Descripci&oacute;n: (*)</td></tr>
+   <td colspan=2 align="center">
+   <textarea name="descripcion" cols=60 rows=10 onChange="this.form.modificado.checked=true">{LISTA.DESCRIPCION}</textarea>
+   </td>
+   </tr>
+   <tr>
+    <td colspan=2 align=center>
+    <b>Registro Modificado:</b>
+    <input type=checkbox onClick="this.form.modificado.checked=true" name="modificado" value=1>
+    &nbsp;&nbsp; 
+     <button type=submit>Actualizar</button>
+    </td>
+   </tr>  
+</table>
+</form>
+<!-- END: form_software -->
+<br>
+</td>
+</tr>
+</body>
+</html>
+<!-- END: main -->

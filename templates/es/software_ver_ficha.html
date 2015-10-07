@@ -1,0 +1,99 @@
+<!-- BEGIN: main -->
+<html>
+<head>
+<title>Grupo GECA: Informaci&oacute;n de Software</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<LINK REL=StyleSheet HREF="estilo.css" TYPE="text/css" MEDIA=screen>
+</head>
+<body>
+<table>
+<tr>
+ <th colspan=2> <H2> Grupo de Electromagnetismo Computacional Avanzado (G.E.C.A.) </H2></th>
+</tr>
+<tr valign="top">
+<!-- Menu lateral -->
+<td align="left" class="menu">
+<h4>INTRANET</h4>
+<ul type=disc>
+ <li><a href="miembros.php">Miembros</a></li>
+ <li><a href="publicaciones.php">Publicaciones</a></li>
+ <li><a href="proyectos.php">Proyectos</a></li>
+ <li><a href="colaboradores.php">Colaboradores</a></li>
+ <li><a href="software.php">Software</a></li>
+</ul>
+</td>
+<!-- Pagina principal -->
+<td class="principal">
+<H3>Informaci&oacute;n de Software</H3>
+<hr>
+<!-- BEGIN: tabla_ficha -->
+<br>
+<table width="100%">
+   <!-- BEGIN: datos_software -->
+   <tr>
+     <td colspan=4 class="cabecera1">{LISTA.TITULO}</td>
+   </tr>
+   <tr>
+     <td colspan=4>{LISTA.DESCRIPCION}</td>
+   </tr>
+   <tr>
+     <td colspan=4 class="cabecera1"><b>Datos</b></td>
+   </tr>
+   <tr>
+     <td colspan=4><b>Sistema Operativo:</b> {LISTA.OP_SYSTEM}</a></td>
+   </tr>
+   <tr>
+     <td colspan=4><b>Licencia:</b><a href="{LISTA.LINK_LICENCIA}">{LISTA.LICENCIA}</a></td>
+   </tr>      
+   <tr>
+     <td colspan=4 class="cabecera1">Enlaces</td>
+   </tr>
+   <tr>
+     <td colspan=4><b>Email de soporte:</b><a href="mailto:{LISTA.EMAIL}">{LISTA.EMAIL}</a></td>
+   </tr>
+   <tr>
+     <td colspan=4><a href="public_busqueda.php?{LISTA.DOCUMENTOS}">Documentos asociados al software</a></td>
+   </tr>
+   <tr>
+     <td colspan=4><a href="{LISTA.LINK_HOMEPAGE}">P&aacute;gina principal del software</a></td>
+   </tr>
+   <tr><td colspan=4></td></tr>   
+   <!-- END: datos_software -->
+   <!-- BEGIN: lista_paquetes -->
+   <tr><td colspan=4></td></tr>
+   <tr>
+     <td colspan=4 class="cabecera1">Ficheros disponibles</td>
+   </tr>
+   <tr><td colspan=4></td></tr>
+   <tr>
+    <td align=center class="cabecera2">
+                          <a href="software_ver_ficha.php?ids={IDS}&ordtype=nombre&order=down">
+                          <img src="img/down.gif" border="0" alt="asc"></a>&nbsp;Nombre&nbsp;
+                          <a href="software_ver_ficha.php?ids={IDS}&ordtype=nombre&order=up">
+                          <img src="img/up.gif" border="0" alt="desc"></a></td>
+    <td align=center class="cabecera2"><a href="software_ver_ficha.php?ids={IDS}&ordtype=version&order=down">
+                          <img src="img/down.gif" border="0" alt="asc"></a>&nbsp;Versi&oacute;n&nbsp;
+                          <a href="software_ver_ficha.php?ids={IDS}&ordtype=version&order=up">
+                          <img src="img/up.gif" border="0" alt="desc"></a></td>
+    <td align=center class="cabecera2"><a href="software_ver_ficha.php?ids={IDS}&ordtype=fecha&order=down">
+                          <img src="img/down.gif" border="0" alt="asc"></a>&nbsp;Fecha&nbsp;
+                          <a href="software_ver_ficha.php?ids={IDS}&ordtype=fecha&order=up">
+                          <img src="img/up.gif" border="0" alt="desc"></a></td>
+    <td align=center class="cabecera2">Descargar</td>
+   </tr>
+   <!-- BEGIN: fila -->
+   <tr>
+     <td align=center>{LISTA.NOMBRE}</td><td align=center>{LISTA.VERSION}</td><td align=center>{LISTA.FECHA}</td>
+     <td align=center><a href="{LISTA.LINK_SW}">{LISTA.NOMBRE_SW}</a></td>
+   </tr>
+   <!-- END: fila -->
+   <!-- END: lista_paquetes -->
+</table>
+<br>
+<!-- END: tabla_ficha -->
+</td>
+</tr>
+</table>
+</body>
+</html>
+<!-- END: main -->

@@ -1,0 +1,28 @@
+<!-- BEGIN: content -->
+<h2>Lista de ofertas del grupo</h2>
+
+<!-- BEGIN: ofertas -->
+
+    <!-- BEGIN: cabecera_noactiva -->
+    <h4>No activas</h4>
+    <!-- END: cabecera_activa -->
+
+    <ul class="sin">
+        <!-- BEGIN: oferta -->
+        <li>
+        <a href="oferta_ver_ficha.php?ido={OFERTA.ID_OFERTA}" style="font-weight: bold;">
+        {OFERTA.TITULO}</a>:&nbsp;{OFERTA.DESCRIPCION}
+        </li>
+        <!-- END: oferta -->
+    </ul>
+    <br />
+<!-- END: ofertas -->
+
+<!-- BEGIN: anyadir -->
+<form action="ofertas_editar.php" method="get">
+    <input type="hidden" name="ido" value="0" />
+    <input type="submit" value="Añadir Nueva Oferta" />
+</form>
+<!-- END: anyadir -->
+
+<!-- END: content -->

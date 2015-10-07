@@ -1,0 +1,29 @@
+<!-- BEGIN: content -->
+<h2>Miembros del grupo</h2>
+
+<!-- BEGIN: grupo -->
+<!-- BEGIN: nombre -->
+<h3>&nbsp;{GRUPO}</h3>
+<!-- END: nombre -->
+
+<!-- BEGIN: noactivos -->
+<h4>&nbsp;No activos</h4>
+<!-- END: noactivos -->
+
+<ul>
+    <!-- BEGIN: miembro -->
+    <li>
+        <a href="miembro_ver_ficha.php?id_miembro={MIEMBRO.ID_MIEMBRO}">{MIEMBRO.DATOS}</a>
+    </li>
+    <!-- END: miembro -->
+</ul>
+<!-- END: grupo -->
+
+<!-- BEGIN: anyadir -->
+<form action="miembro_editar.php" method="get">
+    <input type="hidden" name="id_miembro" value="0" />
+    <input type="submit" value="Añadir Nuevo Miembro" />
+</form>
+<!-- END: anyadir -->
+
+<!-- END: content -->

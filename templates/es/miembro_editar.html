@@ -1,0 +1,185 @@
+<!-- BEGIN: content -->
+<h2>Informaci&oacute;n de Miembro</h2>
+
+<!-- BEGIN: submenu -->
+<ul id="submenu">
+    <li><a href="miembro_ver_ficha.php?id_miembro={MIEMBRO.ID_MIEMBRO}">[Ver Ficha]</a></li>
+    <li><a href="miembro_editar.php?id_miembro={MIEMBRO.ID_MIEMBRO}">[Editar Datos]</a></li>
+    <li><a href="miembro_editar_bibtex.php?id_miembro={MIEMBRO.ID_MIEMBRO}">[Referencias Bibtex]</a></li>
+    <li><a href="miembro_editar_web.php?id_miembro={MIEMBRO.ID_MIEMBRO}">[Cuenta de Acceso]</a></li>
+    <!-- BEGIN: borrar -->
+    <li><a href="miembro_borrar.php?id_miembro={MIEMBRO.ID_MIEMBRO}">[Eliminar Miembro]</a></li>
+    <!-- END: borrar -->
+</ul>
+<!-- END: submenu -->
+
+<!-- BEGIN: formulario -->
+<p style="text-align: center"><strong>{MENSAJE}</strong></p>
+
+<form method="get" enctype="multipart/form-data" action="miembro_editar.php">
+    <input type="hidden" name="id_miembro" value="{MIEMBRO.ID_MIEMBRO}">
+
+    <!-- BEGIN: usuario -->
+    <div style="margin: 5px 0">
+        Inserte un nombre de usuario válido para el miembro<br />
+        <label for="usuario"><strong>Usuario: </strong></label>
+        <input type="text" id="usuario" name="usuario" size="16" maxlength="16" />
+    </div>
+    <!-- END: usuario -->
+
+    <h3><span>Idioma</span></h3>
+    <p><strong>Seleccione Idioma:</strong>
+        <select name="idioma">
+            <!-- BEGIN: idioma -->
+            <option value="{IDIOMA.CLAVE}" {IDIOMA.SELECCIONADO}>
+                {IDIOMA.TEXTO}</option>
+            <!-- END: idioma -->
+        </select>
+        <input type="submit" value="Cambiar" />
+    </p>
+    <p>
+        Los campos marcados con (*) son dependientes del idioma seleccionado.
+        Recuerde guardar los datos antes de cambiar el idioma.
+    </p>
+</form>
+
+<form method="post" enctype="multipart/form-data" action="miembro_editar.php">
+    <input type="hidden" name="id_miembro" value="{MIEMBRO.ID_MIEMBRO}">
+    <input type="hidden" name="idioma" value="{MIEMBRO.IDIOMA}" />
+
+    <h3><span>Identificaci&oacute;n</span></h3>
+    <ul class="formulario">
+        <li>
+            <label for="nombre">Nombre: </label>
+            <input type="text" id="nombre" name="nombre" size="50"
+                   maxlength="25" value="{MIEMBRO.NOMBRE}" />
+            <span class="error">{ERROR.NOMBRE}</span>
+        </li>
+
+        <li>
+            <label for="apellidos">Apellidos: </label>
+            <input type="text" id="apellidos" name="apellidos" size="50"
+                   maxlength="50" value="{MIEMBRO.APELLIDOS}" />
+            <span class="error">{ERROR.APELLIDOS}</span>
+        </li>
+
+        <li>
+            <label for="foto">Foto: </label>
+            <!-- BEGIN: foto -->
+            <img alt="Foto" width="80" src="{MIEMBRO.LINK_FOTO}">
+            <!-- END: foto -->
+            <span class="error">{ERROR.LINK_FOTO}</span>
+            <br />
+            <input type="file" name="foto" />
+        </li>
+    </ul>
+
+    <h3><span>Adscripción</span></h3>
+    <ul class="formulario">
+        <li>
+            <label for="categoria">Categor&iacute;a:</label>
+            <select name="categoria">
+                <!-- BEGIN: categoria -->
+                <option value="{CATEGORIA.CLAVE}" {CATEGORIA.SELECCIONADO}>
+                        {CATEGORIA.TEXTO}</option>
+                <!-- END: categoria -->
+            </select>
+            <span class="error">{ERROR.CATEGORIA}</span>
+        </li>
+
+        <li>
+            <label for="puesto">Puesto: *</label>
+            <input type="text" name="puesto" size="50"
+                   maxlength="50" value="{MIEMBRO.PUESTO}" />
+            <span class="error">{ERROR.PUESTO}</span>
+        </li>
+
+        <li>
+            <label for="">Afiliaci&oacute;n: *</label>
+            <input type="text" name="afiliacion" size="50"
+                   maxlength="100" value="{MIEMBRO.AFILIACION}" />
+            <span class="error">{ERROR.AFILIACION}</span>
+        </li>
+
+        <li>
+            <label for="fecha_incorporacion">Fecha Incorporaci&oacute;n: </label>
+            <input type="hidden" name="fecha_incorporacion"
+                   value="{MIEMBRO.FECHA_INCORPORACION}" />
+            Dia:
+            <input type="text" name="dia"  size="1" maxlength="2"
+                value="{MIEMBRO.DIA}" {FECHA_DISABLED} />
+            Mes:
+            <input type="text" name="mes"  size="1" maxlength="2"
+                value="{MIEMBRO.MES}" {FECHA_DISABLED} />
+            Año:
+            <input type="text" name="anyo" size="3" maxlength="4"
+                value="{MIEMBRO.ANYO}" {FECHA_DISABLED} />
+            <span class="error">{ERROR.FECHA_INCORPORACION}</span>
+        </li>
+
+        <li>
+            <label for="">Activo:</label>
+            <input type="checkbox" name="activo"
+                   value="1" {MIEMBRO.ACTIVO} {ACTIVO_DISABLED} />
+            <span class="error">{ERROR.ACTIVO}</span>
+        </li>
+    </ul>
+
+    <h3><span>Datos de Contacto</span></h3>
+    <ul>
+        <li>
+            <label for="direccion">Direcci&oacute;n: </label>
+            <textarea name="direccion"
+                      cols="60" rows="4">{MIEMBRO.DIRECCION}</textarea>
+            <br />
+            <span class="error">{ERROR.DIRECCION}</span>
+        </li>
+
+        <li>
+            <label for="telefono">Tel&eacute;fono: </label>
+            <input type="text" name="telefono" size="18"
+                   maxlength="20" value="{MIEMBRO.TELEFONO}" />
+            <span class="error">{ERROR.TELEFONO}</span>
+        </li>
+
+        <li>
+            <label for="fax">Fax: </label>
+            <input type="text" name="fax" size="18"
+                   maxlength="20" value="{MIEMBRO.FAX}" />
+            <span class="error">{ERROR.FAX}</span>
+        </li>
+
+        <li>
+            <label for="email">Email: </label>
+            <input type="text" name="email" size="50"
+                   maxlength="50" value="{MIEMBRO.EMAIL}" />
+            <span class="error">{ERROR.EMAIL}</span>
+        </li>
+    </ul>
+
+    <h3><span>Curr&iacute;culum</span></h3>
+    <ul>
+        <li>
+            <label for="cv">Currículum: *</label>
+            <!-- BEGIN: curriculum -->
+            <a href="{MIEMBRO.LINK_CURRICULUM}">Actual</a><br />
+            <!-- END: curriculum -->
+            <input type="file" name="cv" />
+            <span class="error">{ERROR.LINK_CURRICULUM}</span>
+        </li>
+
+        <li>
+            <label for>Texto de Currículum: *</label>
+            <textarea name="curriculum"
+                      cols="60" rows="10">{MIEMBRO.CURRICULUM}</textarea>
+            <span class="error">{ERROR.CURRICULUM}</span>
+        </li>
+    </ul>
+
+    <div style="text-align: center">
+        <input type="submit" value="Actualizar" />
+    </div>
+</form>
+<!-- BEGIN: formulario -->
+
+<!-- END: content -->

@@ -1,0 +1,52 @@
+<!-- BEGIN: content -->
+<h2>Informaci&oacute;n de Miembro</h2>
+
+<!-- BEGIN: submenu -->
+<ul id="submenu">
+    <li><a href="miembro_ver_ficha.php?id_miembro={MIEMBRO.ID_MIEMBRO}">[Ver Ficha]</a></li>
+    <li><a href="miembro_editar.php?id_miembro={MIEMBRO.ID_MIEMBRO}">[Editar Datos]</a></li>
+    <li><a href="miembro_editar_bibtex.php?id_miembro={MIEMBRO.ID_MIEMBRO}">[Referencias Bibtex]</a></li>
+    <li><a href="miembro_editar_web.php?id_miembro={MIEMBRO.ID_MIEMBRO}">[Cuenta de Acceso]</a></li>
+    <!-- BEGIN: borrar -->
+    <li><a href="miembro_borrar.php?id_miembro={MIEMBRO.ID_MIEMBRO}">[Eliminar Miembro]</a></li>
+    <!-- END: borrar -->
+</ul>
+<!-- END: submenu -->
+
+<!-- BEGIN: bibtex -->
+<h3>&nbsp;Nombres de Autor en Bibtex</h3>
+
+<p style="text-align: center"><strong>{MENSAJE}</strong></p>
+
+<form action="miembro_editar_bibtex.php" method="post">
+  <input type="hidden" name="id_miembro" value="{MIEMBRO.ID_MIEMBRO}">
+
+  <table>
+    <tr>
+      <th class="center">Borrar</th>
+      <th class="center">Nombre</th>
+    </tr>
+    <!-- BEGIN: referencia -->
+    <tr>
+      <input type="hidden" name="id_{BIBTEX.INDICE}" value="{BIBTEX.ID_BIBTEX}" />
+      <td class="center"><input type="checkbox" name="borrar_{BIBTEX.INDICE}" value="1"></td>
+      <td><input type="text" name="referencia_{BIBTEX.INDICE}" size="50"
+                 maxlength="50" value="{BIBTEX.TEXTO_BIBTEX}"></td>
+    </tr>
+    <!-- END: referencia -->
+    <tr>
+      <input type="hidden" name="numero" value="{NUMERO}" />
+      <td>Nuevo: </td>
+      <td><input type="text" name="nuevo" size="50" maxlength="50" /></td>
+    </tr>
+
+    <tr>
+        <td></td>
+      <td class="center"><input type="submit" value="Actualizar" /></td>
+    </tr>
+  </table>
+
+</form>
+<!-- BEGIN: bibtex -->
+
+<!-- END: content -->

@@ -1,0 +1,43 @@
+<!-- BEGIN: content -->
+<h2>Acceder a la intranet</h2>
+
+<!-- BEGIN: formulario -->
+<form method="post" enctype="multipart/form-data" action="login.php">
+
+  <div>
+    <p>Introduzca los datos de acceso</p>
+
+    <ul id="acceso">
+      <li>
+        <label for="usuario">Usuario</label><br />
+        <input id="usuario" name="usuario" type="text" size="18" maxlength="16" />
+      </li>
+
+      <li>
+        <label for="password">Password</label><br />
+        <input id="password" name="password" type="password" size="18" maxlength="20" />
+      </li>
+    </ul>
+
+    <!-- BEGIN: error -->
+    <span class="error">{ERROR}</span>
+    <!-- END: error -->
+
+    <div style="padding-left: 85px;">
+      <!--<input type="hidden" value="1" name="post" />-->
+      <input type="submit" value="Aceptar" />
+    </div>
+  </div>
+
+</form>
+<!-- END: formulario -->
+
+<!-- BEGIN: accedido -->
+<p>Bienvenido a la Intranet del Grupo de RadioFrecuencia</p>
+<!-- END: accedido -->
+
+<!-- BEGIN: registrado -->
+<p>Ya está registrado dentro de la Intranet</p>
+<!-- END: registrado -->
+
+<!-- END: content  -->

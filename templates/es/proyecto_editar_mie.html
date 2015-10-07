@@ -1,0 +1,62 @@
+<!-- BEGIN: content -->
+<h2>Información de proyecto</h2>
+
+<!-- BEGIN: menu -->
+<ul id="submenu">
+  <li><a href="proyecto_ver_ficha.php?idp={ID_PROYECTO}">[Ver Ficha]</a></li>
+  <li><a href="proyecto_editar.php?idp={ID_PROYECTO}">[Editar Datos]</a></li>
+  <li><a href="proyecto_editar_mie.php?idp={ID_PROYECTO}">[Miembros]</a></li>
+  <!-- <li><a href="proyecto_editar_col.php?idp={ID_PROYECTO}">[Colaboradores]</a></li> -->
+  <!-- <li><a href="proyecto_editar_sof.php?idp={ID_PROYECTO}">[Software]</a></li> -->
+  <li><a href="proyecto_borrar.php?idp={ID_PROYECTO}">[Eliminar Proyecto]</a></li>
+</ul>
+<!-- END: menu -->
+
+<!-- BEGIN: miembros -->
+<h3>Miembros del proyecto</h3>
+
+<form action="proyecto_editar_mie.php" enctype="multipart/form-data" method="post">
+  <input type="hidden" name="id_proyecto" value="{ID_PROYECTO}">
+
+  <table>
+    <tr>
+      <th class="center">Borrar</th>
+      <th class="center">Nombre</th>
+      <th class="center">Responsable</th>
+      <th class="center">Investigador Ppal.</th>
+    </tr>
+
+    <!-- BEGIN: miembro -->
+    <tr>
+      <input type="hidden" name="id_miembro_{MIEMBRO.INDICE}" value="{MIEMBRO.ID_MIEMBRO}" />
+      <td class="center"><input type="checkbox" name="borrar_{MIEMBRO.INDICE}" value="1"></td>
+      <td>{MIEMBRO.APELLIDOS}, {MIEMBRO.NOMBRE}</td>
+      <td class="center"><input type="checkbox" name="responsable_{MIEMBRO.INDICE}" value="1" {MIEMBRO.RESPONSABLE}></td>
+      <td class="center"><input type="checkbox" name="principal_{MIEMBRO.INDICE}" value="1" {MIEMBRO.INVESTIGADOR_PRINCIPAL}></td>
+    </tr>
+    <!-- END: miembro -->
+
+    <tr>
+      <input type="hidden" name="numero" value="{NUMERO_MIEMBROS}" />
+      <td>Nuevo: </td>
+      <td><select name="nuevo_miembro">
+        <option value=""> - Seleccione un Miembro - </option>
+        <!-- BEGIN: select_miembro -->
+        <option value="{MIEMBRO.ID_MIEMBRO}">{MIEMBRO.APELLIDOS}, {MIEMBRO.NOMBRE}</option>
+        <!-- END: select_miembro -->
+        </select>
+      </td>
+    </tr>
+
+    <tr>
+      <td><input type="hidden" name="actualizar" value="1" /></td>
+      <td class="center"><input type="submit" value="Actualizar" /></td>
+    </tr>
+  </table>
+
+</form>
+
+<b>{MENSAJE_ACTUALIZACION}</b>
+<!-- END: miembros -->
+
+<!-- END: content -->

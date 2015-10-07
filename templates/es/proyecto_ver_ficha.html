@@ -1,0 +1,81 @@
+<!-- BEGIN: content -->
+<h2>Información de Proyecto</h2>
+
+<!-- BEGIN: menu -->
+<ul id="submenu">
+  <li><a href="proyecto_ver_ficha.php?idp={ID_PROYECTO}">[Ver Ficha]</a></li>
+  <li><a href="proyecto_editar.php?idp={ID_PROYECTO}">[Editar Datos]</a></li>
+  <li><a href="proyecto_editar_mie.php?idp={ID_PROYECTO}">[Miembros]</a></li>
+  <!-- <li><a href="proyecto_editar_col.php?idp={ID_PROYECTO}">[Colaboradores]</a></li> -->
+  <!-- <li><a href="proyecto_editar_sof.php?idp={ID_PROYECTO}">[Software]</a></li> -->
+  <li><a href="proyecto_borrar.php?idp={ID_PROYECTO}">[Eliminar Proyecto]</a></li>
+</ul>
+<!-- END: menu -->
+
+<!-- BEGIN: datos_proyecto -->
+<h3>&nbsp;{DATOS.TITULO}</h3>
+<ul>
+  <li>Numero de Referencia: {DATOS.NUM_REFERENCIA}</li>
+  <li>Estado: {DATOS.ESTADO}</li>
+  <li>Duraci&oacute;n: Iniciado el {DATOS.FECHA_INICIO}
+    <!-- BEGIN: fecha_fin -->
+    y finalizado el {FECHA_FIN}
+    <!-- END: fecha_fin -->
+  </li>
+  <!-- BEGIN: financiacion -->
+  <li>Este proyecto está finaciado por <strong>{FINANCIA}</strong>&nbsp;
+    <!-- BEGIN: importe -->
+    con un importe de {VALOR_FINANCIA} {VALOR_MONEDA}
+    <!-- END: importe -->
+  </li>
+  <!-- END: financiacion -->
+</ul>
+
+<h3>&nbsp;Enlaces</h3>
+<ul>
+  <li><a href="{DATOS.HOMEPAGE}">P&aacute;gina principal del proyecto</a></li>
+  <li><a href="public_busqueda.php?{DATOS.DOCUMENTOS}">Documentos/Publicaciones asociados al proyecto</a><li>
+</ul>
+
+<h3>&nbsp;Descripci&oacute;n</h3>
+<p>{DATOS.DESCRIPCION}</p>
+<!-- END: datos_proyecto -->
+
+<!-- BEGIN: miembros -->
+<h3>&nbsp;Miembros del proyecto</h3>
+<ul class="sin">
+  <!-- BEGIN: miembro -->
+  <li><a href="miembro_ver_ficha.php?idm={MIEMBRO.ID_MIEMBRO}">
+      {MIEMBRO.APELLIDOS}, {MIEMBRO.NOMBRE}</a> - {MIEMBRO.CATEGORIA}
+    <!-- BEGIN: investigador_principal -->
+    <strong>&nbsp;&nbsp;Investigador principal</strong>
+    <!-- END: investigador_principal -->
+    <!-- BEGIN: responsable -->
+    <strong>&nbsp;&nbsp;Responsable de proyecto</strong>
+    <!-- END: responsable -->
+  </li>
+  <!-- END: miembro -->
+</ul>
+<!-- END: miembros -->
+
+<!-- BEGIN: colaboradores -->
+<h3>&nbsp;Colaboradores del proyecto</h3>
+<ul class="sin">
+  <!-- BEGIN: colaborador -->
+  <li><a href="{COLABORADOR.LINK_COLABORADOR}">{COLABORADOR.NOMBRE}</a> -
+    <a href="{COLABORADOR.LINK_GRUPO}">{COLABORADOR.NOMBRE_GRUPO}</a></li>
+  <!-- END: colaborador -->
+</ul>
+<!-- END: colaboradores -->
+
+<!-- BEGIN: softwares -->
+<h3>&nbsp;Software del proyecto</h3>
+<ul class="sin">
+  <!-- BEGIN: software -->
+  <li><a href="software_ver_ficha.php?ids={SOFTWARE.ID_SOFTWARE}">
+      {SOFTWARE.TITULO}</a> - {SOFTWARE.DESCRIP_CORTA}</li>
+  <!-- END: software -->
+</ul>
+<!-- END: softwares -->
+
+<!-- END: content -->

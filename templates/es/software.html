@@ -1,0 +1,69 @@
+<!-- BEGIN: main -->
+<html>
+<head>
+<title>Grupo GECA: Software del grupo</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<LINK REL=StyleSheet HREF="estilo.css" TYPE="text/css" MEDIA=screen>
+</head>
+<body>
+<table>
+<tr>
+ <th colspan=2> <H2> Grupo de Electromagnetismo Computacional Avanzado (G.E.C.A.) </H2></th>
+</tr>
+<tr valign="top">
+<!-- Menu lateral -->
+<td align="left" class="menu">
+<h4>INTRANET</h4>
+<ul type=disc>
+ <li><a href="miembros.php">Miembros</a></li>
+ <li><a href="publicaciones.php">Publicaciones</a></li>
+ <li><a href="proyectos.php">Proyectos</a></li>
+ <li><a href="colaboradores.php">Colaboradores</a></li>
+ <li><a href="software.php">Software</a></li>
+</ul>
+</td>
+<!-- Pagina principal -->
+<td class="principal">
+<H3>Lista de Software del grupo </H3>
+<hr>
+<!-- BEGIN: tabla_software -->
+<br>
+<table width="100%">
+   <!-- BEGIN: cab_desactiva -->
+   <tr>
+     <td colspan=3 class="cabecera2">No publicados</td>
+   </tr>
+   <tr><td></td></tr>
+   <!-- END: cab_desactiva --> 
+   <!-- BEGIN: fila -->
+   <tr>
+     <td>&nbsp</td>
+     <td><a href="software_ver_ficha.php?ids={LISTA1.IDS}">
+         <b>{LISTA1.TITULO}</a></b>&nbsp;:&nbsp;{LISTA1.DESC_CORTA}
+     </td>
+     <td align=right width=20><form action="software_editar.php" method=GET>
+       <input type=hidden name=ids value={LISTA1.IDS}>
+       <BUTTON type="submit">Editar</BUTTON></form>
+     </td>
+   </tr>
+   <!-- END: fila --> 
+</table>
+<br>
+<!-- END: tabla_software -->
+<table>
+   <tr>
+    <td>
+     <br>
+     <form action="software_editar.php" method=GET>
+      <input type="hidden" name="ids" value=0>
+      <BUTTON type=submit>Añadir Nuevo Software</BUTTON>
+     </form>
+    </td>
+   </tr> 
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+<!-- END: main -->

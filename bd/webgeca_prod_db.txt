@@ -1,0 +1,188 @@
+# --------------------------------------------------------
+# Crea la Base de datos
+# --------------------------------------------------------
+drop database webgeca_prod;
+create database webgeca_prod;
+use webgeca_prod;
+
+# --------------------------------------------------------
+# Crea tablas de Miembros
+# --------------------------------------------------------
+CREATE TABLE miembros (
+  id_miembro INTEGER PRIMARY KEY AUTO_INCREMENT,
+  nombre VARCHAR(50),
+  categoria CHAR(7) NOT NULL default 'TITULAR',
+  INDEX ind_categoria(categoria),
+  activo BOOL default 1,
+  direccion TEXT,
+  telefono VARCHAR(15),
+  fax VARCHAR(15),
+  email VARCHAR(30),
+  link_foto VARCHAR(128),
+  fecha_entrada DATE);
+
+CREATE TABLE miembro_idiomas (
+  id_miembro INTEGER REFERENCES miembros(id_miembro),
+  idioma CHAR(3),
+  INDEX ind_idioma(idioma),
+  afiliacion VARCHAR(100),
+  puesto VARCHAR(50),
+  curriculum TEXT,
+  link_curriculum VARCHAR(128));
+
+CREATE TABLE autentica_miembro (
+  id_miembro INTEGER REFERENCES miembros(id_miembro),
+  usuario_web VARCHAR(15),
+  UNIQUE INDEX ind_usuario_web(usuario_web),
+  password_web VARCHAR(41));
+
+INSERT INTO autentica_miembro(id_miembro,usuario_web,password_web)
+ VALUES(0,'instalacion',PASSWORD('instalacion'));
+
+CREATE TABLE miembro_bibtex (
+  id_miembro_bibtex INTEGER PRIMARY KEY AUTO_INCREMENT,
+  id_miembro INTEGER REFERENCES miembros(id_miembro),
+  texto_bibtex VARCHAR(50));
+
+# --------------------------------------------------------
+# Crea tabla de Proyectos
+# --------------------------------------------------------
+
+CREATE TABLE proyectos (
+   id_proyecto INTEGER PRIMARY KEY AUTO_INCREMENT,
+   id_pr_bibtex VARCHAR(50),
+   publico BOOL default 0, 
+   activo BOOL default 1,
+   fecha_inicio DATE,
+   fecha_fin DATE,
+   financiador VARCHAR(60),
+   importe INTEGER default 0,
+   moneda CHAR(7) default 'EUROS',
+   link_proyecto VARCHAR(128));
+
+CREATE TABLE proyecto_idiomas (
+   id_proyecto INTEGER REFERENCES proyectos(id_proyecto),
+   idioma CHAR(3),
+   titulo VARCHAR(128),
+   INDEX ind_idioma(idioma),    
+   descrip_corta VARCHAR(255),
+   descripcion TEXT);
+   
+# --------------------------------------------------------
+# Crea tabla de colaboradores
+# --------------------------------------------------------
+CREATE TABLE grupos_colaboradores (
+  id_grupo INTEGER PRIMARY KEY AUTO_INCREMENT,
+  nombre_grupo VARCHAR(60),
+  UNIQUE INDEX ind_nombre_grupo(nombre_grupo),
+  publico BOOL default 0,
+  descripcion VARCHAR(255),
+  link_grupo VARCHAR(128));
+  
+CREATE TABLE colaboradores (
+  id_colaborador INTEGER PRIMARY KEY AUTO_INCREMENT,
+  grupo_pertenece INTEGER REFERENCES grupos_colaboradores(id_grupo),
+  nombre VARCHAR(50),
+  UNIQUE INDEX ind_nombre(nombre),
+  puesto VARCHAR(50),
+  email_colaborador VARCHAR(50),
+  link_colaborador VARCHAR(128),
+  director BOOL default 0);
+
+# --------------------------------------------------------
+# Crea tabla de software
+# --------------------------------------------------------
+
+CREATE TABLE software (
+  id_software INTEGER PRIMARY KEY AUTO_INCREMENT,
+  id_sw_bibtex VARCHAR(50),
+  publico BOOL default 0,
+  sistema_operativo VARCHAR(128),
+  licencia VARCHAR(80),
+  link_licencia VARCHAR(128),
+  email_soporte VARCHAR(30),
+  link_homepage VARCHAR(128));
+
+CREATE TABLE software_idiomas (
+   id_software INTEGER REFERENCES software(id_software),
+   idioma CHAR(3),
+   titulo VARCHAR(128),
+   INDEX ind_idioma(idioma),    
+   descrip_corta VARCHAR(255),
+   descripcion TEXT);
+  
+CREATE TABLE paquetes_software (
+  id_paq_soft INTEGER PRIMARY KEY AUTO_INCREMENT,
+  id_software INTEGER REFERENCES software(id_software),
+  nombre VARCHAR(20), 
+  version VARCHAR(10),
+  fecha DATE,
+  link_software VARCHAR(128));
+
+CREATE TABLE software_usuarios (
+  id_usuario INTEGER PRIMARY KEY AUTO_INCREMENT,
+  email VARCHAR(30),
+  clave VARCHAR(41),
+  activo BOOL default 0,
+  boleto_activacion VARCHAR(32),
+  fecha_alta DATE,
+  fecha_ultimo_acceso DATE);
+  
+# --------------------------------------------------------
+# Crea tablas de referencias
+# --------------------------------------------------------
+
+CREATE TABLE referencias (
+  id_referencia INTEGER PRIMARY KEY AUTO_INCREMENT,
+  id_ref_bibtex VARCHAR(35),
+  UNIQUE INDEX ind_id_ref_bibtex(id_ref_bibtex),
+  tipo VARCHAR(15),
+  INDEX ind_tipo(tipo),
+  tipo_bibtex VARCHAR(15),
+  visible BOOL default 1,
+  estado VARCHAR(15),
+  idioma CHAR(3) default 'NDF',
+  tipo_link CHAR(1) default 'N',
+  link_referencia VARCHAR(128),
+  fecha_publicacion DATE);
+
+CREATE TABLE ref_relacion (
+  id_ref INTEGER REFERENCES referencias(id_referencia),
+  id_campos INTEGER NOT NULL default 0,
+  referencia_cruzada BOOL default 0,
+  UNIQUE INDEX ind_ref_campos(id_ref, id_campos, referencia_cruzada),
+  id_ref_cruzada INTEGER NOT NULL);
+
+CREATE TABLE ref_campos (
+  id_campo INTEGER PRIMARY KEY AUTO_INCREMENT,
+  id_campo_ref INTEGER REFERENCES ref_relacion(id_campos),
+  campo  VARCHAR(20),
+  UNIQUE INDEX ind_campos_ref(id_campo_ref, campo),
+  valor  TEXT);
+  
+CREATE TABLE ref_cadenas (
+  id_cadena INTEGER PRIMARY KEY AUTO_INCREMENT,
+  cadena VARCHAR(20),
+  UNIQUE INDEX ind_ref_cadenas(cadena),
+  valor TEXT);
+ 
+# --------------------------------------------------------
+# Crea tablas de relacion
+# --------------------------------------------------------
+
+CREATE TABLE proyecto_miembros (
+  id_proyecto INTEGER REFERENCES proyectos(id_proyecto),
+  id_miembro INTEGER REFERENCES miembros(id_miembro),
+  UNIQUE INDEX ind_proyecto_miembros(id_proyecto, id_miembro),
+  responsable BOOL default 0);
+
+CREATE TABLE colaborador_proyectos (
+  id_proyecto INTEGER REFERENCES proyectos(id_proyecto),
+  id_colaborador INTEGER REFERENCES colaboradores(id_colaborador),
+  UNIQUE INDEX ind_colaborador_proyectos(id_proyecto, id_colaborador));
+
+CREATE TABLE software_proyectos (
+  id_software INTEGER REFERENCES software(id_software),
+  id_proyecto INTEGER REFERENCES proyectos(id_proyecto),
+  UNIQUE INDEX ind_software_proyectos(id_software, id_proyecto));
+    

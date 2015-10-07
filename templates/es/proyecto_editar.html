@@ -1,0 +1,118 @@
+<!-- BEGIN: content -->
+<h2>Información de proyecto</h2>
+
+<!-- BEGIN: menu -->
+<ul id="submenu">
+  <li><a href="proyecto_ver_ficha.php?idp={ID_PROYECTO}">[Ver Ficha]</a></li>
+  <li><a href="proyecto_editar.php?idp={ID_PROYECTO}">[Editar Datos]</a></li>
+  <li><a href="proyecto_editar_mie.php?idp={ID_PROYECTO}">[Miembros]</a></li>
+  <!-- <li><a href="proyecto_editar_col.php?idp={ID_PROYECTO}">[Colaboradores]</a></li> -->
+  <!-- <li><a href="proyecto_editar_sof.php?idp={ID_PROYECTO}">[Software]</a></li> -->
+  <li><a href="proyecto_borrar.php?idp={ID_PROYECTO}">[Eliminar Proyecto]</a></li>
+</ul>
+<!-- END: menu -->
+
+<!-- BEGIN: ficha -->
+<form method="post" enctype="multipart/form-data" action="proyecto_editar.php">
+  <input type=hidden name="id_proyecto" value="{PROYECTO.ID_PROYECTO}">
+
+  <h3>&nbsp;Idioma</h3>
+  <p><strong>Seleccione Idioma:</strong>
+    <input name="idioma" type="hidden" value="{COD_IDIOMA}" />
+    <select name="idioma_cambio" onChange="javascript:this.form.submit();">
+      <!-- BEGIN: idioma -->
+      <option value="{IDIOMA.CLAVE}" {IDIOMA.SELECCIONADO}>{IDIOMA.TEXTO}</option>
+      <!-- END: idioma -->
+    </select>
+  </p>
+  <p>Los campos marcados con (*) son dependientes del idioma seleccionado</p>
+
+
+  <h3>Identificaci&oacute;n</h3>
+  <ul>
+    <li>
+      <label for="titulo">T&iacute;tulo: *</label>
+      <input type="text" name="titulo" size="50" maxlength="128" value="{PROYECTO.TITULO}" />
+    </li>
+
+    <li>
+      <label for="descrip_corta">Descripci&oacute;n Corta: *</label>
+      <input type="text" name="descrip_corta" size="50" maxlength="256" value="{PROYECTO.DESCRIP_CORTA}" />
+    </li>
+  </ul>
+
+  <h3>Datos del proyecto</h3>
+  <ul>
+    <li>
+      <label for="num_referencia">Número de Referencia: </label>
+      <input type="text" name="num_referencia" size="13" maxlength="15" value="{PROYECTO.NUM_REFERENCIA}" />
+    </li>
+
+    <li>
+      <label for="publico">P&uacute;blico: </label>
+      <input type="checkbox" name="publico" value="1" {PROYECTO.PUBLICO} />
+    </li>
+
+    <li>
+      <label for="estado">Estado: </label>
+      <select name="estado" disabled="disabled" >
+        <!-- BEGIN: estado -->
+        <option value="{ESTADO.CLAVE}" {ESTADO.SELECCIONADO}> {ESTADO.TEXTO}</option>
+        <!-- END: estado -->
+      </select>
+    </li>
+
+    <li>
+      <label for="fecha">Fecha Inicio: </label>
+      Dia: <input type="text" name="dia_ini" size="1" maxlength="2" value="{PROYECTO.DIA_INICIO}" />
+      Mes: <input type="text" name="mes_ini" size="1" maxlength="2" value="{PROYECTO.MES_INICIO}" />
+      Año: <input type="text" name="anyo_ini" size="3" maxlength="4" value="{PROYECTO.ANYO_INICIO}" />
+    </li>
+
+    <li>
+      <label for="fecha">Fecha Fin: </label>
+      Dia: <input type="text" name="dia_fin" size="1" maxlength="2" value="{PROYECTO.DIA_FIN}" />
+      Mes: <input type="text" name="mes_fin" size="1" maxlength="2" value="{PROYECTO.MES_FIN}" />
+      Año: <input type="text" name="anyo_fin" size="3" maxlength="4" value="{PROYECTO.ANYO_FIN}" />
+    </li>
+
+    <li>
+      <label for="entidad">Entidad financiera: </label>
+      <input type="text" name="entidad" size="50" maxlength="50" value="{PROYECTO.FINANCIADOR}" >
+    </li>
+
+    <li>
+      <label for="importe">Importe: </label>
+      <input type=text name="importe" size="8" maxlength="8" value="{PROYECTO.IMPORTE}" />
+      <select name="moneda" >
+        <!-- BEGIN: select_moneda -->
+        <option value="{MONEDA.CLAVE}" {MONEDA.SELECCION}>{MONEDA.NOMBRE}</option>
+        <!-- END: select_moneda -->
+      </select>
+      Publicar: <input type="checkbox" name="publicar_importe" value="1" {PROYECTO.PUBLICAR_IMPORTE} >
+    </li>
+
+    <li>
+      <label for="homepage">Enlace: </label>
+      <input type="text" name="homepage" size="50" maxlength="128" value="{PROYECTO.HOMEPAGE}" >
+    </li>
+
+    <li>
+      <label for="id_bibtex">Campo OPTproyecto: </label>
+      <input type="text" name="id_bibtex" size="50" maxlength="50" value="{PROYECTO.ID_PR_BIBTEX}" >
+    </li>
+
+    <li>
+      <label for="descripcion">Descripci&oacute;n: *</label>
+      <textarea name="descripcion" cols="60" rows="10">{PROYECTO.DESCRIPCION}</textarea>
+    </li>
+  </ul>
+
+  <div class="center">
+    <input type="hidden" name="actualizar" value="1" />
+    <input type="submit" value="Actualizar" />
+  </div>
+</form>
+<!-- END: ficha -->
+
+<!-- END: content -->

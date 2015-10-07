@@ -1,0 +1,134 @@
+<!-- BEGIN: content -->
+<a href="publicaciones.php">[Buscador]</a> &nbsp;
+<a href="public_editar.php">[A&ntilde;adir Publicaci&oacute;n]</a> &nbsp;
+<a href="public_importar.php">[Importaci&oacute;n]</a> &nbsp;
+<a href="public_borrar_bib.php">[Borrar Bibliograf&iacute;as]</a> &nbsp;
+<a href="public_cadenas.php">[Sin&oacute;nimos]</a> &nbsp;
+<hr>
+<table width="100%"><tr>
+  <td>
+   <H3>Datos de publicaci&oacute;n</H3>
+  </td>
+<!-- BEGIN: form_borrar -->
+  <td align=right>
+   <form action="public_borrar.php" method="POST" >
+   <input type=hidden name="id_ref" value="{ID_REFERENCIA}">
+   <button type=submit>Eliminar Publicaci&oacute;n</button>
+   </form>
+  </td>
+<!-- END: form_borrar -->
+</table>    
+<hr> 
+<!-- BEGIN: form_publicacion -->
+<form action="public_editar.php" enctype="multipart/form-data" name="editar" method=POST>
+<!-- BEGIN: datos_pub -->
+ <table>
+   <tr>
+    <td><b>Referencia bibtex:</b>&nbsp;</td>
+    <td>
+      <input type=text name="id_ref_bibtex" size=35 maxlength=35 value="{LISTA.ID_REF_BIBTEX}" onChange="this.form.modificado.checked=true"></td>
+   </tr>
+   <tr>
+    <td><b>Tipo:</b>&nbsp;</td>
+    <td><select name="tipo" onChange="this.form.modificado.checked=true">
+    <!-- BEGIN: select_tipo -->
+     <option value="{TIPO_SELEC}" {SELECTED}>{TIPO_LARGO_SELEC}</option>
+    <!-- END: select_tipo -->
+    </select></td>
+   </tr>
+   <tr>
+    <td><b>Estado:</b>&nbsp;</td>
+    <td><select name="estado" onChange="this.form.modificado.checked=true">
+    <!-- BEGIN: select_estado -->
+     <option value="{ESTADO_SELEC}" {SELECTED}>{ESTADO_SELEC}</option>
+    <!-- END: select_estado -->
+    </select></td>   
+   </tr>
+   <tr>
+    <td><b>Publicar:</b></td>
+    <td><input type=checkbox name="publicar" {LISTA.VISIBLE} value=1 DISABLED >
+        <b><font color="#AA1111">{LISTA.AVISO}</b></b></td>
+   </tr>
+   <tr>
+    <td><b>Idioma:</b>&nbsp;</td>
+    <td><select name="idioma" onChange="this.form.modificado.checked=true">
+     <option value="NDF">Sin Definir</option>
+    <!-- BEGIN: select_idioma -->
+     <option value="{LISTA.IDIOMA_SELEC}" {LISTA.SELECTED}>{LISTA.IDIOMA_WEB}</option>
+    <!-- END: select_idioma -->
+    </select></td>   
+   </tr>
+   <tr>
+    <td><b>Documento disponible:</b></td>
+    <td>
+       <select name="tipo_link" onChange="javascript:this.form.modificado.checked=true;this.form.submit();">
+       <!-- BEGIN: select_tipo_link -->
+        <option value="{V_TIPO_LINK}" {SELECTED}>{TIPO_LINK}</option>
+       <!-- END: select_tipo_link -->
+       </select>
+    </td>
+   </tr>
+   <!-- BEGIN: titulo_link -->
+   <tr>
+    <td colspan=2 ><b>Link Documento:</b></td>
+   </tr>
+   <!-- END: titulo_link -->
+ </table>
+   <!-- BEGIN: link_externo -->
+   <input type=text name="link_refer" size=70 maxlength=128 value="{LINK_REFER}" onChange="this.form.modificado.checked=true">
+   <!-- END: link_externo -->
+   <!-- BEGIN: link_interno -->
+   <a href="{LINK_REFER}">[PDF]</a>&nbsp;&nbsp;
+   <input type=file name="fichero_pub" size=50 onChange="this.form.modificado.checked=true">
+   <!-- END: link_interno -->
+ <input type=hidden name="id_ref" value={LISTA.ID_REFERENCIA}>
+<!-- END: datos_pub -->
+<H3>Campos de la publicaci&oacute;n</H3><hr>
+<!-- BEGIN: campos_pub -->
+<table>
+   <!-- BEGIN: fila -->
+   <tr>
+      <td>
+         <b>{LISTA.CAMPO}</b>
+         <input type=hidden name="id_campo_c_{LISTA.INDICE}" value="{LISTA.CAMPO}">
+      </td>
+      <td align=right width="100%" class="cabecera1">
+        {LISTA.MODIFICAR} OPT:&nbsp;
+        <input type=checkbox name="id_campo_m_{LISTA.INDICE}" {LISTA.DISABLED} value=1 onClick="this.form.modificado.checked=true">
+        &nbsp;&nbsp;&nbsp;Borrar:&nbsp;
+        <input type=checkbox name="id_campo_b_{LISTA.INDICE}" value=1 onClick="this.form.modificado.checked=true">
+      </td>
+   </tr>
+   <tr>
+      <td colspan=2>
+         <textarea name="id_campo_t_{LISTA.INDICE}" cols=60 rows=2 onChange="this.form.modificado.checked=true">{LISTA.VALOR}</textarea>
+         <br />
+         {LISTA.WARNING}
+      </td>    
+   </tr>
+   <!-- END: fila -->
+   <input type=hidden name="numero_campos" value={NUM_CAMPOS}>
+    <tr>
+      <td><b>Nuevo Campo:</b></td>
+      <td><input type=text name="nuevo_campo" size=20 maxlength=20 onChange="this.form.modificado.checked=true"></td>
+   </tr>
+   <tr>
+      <td colspan=2>
+        <textarea name="nuevo_valor" cols=60 rows=2 onChange="this.form.modificado.checked=true"></textarea>
+      </td>
+   </tr>
+   <tr>
+    <td colspan=2 align=center>
+    <b>Registro Modificado:</b>
+    <input type=checkbox onClick="this.form.modificado.checked=true" name="modificado" value=1>
+    &nbsp;&nbsp; 
+     <button type=submit>Actualizar</button>
+    </td>
+   </tr>  
+</table>
+<!-- END: campos_pub -->
+</form>
+<!-- END: form_publicacion -->
+<br>
+
+<!-- END: content -->

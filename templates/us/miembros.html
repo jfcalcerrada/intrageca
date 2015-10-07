@@ -1,0 +1,33 @@
+<!-- BEGIN: content -->
+<h2>Group Members</h2>
+&nbsp;
+&nbsp;
+
+<!-- BEGIN: grupo -->
+    <!-- BEGIN: cabecera -->
+    <h3>&nbsp;{GRUPO_MIEMBROS}</h3>
+    <!-- END: cabecera -->
+
+    <!-- BEGIN: cab_noactivos -->
+    <h4>&nbsp;No active</h4>
+    <!-- END: cab_noactivos -->
+
+    <ul class="sin">
+        <!-- BEGIN: miembro -->
+        <li>
+            <a href="miembro_ver_ficha.php?idm={MIEMBRO.ID_MIEMBRO}">
+            {MIEMBRO.NOMBRE} - {MIEMBRO.PUESTO} - {MIEMBRO.AFILIACION}</a>
+        </li>
+        <!-- END: miembro -->
+    </ul>
+    <br />
+<!-- END: grupo -->
+
+<!-- BEGIN: anyadir -->
+<form action="miembro_editar.php" method="get">
+    <input type="hidden" name="idm" value="0" />
+    <input type="submit" value="Add New Member" />
+</form>
+<!-- END: anyadir -->
+
+<!-- END: content -->

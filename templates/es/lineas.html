@@ -1,0 +1,34 @@
+<!-- BEGIN: content -->
+<h2>Lineas de investigación del grupo </h2>
+<!-- BEGIN: lineas -->
+
+<!-- BEGIN: cab_desactiva -->
+<h4>No publicados</h4>
+<!-- END: cab_desactiva -->
+
+<ul class="sin">
+    <!-- BEGIN: fila -->
+    <li><span {STYLE}>
+    <a href="linea_ver_ficha.php?idl={LINEA.id_linea}" style="font-weight: bold;">
+    {LINEA.titulo}</a>:&nbsp;{LINEA.descrip_corta}</span>
+        <!-- BEGIN: editar -->
+        <form action="proyecto_editar.php" method="get" style="float: right">
+            <input name="idp" value="{IDL}" type="hidden" />
+            <input type="submit" value="Editar" />
+        </form>
+        <div style="clear: right;"></div>
+        <!-- END: editar -->
+    </li>
+    <!-- END: fila -->
+</ul>
+<br />
+<!-- END: lineas -->
+
+<!-- BEGIN: anyadir -->
+<form action="linea_editar.php" method="get">
+    <input type="hidden" name="idl" value="0" />
+    <input type="submit" value="Añadir Nuevo Linea de Investigación" />
+</form>
+<!-- END: anyadir -->
+
+<!-- END: content -->

@@ -1,0 +1,91 @@
+<!-- BEGIN: main -->
+<html>
+<head>
+<title>Grupo GECA: Editar proyecto</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<LINK REL=StyleSheet HREF="estilo.css" TYPE="text/css" MEDIA=screen>
+</head>
+<body>
+<table>
+<tr>
+ <th colspan=2> <H2> Grupo de Electromagnetismo Computacional Avanzado (G.E.C.A.) </H2></th>
+</tr>
+<tr valign="top">
+<!-- Menu lateral -->
+<td align="left" class="menu">
+<h4>INTRANET</h4>
+<ul type=disc>
+ <li><a href="miembros.php">Miembros</a></li>
+ <li><a href="publicaciones.php">Publicaciones</a></li>
+ <li><a href="proyectos.php">Proyectos</a></li>
+ <li><a href="colaboradores.php">Colaboradores</a></li>
+ <li><a href="software.php">Software</a></li>
+</ul>
+</td>
+<!-- Pagina principal -->
+<td class="principal">
+<table width="100%">
+<tr>
+  <td>
+   <H3>Informaci&oacute;n de proyecto</H3>
+  </td>
+</tr>
+</table>    
+<hr>
+<!-- BEGIN: form_proyecto --> 
+<a href="proyecto_editar.php?idp={IDP}">[Datos Proyecto]</a> &nbsp;
+<a href="proyecto_editar_mie.php?idp={IDP}">[Miembros]</a> &nbsp;
+<a href="proyecto_editar_col.php?idp={IDP}">[Colaboradores]</a> &nbsp;
+<a href="proyecto_editar_sof.php?idp={IDP}">[Software]</a> 
+<br><br>
+<form action="proyecto_editar_col.php" name="editar" method=POST>
+<input type=hidden name="idp" value="{IDP}">
+<table width="100%">
+   <tr>
+     <td class="cabecera1" colspan=3>Colaboradores del proyecto</td>
+   <tr>
+   <tr>
+     <td align=center width="30"><b>Borrar</b></td>
+     <td><b>Nombre</b></td>
+     <td><b>Grupo Colaborador</b></td>
+   </tr>
+    <!-- BEGIN: fila_colaborador -->
+    <tr>
+      <td align=center width="30">
+        <input type=checkbox name="id_proy_b_{LISTA.INDICE}" value=1  onClick="this.form.modificado.checked=true">
+      </td>
+      <input type=hidden name="id_proy_i_{LISTA.INDICE}" value="{LISTA.IDENTIFICADOR}">
+      <td width="220">{LISTA.NOMBRE}</td>
+      <td width="300">{LISTA.GRUPO_COL}</td>
+    </tr>
+    <!-- END: fila_colaborador -->
+    <input type=hidden name="numero_col" value={NUM_COL}>
+    <tr>
+      <td>&nbsp;</td>
+      <td><b>A&ntilde;adir nuevo colaborador:</b></td>
+      <td><select name="nuevo_col"  onClick="this.form.modificado.checked=true">
+           <option value="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+           <!-- BEGIN: selec_col -->
+           <option value="{LISTA.IDC}">{LISTA.NOMBRE}</option>
+           <!-- END: selec_col -->
+          </select>
+      </td>
+    </tr>
+   <tr>
+    <td colspan=3 align=center><br>
+    <b>Formulario Modificado:</b>
+    <input type=checkbox onClick="this.form.modificado.checked=true" name="modificado" value=1>
+    &nbsp;&nbsp; 
+     <button type=submit>Actualizar</button>
+    </td>
+   </tr>  
+</table>
+</form>
+<b>{MENSAJE_ACTUALIZACION}</b>
+<!-- END: form_proyecto -->
+<br>
+</td>
+</tr>
+</body>
+</html>
+<!-- END: main -->

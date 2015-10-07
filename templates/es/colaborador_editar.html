@@ -1,0 +1,131 @@
+<!-- BEGIN: main -->
+<html>
+<head>
+<title>Grupo GECA: Edición de colaboradores del grupo</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<LINK REL=StyleSheet HREF="estilo.css" TYPE="text/css" MEDIA=screen>
+</head>
+<body>
+<table>
+<tr>
+ <th colspan=2> <H2> Grupo de Electromagnetismo Computacional Avanzado (G.E.C.A.) </H2></th>
+</tr>
+<tr valign="top">
+<!-- Menu lateral -->
+<td align="left" class="menu">
+<h4>INTRANET</h4>
+<ul type=disc>
+ <li><a href="miembros.php">Miembros</a></li>
+ <li><a href="publicaciones.php">Publicaciones</a></li>
+ <li><a href="proyectos.php">Proyectos</a></li>
+ <li><a href="colaboradores.php">Colaboradores</a></li>
+ <li><a href="software.php">Software</a></li>
+</ul>
+</td>
+<!-- Pagina principal -->
+<td class="principal">
+<table width="100%"><tr>
+  <td>
+   <H3>Informaci&oacute;n del grupo colaborador</H3>
+  </td>
+<!-- BEGIN: form_borrar -->
+  <td align=right width=20>
+       <form action="colaborador_borrar.php" method=GET>
+        <input type=hidden name=idc value={IDC}>
+        <BUTTON type="submit">Eliminar Grupo</BUTTON>
+       </form>
+  </td>
+<!-- END: form_borrar -->
+</table>    
+<hr> 
+<!-- BEGIN: form_colaboradores -->
+<br>
+<form name="form_colaboradores" action="colaborador_editar.php" method=POST>
+   <!-- BEGIN: cabecera -->
+   <table width="100%">
+   <tr>
+     <td class="cabecera1" colspan=2>
+      <b>Grupo:</b>&nbsp;<input type=text name="gc_nombre" value="{LISTA.GRUPO_COLABORADOR}" size=40 maxlength=60 onClick="this.form.modificado.checked=true">
+       <input type=hidden name="gc_id_grupo" value="{LISTA.ID_GRUPO}">
+       &nbsp;&nbsp;<b>P&uacute;blico:</b>
+       <input type=checkbox name="gc_publico" value=1 {LISTA.PUBLICO} onClick="this.form.modificado.checked=true">
+     </td>
+   </tr>
+   <tr>
+     <td><b>Descripci&oacute;n:</b></td>
+     <td colspan=2>
+      <input type=text name="gc_desc" value="{LISTA.DESCRIPCION}" size=60 maxlength=255 onClick="this.form.modificado.checked=true">
+     </td>
+   </tr>
+   <tr>
+     <td><b>Link del grupo:</b></td>
+     <td colspan=2>
+     <input type=text name="gc_link" value="{LISTA.LINK_GRUPO}" size=60 maxlength=128 onClick="this.form.modificado.checked=true">
+     </td>
+   </tr>
+   </table>
+   <!-- END: cabecera -->
+   <!-- BEGIN: colaboradores -->
+   <table width="100%">
+   <tr>
+     <td colspan=3><b>Miembros del grupo</b><hr></td>
+   </tr>
+   <!-- BEGIN: fila -->
+   <tr>
+     <td colspan=3 class="cabecera2"><b>Nombre:</b>
+     <input type=hidden name="{LISTA.GC_ID_MI}" value="{LISTA.ID_MI}">
+     <input type=text name="{LISTA.MI_NOMBRE}" value="{LISTA.NOMBRE}" size=45 maxlength=50 onClick="this.form.modificado.checked=true">
+     &nbsp;<b>Director</b>&nbsp;<input type=checkbox name="{LISTA.MI_DIRECTOR}" value="1" {LISTA.ACTIVO} onClick="this.form.modificado.checked=true">
+     &nbsp;<b>Borrar</b>&nbsp;<input type=checkbox name="{LISTA.MI_BORRAR}" value="1" onClick="this.form.modificado.checked=true">
+     </td>
+   </tr>
+   <tr>
+     <td>&nbsp;</td>
+     <td>Puesto:</td> 
+     <td><input type=text name="{LISTA.MI_PUESTO}" value="{LISTA.PUESTO}" size=50 maxlength=50 onClick="this.form.modificado.checked=true">
+     </td>
+   </tr>
+   <tr>
+     <td>&nbsp;</td>
+     <td>Email:</td>
+     <td><input type=text name="{LISTA.MI_EMAIL}" value="{LISTA.EMAIL}" size=50 maxlength=50 onClick="this.form.modificado.checked=true">
+     </td>
+   </tr>
+   <tr>
+     <td>&nbsp;</td>
+     <td>Link:</td>
+     <td><input type=text name="{LISTA.MI_LINK}" value="{LISTA.LINK}" size=50 maxlength=128 onClick="this.form.modificado.checked=true">
+     </td>
+   </tr>
+   <!-- END: fila -->
+   <tr>
+    <td colspan=3><hr></td>
+   </tr>
+   <tr>
+     <td><button type=submit>Nuevo</button></td>
+     <td>Nombre:</td> 
+     <td><input type=text name="mi_nuevo" value="" size=50 maxlength=50 onClick="this.form.modificado.checked=true">
+         <input type=hidden name="gc_num_mi" value="{LISTA.VAL_MIEMBROS}">
+     </td>     
+   </tr>
+   </table>
+   <!-- END: colaboradores -->
+   <table width="100%">
+   <tr><td colspan=3><br></td></tr>
+   <td colspan=3 align=center>
+    <b>Formulario Modificado:</b>
+    <input type=checkbox onClick="this.form.modificado.checked=true" name="modificado" value=1 onClick="this.form.modificado.checked=true">
+    &nbsp;&nbsp; 
+     <button type=submit>Actualizar</button>
+    </td>   
+   </tr>
+   </table>
+</form>
+<br>
+<!-- BEGIN: form_colaboradores -->
+</td>
+</tr>
+</table>
+</body>
+</html>
+<!-- END: main -->

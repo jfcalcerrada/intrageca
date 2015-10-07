@@ -1,0 +1,123 @@
+<!-- BEGIN: content -->
+<h2>Resultados de la búsqueda de Publicaciones</h2>
+
+<!-- BEGIN: menu -->
+<ul id="submenu">
+  <li><a href="publicaciones.php">[Buscador]</a></li>
+  <li><a href="public_editar.php">[Añadir Publicación]</a></li>
+  <li><a href="public_importar.php">[Importación]</a></li>
+  <li><a href="public_cadenas.php">[Sinónimos]</a></li>
+  <!-- BEGIN: borrar -->
+  <li><a href="public_borrar_bib.php">[Borrar Bibliografías]</a></li>
+  <!-- END: borrar -->
+</ul>
+<!-- END: menu -->
+
+<!-- BEGIN: directorio -->
+<ul id="submenu">
+  <li><a href="publicaciones.php">[Buscar]</a></li>
+  <!-- BEGIN: fila -->
+  <li><a href="public_busqueda.php?tipo={LISTA1.VAL1}">{LISTA1.VAL2}</a></li>
+  <!-- END: fila -->
+  <!--<a href="public_busqueda.php">[Todas]</a>-->
+</ul>
+<!-- END: directorio -->
+
+<!-- BEGIN: parametros -->
+<h3>&nbsp;Parámetros de Búsqueda</h3>
+<!-- BEGIN: logica_busqueda -->
+Mostrar registros que coinciden en {LOGICA} los parametros.
+<!-- END: logica_busqueda -->
+
+<ul>
+  <!-- BEGIN: tipo_publicacion -->
+  <li><span style="font-weight: bold">Tipo</span>:&nbsp;"{VALOR}"</li>
+  <!-- END: tipo_publicacion -->
+
+  <!-- BEGIN: lista_parametros -->
+  <li><span style="font-weight: bold">{LISTA_PARAMETROS.CAMPO}</span>:&nbsp;"{LISTA_PARAMETROS.VALOR}"</li>
+  <!-- END: lista_parametros -->
+
+  <!-- BEGIN: pagina -->
+  <li><span style="font-weight: bold">P&aacute;gina</span>:&nbsp;"{VALOR}"</li>
+  <!-- END: pagina -->
+</ul>
+<!-- END: parametros -->
+<br />
+
+<!-- BEGIN: publicaciones -->
+
+<!-- BEGIN: cabecera_tipo -->
+<h3>&nbsp;{TIPO_PUBLICACION}</h3>
+<!-- END: cabecera_tipo -->
+
+<!-- BEGIN: lista -->
+<!-- BEGIN: cabecera_anyo -->
+<h4 style="text-align: center">{ANYO_PUBLICACION}</h4>
+<!-- END: cabecera_anyo -->
+
+<ul class="public">
+  <!-- BEGIN: fila -->
+  <li>{REFERENCIA} <a href="{LINK_PUB}">{EXT}</a>
+    <!-- BEGIN: editar -->
+    <a href="public_editar.php?id_ref={ID_REFERENCIA}">[Editar]</a>
+    <!-- END: editar -->
+  </li>
+  <!-- END: fila -->
+</ul>
+<!-- END: lista -->
+<!-- END: publicaciones -->
+
+<!-- BEGIN: resumen -->
+<div style="width: 100%; text-align: center">
+  <ul id="paginacion" class="linea">
+    <!-- BEGIN: primeras -->
+    <li><a href="public_busqueda.php?{ENLACE_PRIMERA}pagina=1">&lt;&lt;</a></li>
+    <li><a href="public_busqueda.php?{ENLACE_ANTERIOR}">&lt;</a></li>
+    <!-- END: primeras -->
+
+    <!-- BEGIN: anteriores -->
+    <li><a href="public_busqueda.php?{ENLACE_PAGINA}">...</a></li>
+    <!-- END: anteriores -->
+
+    <!-- BEGIN: anterior -->
+    <li><a href="public_busqueda.php?{ENLACE_PAGINA}">{PAGINA}</a></li>
+    <!-- END: anterior -->
+
+    <!-- BEGIN: actual -->
+    <li>{PAGINA}</li>
+    <!-- END: actual -->
+
+    <!-- BEGIN: siguiente -->
+    <li><a href="public_busqueda.php?{ENLACE_PAGINA}">{PAGINA}</a></li>
+    <!-- END: siguiente -->
+
+    <!-- BEGIN: siguientes -->
+    <li><a href="public_busqueda.php?{ENLACE_PAGINA}">...</a></li>
+    <!-- END: siguientes -->
+
+    <!-- BEGIN: ultimas -->
+    <li><a href="public_busqueda.php?{ENLACE_SIGUIENTE}">&gt;</a></li>
+    <li><a href="public_busqueda.php?{ENLACE_ULTIMA}">&gt;&gt;</a></li>
+    <!-- END: ultimas -->
+  </ul>
+
+  <ul class="linea">
+    <li><a href="public_exportar_l.php?{ENLACE_EXPORT}">[Exportar a HTML]</a></li>
+    <li><a href="public_exportar_l.php?rtf=1&{ENLACE_EXPORT}">[Exportar a RTF]</a></li>
+    <li><a href="public_exportar.php?{ENLACE_EXPORT}">[Exportar a Bibtex]</a></li>
+  </ul>
+  
+  <p style="font-weight: bold">
+    <!-- BEGIN: resumen_negativo -->
+    No se ha encontrado ningúna publicaci&oacute;n.
+    <!-- END: resumen_negativo -->
+    <!-- BEGIN: resumen_positivo -->
+    Encontradas {LISTA.TOTAL} publicaciones. Mostrando desde la
+    {LISTA.PRIMERA} hasta la {LISTA.ULTIMA}
+    <!-- END: resumen_positivo -->
+  </p>
+</div>
+<!-- END: resumen -->
+
+<!-- END: content -->

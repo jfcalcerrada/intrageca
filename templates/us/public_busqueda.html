@@ -1,0 +1,111 @@
+<!-- BEGIN: content -->
+<h2>Search results Publications</h2>
+
+<!-- BEGIN: menu -->
+<p>
+<a href="publicaciones.php">[Buscador]</a> &nbsp;
+<a href="public_editar.php">[Add Publication]</a> &nbsp;
+<a href="public_importar.php">[Import]</a> &nbsp;
+<a href="public_cadenas.php">[Synonyms]</a> &nbsp;
+
+    <!-- BEGIN: borrar -->
+    <a href="public_borrar_bib.php">[Delete Bibliographies]</a> &nbsp;
+    <!-- END: borrar -->
+</p>
+<!-- END: menu -->
+
+<!-- BEGIN: directorio -->
+<p>
+    <a href="publicaciones.php">[Search]</a>&nbsp;
+    <!-- BEGIN: fila -->
+    <a href="public_busqueda.php?tipo={LISTA1.VAL1}">{LISTA1.VAL2}</a>&nbsp;
+    <!-- END: fila -->
+    <a href="public_busqueda.php">[All]</a>
+</p>
+<!-- END: directorio -->
+
+<!-- BEGIN: parametros -->
+<h3>Search Parameters</h3>
+    <!-- BEGIN: logica_busqueda -->
+    Show records that matches {LOGICA} the parameters.
+    <!-- END: logica_busqueda -->
+
+<ul>
+    <!-- BEGIN: tipo_publicacion -->
+    <li><span style="font-weight: bold">Type</span>:&nbsp;"{VALOR}"</li>
+    <!-- END: tipo_publicacion -->
+
+    <!-- BEGIN: lista_parametros -->
+    <li><span style="font-weight: bold">{LISTA_PARAMETROS.CAMPO}</span>:&nbsp;"{LISTA_PARAMETROS.VALOR}"</li>
+    <!-- END: lista_parametros -->
+
+    <!-- BEGIN: pagina -->
+    <li><span style="font-weight: bold">Page</span>:&nbsp;"{VALOR}"</li>
+    <!-- END: pagina -->
+</ul>
+<!-- END: parametros -->
+<br />
+
+<!-- BEGIN: publicaciones -->
+
+    <!-- BEGIN: cabecera_tipo -->
+    <h3>&nbsp;{TIPO_PUBLICACION}</h3>
+    <!-- END: cabecera_tipo -->
+
+    <!-- BEGIN: lista -->
+        <!-- BEGIN: cabecera_anyo -->
+        <h4 style="text-align: center">{ANYO_PUBLICACION}</h4>
+        <!-- END: cabecera_anyo -->
+
+        <ul class="public">
+            <!-- BEGIN: fila -->
+            <li>{REFERENCIA} <a href="{LINK_PUB}">{EXT}</a>
+                <!-- BEGIN: editar -->
+                <a href="public_editar.php?id_ref={ID_REFERENCIA}">[Editar]</a>
+                <!-- END: editar -->
+            </li>
+            <!-- END: fila -->
+        </ul>
+        <!-- END: lista -->
+<!-- END: publicaciones -->
+
+<!-- BEGIN: resumen -->
+<div style="width: 100%; text-align: center">
+<p>
+    <a href="public_busqueda.php?{ENLACE_PRIMERA}pagina=1">&lt;&lt;</a>&nbsp;
+    <a href="public_busqueda.php?{ENLACE_ANTERIOR}">&lt;</a>&nbsp;
+    <!-- BEGIN: anteriores -->
+    <a href="public_busqueda.php?{ENLACE_PAGINA}">...</a>&nbsp;
+    <!-- END: anteriores -->
+
+    <!-- BEGIN: anterior -->
+    <a href="public_busqueda.php?{ENLACE_PAGINA}">{PAGINA}</a>&nbsp;
+    <!-- END: anterior -->
+
+    <!-- BEGIN: actual -->
+    {PAGINA}&nbsp;
+    <!-- END: actual -->
+
+    <!-- BEGIN: siguiente -->
+    <a href="public_busqueda.php?{ENLACE_PAGINA}">{PAGINA}</a>&nbsp;
+    <!-- END: siguiente -->
+
+    <!-- BEGIN: siguientes -->
+    <a href="public_busqueda.php?{ENLACE_PAGINA}">...</a>&nbsp;
+    <!-- END: siguientes -->
+    <a href="public_busqueda.php?{ENLACE_SIGUIENTE}">&gt;</a>&nbsp;
+    <a href="public_busqueda.php?{ENLACE_ULTIMA}">&gt;&gt;</a>
+</p>
+<p style="font-weight: bold">
+    <!-- BEGIN: resumen_negativo -->
+    Not found any publication.
+    <!-- END: resumen_negativo -->
+    <!-- BEGIN: resumen_positivo -->
+    Found {LISTA.TOTAL} publications. Showing from
+    {LISTA.PRIMERA} to {LISTA.ULTIMA}
+    <!-- END: resumen_positivo -->
+</p>
+</div>
+<!-- END: resumen -->
+
+<!-- END: content -->

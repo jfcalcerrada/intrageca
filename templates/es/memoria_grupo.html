@@ -1,0 +1,33 @@
+<!-- BEGIN: content -->
+<h2>Memoria de Grupo</h2>
+
+<form action="memoria_grupo.php" method="get">
+
+  <ul>
+    <li><label for="desde" style="width: 75px;">Desde:</label> <input name="desde" type="text" /></li>
+    <li><label for="hasta" style="width: 75px;">Hasta:</label> <input name="hasta" type="text" /></li>
+
+    <li>
+      Miembros:
+      <ul style="padding-left: 0px;">
+        <!-- BEGIN: miembro -->
+        <li style="float: left; width: 33%; overflow: hidden"><input name="miembro{NUMERO}" type="checkbox" value="{MIEMBRO.ID_MIEMBRO}" />
+        {MIEMBRO.APELLIDOS}, {MIEMBRO.NOMBRE}</li>
+        <!-- END: miembro -->
+      </ul>
+    </li>
+
+    <li style="clear: both">
+      Proyectos:
+      <ul>
+        <!-- BEGIN: proyecto -->
+        <li><input name="proyecto{NUMERO}" type="checkbox" value="{PROYECTO.id_pr_bibtex}" />
+        {PROYECTO.id_pr_bibtex}</li>
+      <!-- END: proyecto -->
+      </ul>
+    </li>
+  </ul>
+
+  <input type="submit" value="Realizar Búsqueda" />
+</form>
+<!-- END: content -->

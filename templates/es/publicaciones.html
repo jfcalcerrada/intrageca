@@ -1,0 +1,98 @@
+<!-- BEGIN: content -->
+<h2>Publicaciones del grupo</h2>
+
+<!-- BEGIN: menu -->
+<ul id="submenu">
+  <li><a href="publicaciones.php">[Buscador]</a></li>
+  <li><a href="public_editar.php">[Añadir Publicación]</a></li>
+  <li><a href="public_importar.php">[Importación]</a></li>
+  <li><a href="public_cadenas.php">[Sinónimos]</a></li>
+  <!-- BEGIN: borrar -->
+  <li><a href="public_borrar_bib.php">[Borrar Bibliografías]</a></li>
+  <!-- END: borrar -->
+</ul>
+<!-- END: menu -->
+
+<!-- BEGIN: publicaciones -->
+Número de publicaciones totales: {NUM_PUBLICACIONES}
+<ul>
+  <!-- BEGIN: tipo -->
+  <li><a href="public_busqueda.php?tipo={LISTA1.VAL1}">{LISTA1.VAL2}</a></li>
+  <!-- END: tipo -->
+</ul>
+<!-- END: publicaciones -->
+
+<!-- Formulario buscador -->
+<h3>&nbsp;Buscar Publicaci&oacute;n</h3>
+
+<form action="public_busqueda.php" method="get">
+
+  <table>
+    <!-- BEGIN: id_bibtex -->
+    <tr>
+      <td>Identificador Bibtex</td>
+      <td colspan="2"><input type="text" name="id_ref_bibtex" size="35" maxlength="35"></td>
+    </tr>
+    <!-- END: id_bibtex -->
+
+    <tr>
+      <td>Tipo de Publicaci&oacute;n:</td>
+      <td colspan="3">
+        <select name="tipo">
+          <option value="" SELECTED> </option>
+          <!-- BEGIN: select_tipos -->
+          <option value="{LISTA2.VAL1}">{LISTA2.VAL2}</option>
+          <!-- END: select_tipos -->
+        </select>
+      </td>
+    </tr>
+
+    <!-- BEGIN: estado_public -->
+    <tr>
+      <td>Estado de Publicaci&oacute;n:</td>
+      <td colspan="3">
+        <ul class="continua">
+            <!-- BEGIN: select_estados -->
+            <li><input type="checkbox" name="E_{LISTA2.VAL1}" value="1">
+              {LISTA2.VAL2}&nbsp;&nbsp;</li>
+            <!-- END: select_estados -->
+          </ul>
+      </td>
+    </tr>
+    <!-- END: estado_public -->
+
+    <tr>
+      <td>Coincidencia de campos:</td>
+      <td colspan="3">
+        <select name="logica">
+          <option value="AND" selected="selected">Todos los campos</option>
+          <option value="OR">Al menos un campo</option>
+        </select>
+      </td>
+    </tr>
+    <!-- BEGIN: select_campo -->
+    <tr>
+      <td>{LISTA3.CAMPO}:</td>
+      <td>
+        <select name="{LISTA3.NOMBRE_C}">
+          <option value="" selected="selected"> </option>
+          <option value="ANY">CUALQUIERA</option>
+          <!-- BEGIN: lista -->
+          <option value="{LISTA3.VAL1}">{LISTA3.VAL1}</option>
+          <!-- END: lista -->
+        </select>
+      </td>
+      <td>&nbsp;Contiene:</td>
+      <td>
+        <input type=text name="{LISTA3.NOMBRE_V}" size=20 MAXLENGTH=20>
+      </td>
+    </tr>
+    <!-- END: select_campo -->
+    <tr>
+      <td></td><td><input type="submit" value="Buscar" /></td>
+    </tr>
+  </table>
+</form>
+</body>
+</html>
+<!-- END: main -->

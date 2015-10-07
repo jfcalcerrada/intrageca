@@ -1,0 +1,50 @@
+<!-- BEGIN: content -->
+<h2>Lista de colaboradores del grupo </h2>
+<!-- BEGIN: grupo_colaboradores -->
+
+    <!-- BEGIN: cabecera -->
+    <h3><span {STYLE}>&nbsp;
+    <a href="{LISTA.LINK_GRUPO}" style="vertical-align: middle">{LISTA.GRUPO_COLABORADOR}</a></span>
+        <!-- BEGIN: editar -->
+        <form action="colaborador_editar.php" method="get" style="float: right">
+            <input type="hidden" name="idc" value="{IDC}" />
+            <input type="submit" value="Editar" />
+        </form>
+        <div style="clear: right;"></div>
+        <!-- END: editar -->
+    </h3>
+    <p><span style="font-weight: bold">Descripci&oacute;n:</span> {LISTA.DESCRIPCION}</p>
+    <!-- END: cabecera -->
+
+    <!-- BEGIN: cab_desactiva -->
+    <h4>&nbsp;No publicados</h4>
+    <!-- END: cab_desactiva -->
+
+    <!-- BEGIN: colaboradores -->
+    <span style="font-weight: bold">Responsable/s del grupo</span>
+    <ul class="sin">
+        <!-- BEGIN: fila -->
+        <li><a href="{LISTA.LINK_PERSONA}">{LISTA.NOMBRE}</a>: {LISTA.PUESTO}</li>
+        <!-- END: fila -->
+    </ul>
+    <!-- END: colaboradores -->
+
+    <!-- BEGIN: proyectos -->
+    <span style="font-weight: bold">Proyectos en colaboraci&oacute;n</span><br />
+    <ul class="sin">
+        <!-- BEGIN: fila -->
+        <li><a href="proyecto_ver_ficha.php?idp={LISTA.LINK_PROY}">{LISTA.TITULO}</a>: {LISTA.DESC}</li>
+        <!-- END: fila -->
+    </ul>
+    <br />
+    <!-- END: proyectos -->
+<!-- END: grupo_colaboradores -->
+<br />
+<!-- BEGIN: anyadir -->
+<form action="colaborador_editar.php" method="get">
+    <input type="hidden" name="idc" value="0" />
+    <input type="submit" value="Añadir Nuevo Grupo" />
+</form>
+<!-- END: anyadir -->
+
+<!-- END: content -->

@@ -1,0 +1,46 @@
+<!-- BEGIN: content -->
+<h2>Lista de asignaturas impartidas por el grupo</h2>
+
+<!-- BEGIN: asignaturas -->
+<ul>
+  <!-- BEGIN: asignatura -->
+  <li>
+    <a href="{ASIGNATURA.LINK}" style="font-weight: bold;">{ASIGNATURA.NOMBRE}</a>
+    <!-- BEGIN: editar -->
+    &nbsp;<a href="docencia_editar.php?ida={ASIGNATURA.ID_ASIGNATURA}">[Editar]</a>
+    <!-- END: editar -->
+    <ul>
+      <!-- BEGIN: coordinador -->
+      <li>Coordinador/es:
+      <ul class="continua">
+        <!-- BEGIN: miembro -->
+        <li><a href="miembro_ver_ficha.php?idm={MIEMBRO.ID_MIEMBRO}">{MIEMBRO.APELLIDOS}, {MIEMBRO.NOMBRE}</a></li>
+        <!-- END: miembro -->
+      </ul>
+      </li>
+      <!-- END: coordinador -->
+
+      <!-- BEGIN: miembros -->
+      <li>Profesor/es:
+      <ul class="continua">
+        <!-- BEGIN: miembro -->
+        <li><a href="miembro_ver_ficha.php?idm={MIEMBRO.ID_MIEMBRO}">{MIEMBRO.APELLIDOS}, {MIEMBRO.NOMBRE}</a></li>
+        <!-- END: miembro -->
+      </ul>
+      </li>
+      <!-- END: miembros -->
+    </ul>
+  </li>
+  <!-- END: asignatura -->
+</ul>
+<br />
+<!-- END: asignaturas -->
+
+<!-- BEGIN: anyadir -->
+<form action="docencia_editar.php" method="get">
+  <input type="hidden" name="ida" value="0" />
+  <input type="submit" value="A&ntilde;adir Nueva Asignatura" />
+</form>
+<!-- END: anyadir -->
+
+<!-- END: content -->

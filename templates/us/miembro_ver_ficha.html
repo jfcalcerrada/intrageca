@@ -1,0 +1,44 @@
+<!-- BEGIN: content -->
+<h2>Member Information</h2>
+
+    <!-- BEGIN: menu -->
+    <p>
+    <a href="miembro_ver_ficha.php?idm={IDM}">[Ver Ficha]</a>&nbsp;
+    <a href="miembro_editar.php?idm={IDM}">[Editar Datos]</a>&nbsp;
+    <a href="miembro_editar_bibtex.php?idm={IDM}">[Referencias Bibtex]</a>&nbsp;
+    <!-- <a href="miembro_editar_formato.php?idm={IDM}">[Editar Formato]</a>&nbsp; -->
+    <a href="miembro_editar_web.php?idm={IDM}">[Cuenta de Acceso]</a>&nbsp;
+    </p>
+    <!-- END: menu -->
+
+    <!-- BEGIN: datos_personales -->
+    <div style="font-weight: bold; text-align: center; width: 100%;">
+    {DATOS.NOMBRE}
+        <!-- BEGIN: foto -->
+        <img alt="Foto" src="{LINK_FOTO}" style="width: 80px; vertical-align: middle;" />
+        <!-- END: foto -->
+    </div><br />
+
+    <h3>&nbsp;Area</h3>
+    <p>{DATOS.PUESTO}</p>
+    <p>{DATOS.AFILIACION}</p>
+        <!-- BEGIN: incorporacion -->
+        <p>Fecha Incorporaci&oacute;n: {FECHA_INC}</p>
+        <!-- END: incorporacion -->
+
+    <h3>&nbsp;Contact Data</h3>
+    <p>Address: <br />
+    {DATOS.DIRECCION}</p>
+    <p>Phone: {DATOS.TELEFONO}</p>
+    <p>Fax: {DATOS.FAX}</p>
+    <p>Email: {DATOS.EMAIL}</p>
+    <!-- END: datos_personales -->
+
+    <!-- BEGIN: publicaciones -->
+    <h3>&nbsp;<a href="public_busqueda.php?{PUBLICACIONES}">List of publications</a></h3>
+    <!-- END: publicaciones -->
+
+    <!-- BEGIN: curriculum -->
+    <h3>&nbsp;<a href="miembro_ver_cur.php?idm={IDM}">Curriculum</a></h3>
+    <!-- END: curriculum -->
+<!-- END: content -->

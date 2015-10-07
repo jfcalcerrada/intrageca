@@ -1,0 +1,77 @@
+<!-- BEGIN: main -->
+<html>
+<head>
+<title>Grupo GECA: Editar Sin&oacute;nimos Bibtex</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<LINK REL=StyleSheet HREF="estilo.css" TYPE="text/css" MEDIA=screen>
+</head>
+<body>
+<table>
+<tr>
+ <th colspan=2> <H2> Grupo de Electromagnetismo Computacional Avanzado (G.E.C.A.) </H2></th>
+</tr>
+<tr valign="top">
+<!-- Menu lateral -->
+<td align="left" class="menu">
+<h4>INTRANET</h4>
+<ul type=disc>
+ <li><a href="miembros.php">Miembros</a></li>
+ <li><a href="publicaciones.php">Publicaciones</a></li>
+ <li><a href="proyectos.php">Proyectos</a></li>
+ <li><a href="colaboradores.php">Colaboradores</a></li>
+ <li><a href="software.php">Software</a></li>
+</ul>
+</td>
+<!-- Pagina principal -->
+<td class="principal">
+<a href="publicaciones.php">[Buscador]</a> &nbsp;
+<a href="public_editar.php">[A&ntilde;adir Publicaci&oacute;n]</a> &nbsp;
+<a href="public_importar.php">[Importaci&oacute;n]</a> &nbsp;
+<a href="public_borrar_bib.php">[Borrar Bibliograf&iacute;as]</a> &nbsp;
+<a href="public_cadenas.php">[Sin&oacute;nimos]</a> &nbsp;
+<hr>
+<form action="public_cadenas.php" name="cadenas" method=POST>
+<h3>Editar Sin&oacute;nimos Bibtex</h3>    
+<hr> 
+<table>
+<tr>
+  <td><h4>Sin&oacute;nimo</h4></td>
+  <td><h4>Cadena Sustituta</h4></td>
+  <td><h4>Borrar</h4></td>
+</tr>
+<!-- BEGIN: fila_cadena -->
+<tr>
+  <td><b>{LISTA.SINONIMO}</b></td>
+  <input type=hidden name="{LISTA.ID_SIN}" value="{LISTA.SINONIMO}">
+  <td><textarea rows=1 cols="60" name="{LISTA.T_SIN}" onChange="this.form.modificado.checked=true">{LISTA.TEXTO_SIN}</textarea></td>
+  <td><input type=checkbox name="{LISTA.B_SIN}" value=1 onChange="this.form.modificado.checked=true"></td>
+</tr>
+<!-- END: fila_cadena -->
+<tr>
+ <td><h4>Nueva cadena</h4></td>
+</tr>
+<tr>
+  <td>Sin&oacute;nimo:</td>
+  <td><input type=text size=20 maxlength=20 name="nuevo_campo" onChange="this.form.modificado.checked=true"></td>
+</tr>
+<tr>
+  <td>Cadena Sustituta:</td>
+  <td><textarea rows=1 cols="60" name="nuevo_texto" onChange="this.form.modificado.checked=true"></textarea></td> 
+</tr>
+   <tr>
+    <td colspan=2 align=center>
+    <input type=hidden name="numero_cadenas" value="{NUM_CADENAS}">
+    <b>Cadena Modificada:</b>
+    <input type=checkbox onClick="this.form.modificado.checked=true" name="modificado" value=1>
+    &nbsp;&nbsp; 
+     <button type=submit>Actualizar</button>
+    </td>
+   </tr>  
+</table>
+<br>
+</form>
+</td>
+</tr>
+</body>
+</html>
+<!-- END: main -->
