@@ -12,7 +12,7 @@
 
 
 // Carga los includes de la cabecera
-require_once 'includes/initialize.php' ;
+require_once 'includes/bootstrap.php' ;
 
 // Carga el modelo
 require_once 'model/' . $_file . '.php' ;
@@ -55,6 +55,3 @@ if (isset($_POST['usuario'])) {
 
 // Incluye la vista de la pagina
 require_once 'vista/' . $_file . '.php';
-
-
-?>

@@ -1,18 +1,13 @@
 <?php
-// Cargamos los includes de la cabecera
-require_once 'includes/initialize.php';
+
+require_once 'includes/bootstrap.php';
 
 /**
- * Página que se encarga de terminar la sesión y redirigir a la página de
- * bienvenida
- *
+ * Página que se encarga de terminar la sesión y redirigir a la página de bienvenida
  */
 
 // Termina la session
 session_unset();
 
-
 // Redirecciona a la página de inicio
-header('Location: index.html');
-
-?>
+header('Location: ' . url('index.html'));

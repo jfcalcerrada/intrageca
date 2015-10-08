@@ -6,7 +6,7 @@
 
 
 // Carga los includes de la cabecera
-require_once 'includes/initialize.php';
+require_once 'includes/bootstrap.php';
 
 // Carga el modelo
 require_once 'model/includes/miembros.php';
@@ -35,6 +35,10 @@ $id_miembro = validateId($id_miembro);
 
 // Controla el acceso a la pagina
 accessOwnMember($id_miembro);
+
+
+// TODO function to validate languages (here and in forms!)
+
 
 
 // Si hay cambio de idioma, lo recibe por GET
@@ -271,6 +275,3 @@ $miembro['activo'] = ($miembro['activo']) ? 'checked="checked"' : '';
 
 // Incluye la vista de la pagina
 require_once 'vista/' . $_file . '.php';
-
-
-?>

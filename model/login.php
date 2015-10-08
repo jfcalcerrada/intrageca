@@ -1,11 +1,6 @@
 <?php
 
 /**
- *
- */
-
-
-/**
  * Comprueba si existen el usuario y si la clave es correcta, en caso afirmativo
  * obtiene los datos de la sesion
  *

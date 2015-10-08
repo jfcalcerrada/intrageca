@@ -5,7 +5,7 @@
  */
 
  // Carga los includes de la cabecera
-require_once 'includes/initialize.php';
+require_once 'includes/bootstrap.php';
 
 // Carga el modelo
 require_once 'model/includes/miembros.php';

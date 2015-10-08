@@ -1,10 +1,5 @@
 <?php
 
-/**
- *
- */
-
-
 // Carga la plantilla
 $_content = new XTemplate('templates/' . $_lang . '/' . $_file . '.html');
 
@@ -12,7 +7,6 @@ $_content = new XTemplate('templates/' . $_lang . '/' . $_file . '.html');
 // Si no esta logueado
 if (!isset($_SESSION['id_miembro'])) {
     $_content->parse('content.formulario');
-    
 
 } else {
     // Si está registrado, puestra el mensaje
@@ -33,5 +27,3 @@ $_content->parse('content');
 // Incluye el Layout
 require_once 'includes/layout.php';
 
-
-?>

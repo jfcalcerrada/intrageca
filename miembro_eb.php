@@ -231,4 +231,3 @@ include "miembro_insertar.php";
   $pagina->out("main"); 
 
 }
-?>

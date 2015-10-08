@@ -6,7 +6,7 @@
 
 
 // Carga los includes de la cabecera
-require_once 'includes/initialize.php';
+require_once 'includes/bootstrap.php';
 
 // Carga el modelo
 require_once 'model/includes/miembros.php';
@@ -69,6 +69,3 @@ $bibtex = getMiembroBibtex($id_miembro);
 
 // Incluye la vista de la pagina
 require_once 'vista/' . $_file . '.php';
-
-
-?>

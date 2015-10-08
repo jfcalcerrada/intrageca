@@ -20,7 +20,3 @@ $_content->parse('content');
 
 // Incluye el Layout
 require_once 'includes/layout.php';
-
-
-
-?>
