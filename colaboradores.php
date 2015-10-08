@@ -30,8 +30,9 @@ $consulta_grupos =
     "ORDER BY publico DESC, nombre_grupo ASC";
 
 // Realiza consulta y verifica si es correcta
-if (!($resultado_grupos = mysql_query($consulta_grupos)))
+if (!($resultado_grupos = mysql_query($consulta_grupos))) {
     ERR_muestra_pagina_error("Error en consulta: $consulta_grupos");
+}
 
 // Imprime cada grupo
 while ($grupos = mysql_fetch_array($resultado_grupos)) {

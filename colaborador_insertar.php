@@ -6,7 +6,7 @@
 //  haya modificado.
 //  Parametros:
 //
-//   gc_id_grupo   : El identificador del grupo
+//   idc           : El identificador del grupo
 //   gc_nombre     : El nombre del grupo
 //   gc_publico    : Indica si el grupo es publico o no
 //   gc_desc       : La descripcion del grupo $i
@@ -32,7 +32,7 @@ function colaborador_insertar($conexion, $registro)
   $publico = ($registro['gc_publico'] == 1)?  1:0;
   
   // chequea si hay que insertar un nuevo registro o solo actualizarlo
-  if ($registro['gc_id_grupo'] == 0)
+  if ($registro['idc'] == 0)
   {
     // construye la consulta de insercion de grupo colaborador
     $consulta_grupo = 'INSERT INTO grupos_colaboradores(nombre_grupo, '.
@@ -44,7 +44,7 @@ function colaborador_insertar($conexion, $registro)
     // construye la consulta de actualizacion de grupo colaborador 
     $consulta_grupo = 'UPDATE grupos_colaboradores SET nombre_grupo="'.
           $nombre.'", descripcion="'.$descripcion.'", link_grupo="'.$link.'" '.
-          ', publico='.$publico.' WHERE id_grupo='.$registro['gc_id_grupo'];       
+          ', publico='.$publico.' WHERE id_grupo='.$registro['idc'];
   }
   
   // realiza consulta de miembro
@@ -58,13 +58,13 @@ function colaborador_insertar($conexion, $registro)
   }
 
   // obtiene el valor del elemento insertado/actualizado
-  if ($registro['gc_id_grupo'] == 0)
+  if ($registro['idc'] == 0)
   {
      $id_grupo = mysql_insert_id();
   }  
   else
   {
-     $id_grupo = $registro['gc_id_grupo'];
+     $id_grupo = $registro['idc'];
   }
 
   //---------------------------------------------
@@ -73,7 +73,7 @@ function colaborador_insertar($conexion, $registro)
   for ($i=1; $i<=$registro['gc_num_mi']; $i++)
   {
       // verifica si hay que borrar miembro
-      if ($registro["mi_borrar_$i"] == 1)
+      if (isset($registro["mi_borrar_$i"]) && $registro["mi_borrar_$i"] == 1)
       {
           // construye consulta
           $consulta_borrar = 'DELETE FROM colaborador_proyectos '.
@@ -104,7 +104,7 @@ function colaborador_insertar($conexion, $registro)
          $mi_puesto = addslashes($registro["mi_puesto_$i"]);
          $mi_email  = addslashes($registro["mi_email_$i"]);
          $mi_link   = addslashes($registro["mi_link_$i"]);
-         $mi_dir    = ($registro["mi_dir_$i"] == 1)? 1:0;
+         $mi_dir    = (isset($registro["mi_dir_$i"]) && $registro["mi_dir_$i"] == 1) ? 1 : 0;
          
          // construye consulta de actualizacion
          $consulta_act = 'UPDATE colaboradores SET nombre="'.$mi_nombre.

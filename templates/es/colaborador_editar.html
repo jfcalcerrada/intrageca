@@ -1,52 +1,20 @@
-<!-- BEGIN: main -->
-<html>
-<head>
-<title>Grupo GECA: Edición de colaboradores del grupo</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<LINK REL=StyleSheet HREF="estilo.css" TYPE="text/css" MEDIA=screen>
-</head>
-<body>
-<table>
-<tr>
- <th colspan=2> <H2> Grupo de Electromagnetismo Computacional Avanzado (G.E.C.A.) </H2></th>
-</tr>
-<tr valign="top">
-<!-- Menu lateral -->
-<td align="left" class="menu">
-<h4>INTRANET</h4>
-<ul type=disc>
- <li><a href="miembros.php">Miembros</a></li>
- <li><a href="publicaciones.php">Publicaciones</a></li>
- <li><a href="proyectos.php">Proyectos</a></li>
- <li><a href="colaboradores.php">Colaboradores</a></li>
- <li><a href="software.php">Software</a></li>
-</ul>
-</td>
-<!-- Pagina principal -->
-<td class="principal">
-<table width="100%"><tr>
-  <td>
-   <H3>Informaci&oacute;n del grupo colaborador</H3>
-  </td>
+<!-- BEGIN: content -->
+<h2>Informaci&oacute;n del grupo colaborador</h2>
 <!-- BEGIN: form_borrar -->
-  <td align=right width=20>
-       <form action="colaborador_borrar.php" method=GET>
-        <input type=hidden name=idc value={IDC}>
-        <BUTTON type="submit">Eliminar Grupo</BUTTON>
-       </form>
-  </td>
+<form action="colaborador_borrar.php" method=GET>
+    <input type="hidden" name="idc" value="{IDC}" />
+    <input type="submit" value="Eliminar Grupo" />
+</form>
 <!-- END: form_borrar -->
-</table>    
-<hr> 
+
 <!-- BEGIN: form_colaboradores -->
-<br>
-<form name="form_colaboradores" action="colaborador_editar.php" method=POST>
+<form name="form_colaboradores" action="colaborador_editar.php" method="post">
    <!-- BEGIN: cabecera -->
    <table width="100%">
    <tr>
      <td class="cabecera1" colspan=2>
       <b>Grupo:</b>&nbsp;<input type=text name="gc_nombre" value="{LISTA.GRUPO_COLABORADOR}" size=40 maxlength=60 onClick="this.form.modificado.checked=true">
-       <input type=hidden name="gc_id_grupo" value="{LISTA.ID_GRUPO}">
+       <input type=hidden name="idc" value="{LISTA.ID_GRUPO}">
        &nbsp;&nbsp;<b>P&uacute;blico:</b>
        <input type=checkbox name="gc_publico" value=1 {LISTA.PUBLICO} onClick="this.form.modificado.checked=true">
      </td>
@@ -121,11 +89,5 @@
    </tr>
    </table>
 </form>
-<br>
-<!-- BEGIN: form_colaboradores -->
-</td>
-</tr>
-</table>
-</body>
-</html>
-<!-- END: main -->
+<!-- END: form_colaboradores -->
+<!-- END: content -->

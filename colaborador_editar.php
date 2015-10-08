@@ -19,13 +19,12 @@ require_once "colaborador_insertar.php";
   $lista_id_miembros = array();
   
   // crea parser de la página
-  $pagina=new XTemplate ("templates/es/colaborador_editar.html");
+  $_content = new XTemplate ("templates/es/colaborador_editar.html");
 
   // conecta a Base de Datos MySQL
   $conexion = mysql_connect("localhost",$USER_BD,$PASS_BD);
   // verifica si se abrió conexion
-  if (!$conexion)
-  {
+  if (!$conexion) {
      ERR_muestra_pagina_error($gen_error_conexion, "");
      return;
   }
@@ -37,13 +36,13 @@ require_once "colaborador_insertar.php";
  // VERIFICA SI TIENE QUE INSERTAR/ACTUALIZAR REGISTRO TRAS AUTOLLAMADA
  //--------------------------------------------------------------------
  // le hemos dado a actualizar al formulario, modificando valores
- if ($_POST['modificado'] == 1) 
+ if (isset($_POST['modificado']) && $_POST['modificado'] == 1)
  {
    // llama a la funcion de insertar/actualizar
    $id_grupo = colaborador_insertar($conexion, $_POST);
  }
  // le hemos dado a actualizar al formulario, sin modificar valores
- else if (strlen($_POST['idc']) > 0) // 
+ else if (isset($_POST['idc'])) //
  {
    $id_grupo = $_POST['idc'];
  } 
@@ -54,25 +53,22 @@ require_once "colaborador_insertar.php";
  }
  
  // verifica que tras identificacion, tenemos un identificado valido
- if (strlen($id_grupo)==0) 
- {
+ if (strlen($id_grupo) === 0) {
         ERR_muestra_pagina_error("Grupo desconocido","");
         exit;     
  }  
  //--------------------------------------------------------------------
  // RELLENA FORMULARIO DE BORRADO SI NO ES NUEVO
  //-------------------------------------------------------------------- 
- if ($id_grupo != 0)
- {
-  $pagina->assign("IDC", $id_grupo);
-  $pagina->parse("main.form_borrar");
+ if ($id_grupo !== 0) {
+  $_content->assign("IDC", $id_grupo);
+  $_content->parse("content.form_borrar");
  }
  //--------------------------------------------------------------------
  // CONSULTA DE COLABORADORES
  //--------------------------------------------------------------------   
 
- if ($id_grupo != 0)
- {
+ if ($id_grupo !== 0) {
     // definicion de consultas de la base de datos
     $consulta_grupos ='SELECT id_grupo, nombre_grupo, descripcion, link_grupo,'. 
         'publico FROM grupos_colaboradores WHERE id_grupo='.$id_grupo;
@@ -100,14 +96,13 @@ require_once "colaborador_insertar.php";
                     'LINK_GRUPO' => $grupos[3],
                     'PUBLICO' => $publico);
  // imprimelos en página
- $pagina->assign("LISTA",$lista_valores);
- $pagina->parse("main.form_colaboradores.cabecera");
+ $_content->assign("LISTA",$lista_valores);
+ $_content->parse("content.form_colaboradores.cabecera");
  
  //-------------------------------------
  // obtiene todos los miembros del grupo
  //-------------------------------------
- if ($id_grupo != 0)
- {
+if ($id_grupo !== 0) {
     $consulta_miembros = 'SELECT nombre, puesto, email_colaborador, '.
        'link_colaborador, id_colaborador, director FROM colaboradores '.
        'WHERE grupo_pertenece='.$grupos[0];
@@ -116,8 +111,7 @@ require_once "colaborador_insertar.php";
     $resultado2 = mysql_query($consulta_miembros, $conexion);
     
     // verifica que se ejecuto bien
-    if (!$resultado)
-    { 
+    if (!$resultado) {
       echo "Error en consulta ".$consulta_miembros;
       exit;
     }  
@@ -146,22 +140,22 @@ require_once "colaborador_insertar.php";
                 'MI_DIRECTOR' => 'mi_dir_'.$numero_miembros,
                 'ACTIVO' => $checked);
       // imprimelos en página
-      $pagina->assign("LISTA",$lista_valores);
-      $pagina->parse("main.form_colaboradores.colaboradores.fila");            
+      $_content->assign("LISTA",$lista_valores);
+      $_content->parse("content.form_colaboradores.colaboradores.fila");
     }
 
     // asigna valores de grupo
     $lista_valores = array(
             'VAL_MIEMBROS' => $numero_miembros);
     // imprime cabecera de colaboradores
-    $pagina->assign("LISTA",$lista_valores);
-    $pagina->parse("main.form_colaboradores.colaboradores"); 
- }   
- // cierra tabla
- $pagina->parse("main.form_colaboradores");
- // cierra descriptor
- mysql_close($conexion);
+    $_content->assign("LISTA",$lista_valores);
+    $_content->parse("content.form_colaboradores.colaboradores");
+}
+// cierra tabla
+$_content->parse("content.form_colaboradores");
 
- //imprime resultado
- $pagina->parse("main");
- $pagina->out("main"); 
+// cierra descriptor
+mysql_close($conexion);
+// Parsea el contenido
+$_content->parse("content");
+require_once __DIR__ . '/includes/layout.php';
