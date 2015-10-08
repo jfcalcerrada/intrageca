@@ -1,36 +1,18 @@
 <?php
 
-/**
- *
- */
-
-
-global $_file;
-global $_languages;
-global $_titles;
-
-
-// Obtenemos la url y el añade parte de la query ? o &
-$url  = $_SERVER['REQUEST_URI'];
-$url .= ( ! strpos($url, '?')) ? '?' : '&';
-
-
 // Obtiene la información de la página si no está introducida previamente
-if ( !isset($page['file'])) {
+if (!isset($page['file'])) {
     $page['file'] = $_file;
 }
 
-if ( !isset($page['title'])) {
+if (!isset($page['title'])) {
     $page['title'] = $_titles['titulos'][$_file];
 }
 
-if ( !isset($page['content'])) {
+if (!isset($page['content'])) {
     $page['content'] = $_content->text('content');
 }
 
-if ( !isset($page['url'])) {
-    $page['url'] = $url;
-}
 
 
 // Cargamos el XTemplate de la página
@@ -51,16 +33,18 @@ if (file_exists('javascript/' . $_file. '.js')) {
 // Incluimos los idiomas restantes
 unset($_languages[$_lang]);
 
-$_page->assign('LANGVALOR', reset($_languages));
-$_page->assign('LANGCLAVE', key($_languages));
-$_page->parse('page.idioma');
 
+$i = 0;
+foreach ($_languages as $key => $value) {
+    // Except for the first language
+    if ($i++) {
+        $_page->parse('page.idioma.siguiente');
+    }
 
-while ($valor = next($_languages)) {
-    $_page->parse('page.idioma.siguiente');
-
-    $_page->assign('LANGVALOR', $valor);
-    $_page->assign('LANGCLAVE', key($_languages));
+    $_page->assign('LANG', array(
+        'VALUE' => $value,
+        'URL'   => url(null, array('lang' => $key))
+    ));
     $_page->parse('page.idioma');
 }
 
@@ -68,14 +52,21 @@ while ($valor = next($_languages)) {
 // Rellena los datos de la sesiones si está logueado
 if (isset($_SESSION['id_miembro'])) {
     // Obtiene el rol del usuario
-    $rol = ($_SESSION['privilegios'] == INVITADO)
-        ? $_roles[MIEMBRO]
-        : $_roles[INVITADO];
+    $_page->assign('ROL', array(
+        'NAME' => ($_SESSION['privilegios'] === INVITADO) ? $_roles[MIEMBRO] : $_roles[INVITADO],
+        'URL'  => url(null, array('rol' => 1)),
+    ));
 
-    $_page->assign('ROL', $rol);
-    $_page->assign('MIEMBRO', arrayUpper($_SESSION));
+    $_page->assign('MIEMBRO', array(
+        'ID'     => $_SESSION['id_miembro'],
+        'NOMBRE' => $_SESSION['nombre'],
+        'URL'    => url('miembro_ver_ficha.php', array('id_miembro' => $_SESSION['id_miembro'])),
+    ));
     $_page->parse('page.miembro');
 
+    if ($_SESSION['privilegios'] === ADMIN) {
+        $pagina->parse('main.administracion');
+    }
 
 } else {
     // Si no esta logueado muestra el acceso
@@ -85,5 +76,3 @@ if (isset($_SESSION['id_miembro'])) {
 // Parsea e imprime la página
 $_page->parse('page');
 $_page->out('page');
-
-?>

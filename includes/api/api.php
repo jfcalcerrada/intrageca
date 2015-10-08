@@ -1,11 +1,6 @@
 <?php
 
 /**
- * 
- */
-
-
-/**
  * Funcion que a partir de la variable de PHP $_REQUEST y un array con un
  * listado de claves realiza la intersección para así poder recuperar con
  * extract las variables necesarias para un más fácil acceso
@@ -47,11 +42,16 @@ function arraySql($array, $query)
  * Función que cambia a mayúsculas las claves de un array
  *
  * @param array $array El array que queremos modificar
- * 
+ *
  * @return array Devuelve el array cambiado
  */
 function arrayUpper($array)
 {
+    // TODO remove
+    if ($array === null) {
+        return array();
+    }
+
     return array_change_key_case($array, CASE_UPPER);
 }
 
@@ -71,5 +71,3 @@ function validateId($id)
     
     return $id;
 }
-
-?>

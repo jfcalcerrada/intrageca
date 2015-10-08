@@ -1,36 +1,21 @@
 <?php
 
-/* Funcion que determina el idioma en funcion del párametro por url: lang
- * y verifica si este es correcto o no, existe o no en idiomas disponibles
- */
-function determinar_idioma($idioma, $gen_idiomas_disp)
-{
-
-    // Comprobamos si existe el lenguaje, si no lo ponemos en español
-    if(!isset($gen_idiomas_disp[$idioma])) {
-        reset($gen_idiomas_disp);
-        $idioma = key($gen_idiomas_disp);
-    }
-
-    return $idioma;
-}
-
 /* Introducimos el idioma, el archivo y el contenido, y la funcion se encarga
  * de introducirlo y parsearlo al xtemplate, además mira si hay algún archivo
  * javascript asociado a la pagina
  */
 function mostrar_pagina($archivo, $contenido) {
 
-    global $idioma;
-    global $gen_idiomas_disp;
-    global $gen_roles;
     global $titulos_web;
     global $nombres_web;
     global $link_nombres;
-    global $intranet;
+
+    global $_lang;
+    global $_languages;
+    global $_roles;
 
     // Creamos la template de la pagina, y le asignamos el titulo y contenido
-    $pagina = new XTemplate("templates/$idioma/pagina.html");
+    $pagina = new XTemplate("templates/$_lang/pagina.html");
     $pagina->assign('TITULO', $titulos_web[$archivo]);
     $pagina->assign('CONTENIDO', $contenido->text('content'));
 
@@ -40,65 +25,53 @@ function mostrar_pagina($archivo, $contenido) {
     $pagina->assign('LINK', array_upper($link_nombres));
 
 
-    // Controla como inserta el idioma, el login y el cambio de rol
-    $url = $_SERVER['REQUEST_URI'];
-    $url = (strpos($url, '?') > 0) ? $url.'&' : $url.'?' ;
-
-
-    // Control del idioma
-    $idiomas = $gen_idiomas_disp;
-    unset($idiomas[$idioma]);
-    
-    // Imprimimos el primer idioma
-    $pagina->assign('URL', $url);
-    $pagina->assign('IDIOMA', reset($idiomas));
-    $pagina->assign('CLAVE', key($idiomas));
-    $pagina->parse('main.idioma');
-
-    // Imprimimos los siguientes idiomas
-    while ($nombre_idioma = next($idiomas)) {
-        $pagina->parse('main.idioma.siguiente');
-
-        $pagina->assign('URL', $url);
-        $pagina->assign('IDIOMA', $nombre_idioma);
-        $pagina->assign('CLAVE', key($idiomas));
-        $pagina->parse('main.idioma');
-    }
-
-
     // Le asignamos el codigo javascript si lo tiene
     if (file_exists("scripts/$archivo.js")) {
         $pagina->assign('JAVASCRIPT', $archivo);
         $pagina->parse('main.javascript');
     }
 
-    // Carga los datos de la publica o la intranet
-    if (isset($_SESSION['id_miembro']) && $_SESSION['id_miembro'] >= 0) {
 
-        // Parseamos el nombre de usuario y el boton de salir
-        $pagina->assign('USUARIO', array_upper($_SESSION));
+    /// Incluimos los idiomas restantes
+    unset($_languages[$_lang]);
 
-        // Seleccionamos el tipo de rol a mostrar
-        $rol = ($_SESSION['privilegios'] != 0) ? $gen_roles['Invitado'] : $gen_roles['Usuario'];
-        // Lo mostramos
-        $pagina->assign('ROL', $rol);
+    $i = 0;
+    foreach ($_languages as $key => $value) {
+        // Only for the first language
+        if ($i++) {
+            $pagina->parse('main.idioma.siguiente');
+        }
 
+        $pagina->assign('LANG', array(
+            'VALUE' => $value,
+            'URL'   => url(null, array('lang' => $key))
+        ));
+        $pagina->parse('main.idioma');
+    }
+
+    // Rellena los datos de la sesiones si está logueado
+    if (isset($_SESSION['id_miembro'])) {
+        // Obtiene el rol del usuario
+        $pagina->assign('ROL', array(
+            'NAME' => ($_SESSION['privilegios'] === INVITADO) ? $_roles[MIEMBRO] : $_roles[INVITADO],
+            'URL'  => url(null, array('rol' => 1)),
+        ));
+
+        $pagina->assign('MIEMBRO', array(
+            'ID'    => $_SESSION['id_miembro'],
+            'URL'   => url('miembro_ver_ficha.php', array('id_miembro',  $_SESSION['id_miembro'])),
+        ));
         $pagina->parse('main.miembro');
 
-        // Parseamos el menu de la intranet
-        $pagina->parse('main.intranet');
-
-        if ($_SESSION['privilegios'] == ADMIN)
-          $pagina->parse('main.administracion');
+        if ($_SESSION['privilegios'] === ADMIN) {
+            $pagina->parse('main.administracion');
+        }
 
     } else {
-        /**
-         * @nota: el acesso a la intranet por https
-         * @nota: posibilidad de acceso a https como invitado
-         */
-        //$pagina->assign('URL', "$intranet$url");
+        // Si no esta logueado muestra el acceso
         $pagina->parse('main.acceder');
     }
+
 
     // Parsea la pagina e imprime la pagina
     $pagina->parse('main');

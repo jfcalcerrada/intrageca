@@ -14,8 +14,7 @@ class DB extends PDO
      */
     public function __construct()
     {
-        parent::__construct('mysql:host=localhost;dbname=webgeca_prod',
-            'webgrupo', 'webgrupo');
+        parent::__construct('mysql:host=localhost;dbname=webgeca_prod', 'webgrupo', 'webgrupo');
     }
 
     /**
@@ -33,5 +32,3 @@ class DB extends PDO
         return self::$_instance;
     }
 }
-
-?>

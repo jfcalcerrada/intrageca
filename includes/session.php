@@ -1,10 +1,5 @@
 <?php
 
-/**
- *
- */
-
-
 // Controla el tiempo de la expiración de la session
 if (isset($_SESSION['id_miembro'])) {
     sessionTime();
@@ -15,17 +10,15 @@ if (!isset($_SESSION['privilegios'])) {
     $_SESSION['privilegios'] = INVITADO;
 }
 
-
 // Cambiar rol usuario/visitante, si se solicita
-if (isset($_GET['rol'])) {
+if (isset($_GET['rol']) && isset($_SESSION['id_miembro'])) {
 
     // Si no esta invitado, le ponemos como invitado y salvamos privilegios
-    if ($_SESSION['privilegios'] != INVITADO) {
+    if ($_SESSION['privilegios'] !== INVITADO) {
         // Guardamos los privilegios y le ponesmo como invitado
         $_SESSION['privilegios_old'] = $_SESSION['privilegios'];
         $_SESSION['privilegios']     = INVITADO;
 
-    
     } else {
         // Si quiere volver, restauramos sus privilegios
         $_SESSION['privilegios'] = $_SESSION['privilegios_old'];
@@ -36,21 +29,17 @@ if (isset($_GET['rol'])) {
 /**
  * Funcion que controla el tiempo máximo de la sessión en la intranet
  *
- * @return none
+ * @return void
  */
-function sessionTime()
-{
-    // Comprueba si no ha excedido el tiempo y lo actualiza
-    if (!isset($_SESSION['last_access'])
-      || (time()-$_SESSION['last_access']) <= TIEMPO_SESSION
-    ) {
+function sessionTime() {
+    if (!isset($_SESSION['last_access']) || (time() - $_SESSION['last_access']) <= TIEMPO_SESSION) {
         $_SESSION['last_access'] = time();
 
-    
     } else {
-        // Si lo ha excedido termina la sesion
-        session_unset();
+        $_SESSION['id_miembro']  = null;
+        $_SESSION['privilegios'] = null;
+
+        unset($_SESSION['id_miembro']);
+        unset($_SESSION['privilegios']);
     }
 }
-
-?>
