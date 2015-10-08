@@ -1,8 +1,8 @@
 <?php
-// Inicializamos el archivo con el script
-include('common/init.php');
 
-include("docencia_insertar.php");
+require_once 'common/init.php';
+
+require_once "docencia_insertar.php";
 
 
 /**
@@ -98,15 +98,15 @@ if ($id_asignatura > 0) {
 /* MUESTA EL BOTON DE ELIMINAR */
 // Si la asignatura no es nueva
 if ($id_asignatura != 0) {
-    $contenido->assign('IDA', $id_asignatura);
-    $contenido->assign('content.menu');
+    $_content->assign('IDA', $id_asignatura);
+    $_content->assign('content.menu');
 }
 
 
 
 /* MUESTRA LOS DIFERENTES IDIOMAS DISPONIBLES */
 // Asigna el campo oculto con el codigo actual, en el que se muestran los datos
-$contenido->assign('COD_IDIOMA', $asignatura_idioma);
+$_content->assign('COD_IDIOMA', $asignatura_idioma);
 
 // Imprime los idiomas disponibles
 foreach($gen_idiomas_disp as $clave_idioma => $texto_idioma) {
@@ -119,8 +119,8 @@ foreach($gen_idiomas_disp as $clave_idioma => $texto_idioma) {
                            'SELECCIONADO' => $selected);
 
     // insertalo en página
-    $contenido->assign('IDIOMA', $idioma_lista);
-    $contenido->parse('content.asignatura.idioma');
+    $_content->assign('IDIOMA', $idioma_lista);
+    $_content->parse('content.asignatura.idioma');
 }
 
 
@@ -129,8 +129,8 @@ foreach($gen_idiomas_disp as $clave_idioma => $texto_idioma) {
 $asignatura = array_change_key_case($asignatura, CASE_UPPER);
 
 // Asigna y parsea
-$contenido->assign('ASIGNATURA', $asignatura);
-$contenido->parse('content.asignatura.datos');
+$_content->assign('ASIGNATURA', $asignatura);
+$_content->parse('content.asignatura.datos');
 
 
 
@@ -167,8 +167,8 @@ while ($miembro = mysql_fetch_assoc($resultado_miembros)) {
     $miembro = array_change_key_case($miembro, CASE_UPPER);
 
     // Asigna y parse
-    $contenido->assign('MIEMBRO', $miembro);
-    $contenido->parse('content.asignatura.miembros.miembro');
+    $_content->assign('MIEMBRO', $miembro);
+    $_content->parse('content.asignatura.miembros.miembro');
 }
 
 
@@ -193,17 +193,17 @@ while ($miembro = mysql_fetch_assoc($resultado_miembros)) {
     $miembro = array_change_key_case($miembro, CASE_UPPER);
 
     // Asigna y parse
-    $contenido->assign('MIEMBRO', $miembro);
-    $contenido->parse('content.asignatura.miembros.seleccion');
+    $_content->assign('MIEMBRO', $miembro);
+    $_content->parse('content.asignatura.miembros.seleccion');
 }
 
 // Cierra los miembros
-$contenido->assign('NUMERO_MIEMBROS', $numero_miembros);
-$contenido->parse('content.asignatura.miembros');
+$_content->assign('NUMERO_MIEMBROS', $numero_miembros);
+$_content->parse('content.asignatura.miembros');
 
 
 // Cierra la asignatura
-$contenido->parse('content.asignatura');
+$_content->parse('content.asignatura');
 
 // Cierra la conexion con mysql
 mysql_close($conexion);
@@ -211,9 +211,5 @@ mysql_close($conexion);
 
 /* MUESTRA LA PAGINA */
 // Parsea el contenido
-$contenido->parse('content');
-
-// Muestra la pagina final
-mostrar_pagina($archivo, $contenido);f
-
-?>
+$_content->parse("content");
+require_once __DIR__ . '/includes/layout.php';

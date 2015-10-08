@@ -1,7 +1,6 @@
 <?php
-// Inicializamos el archivo con el script
-include('common/init.php');
 
+require_once 'common/init.php';
 
 /**
  * docencia.php
@@ -58,12 +57,12 @@ while ($asignatura = mysql_fetch_array($resultado_asignaturas)) {
   $asignatura = array_change_key_case($asignatura, CASE_UPPER);
 
   // Imprime el proyecto
-  $contenido->assign('ASIGNATURA', $asignatura);
+  $_content->assign('ASIGNATURA', $asignatura);
 
 
   // Si es el administrador, damos acceso a la edicion de asignaturas
   if ($_SESSION['privilegios'] == ADMIN)
-    $contenido->parse('content.asignaturas.asignatura.editar');
+    $_content->parse('content.asignaturas.asignatura.editar');
 
 
   /* CONSULTA DE LOS MIEMBROS ASOCIADOS A LA ASIGNATURA */
@@ -93,39 +92,39 @@ while ($asignatura = mysql_fetch_array($resultado_asignaturas)) {
       $miembro = array_change_key_case($miembro, CASE_UPPER);
 
       // Asigna los valores y los imprime
-      $contenido->assign('MIEMBRO', $miembro);
+      $_content->assign('MIEMBRO', $miembro);
 
       // Comprueba si se trata de un un coordinador
       if ($miembro['COORDINADOR'] == 1) {
         // Aumenta el flag
         $coordinador = true;
         // Imprime el miembro coordinador
-        $contenido->parse('content.asignaturas.asignatura.coordinador.miembro');
+        $_content->parse('content.asignaturas.asignatura.coordinador.miembro');
 
       // Si se trata de un miembro
       } else {
         // Y se ha imprimido algún coordinador, imprime el bloque coordinador
         if ($coordinador == true) {
           $coordinador = false;
-          $contenido->parse('content.asignaturas.asignatura.coordinador');
+          $_content->parse('content.asignaturas.asignatura.coordinador');
         }
 
         // Imprime el miembro que imparte la asignatura
-        $contenido->parse('content.asignaturas.asignatura.miembros.miembro');
+        $_content->parse('content.asignaturas.asignatura.miembros.miembro');
       }
     }
 
     // Añandimos los miembros
-    $contenido->parse('content.asignaturas.asignatura.miembros');
+    $_content->parse('content.asignaturas.asignatura.miembros');
   }
 
 
   // Lo imprimimos
-  $contenido->parse('content.asignaturas.asignatura');
+  $_content->parse('content.asignaturas.asignatura');
 }
 
 // Cierra y muestra las asignaturas
-$contenido->parse('content.asignaturas');
+$_content->parse('content.asignaturas');
 
 // Cierra la conexion con mysql
 mysql_close($conexion);
@@ -134,14 +133,10 @@ mysql_close($conexion);
 /* BOTON AÑADIR PROYECTOS SOLO ADMIN */
 // Mostramos el boton de añadir proyecto si es el administrador
 if($_SESSION['privilegios'] == ADMIN)
-  $contenido->parse('content.anyadir');
+  $_content->parse('content.anyadir');
 
 
 /* MUESTRA LA PAGINA */
 // Parsea el contenido
-$contenido->parse('content');
-
-// Muestra la pagina final
-mostrar_pagina($archivo, $contenido);
-
-?>
+$_content->parse("content");
+require_once __DIR__ . '/includes/layout.php';
