@@ -1,12 +1,10 @@
-<?
-include "autenticacion.php";
+<?php
+
+require_once 'common/init.php';
+
 // ejecuta autenticacion antes que nada
-  autenticar_usuario();
-  
-require "xtpl.php";
-include "config.php";
-include "common/def_spa.php";
-include "common/common_error.php";
+autenticar_usuario();
+
 //--------------------------------------------------------------------------
 // proyecto_editar_sof.php
 //

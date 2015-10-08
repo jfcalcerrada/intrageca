@@ -1,7 +1,7 @@
 <?php
-// Inicializamos el archivo con el script
-include("common/init.php");
-include("autenticacion.php");
+
+require_once 'common/init.php';
+
 // Autenticamos al usuario
 autenticar_usuario();
 
@@ -44,7 +44,7 @@ function asigna_select_box ($inicio, $fin, $v_selec, &$pagina, $nom_fila)
 //   
 //--------------------------------------------------------------------------
 
-   $pagina = $contenido;
+   $pagina = $_content;
 
  //--------------------------------------------------------------------
  // VERIFICA SI TIENE QUE INSERTAR/ACTUALIZAR REGISTRO TRAS AUTOLLAMADA

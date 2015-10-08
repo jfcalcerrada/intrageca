@@ -1,8 +1,8 @@
 <?php
-// Inicializamos el archivo con el script
-include('common/init.php');
 
-include('common/common_pub.php');
+require_once 'common/init.php';
+
+require_once 'common/common_pub.php';
 
 $id_miembro = $_SESSION['id_usuario'];
 $public_marcacion_campos = cargar_formatos($public_marcacion_campos, $id_miembro, $conexion);

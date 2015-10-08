@@ -1,9 +1,10 @@
 <?php
-// Inicializamos el archivo con el script
-include('common/init.php');
 
-include('common/common_pub.php');
-include "public_insertar.php";
+require_once 'common/init.php';
+
+require_once 'common/common_pub.php';
+require_once 'public_insertar.php';
+
 //--------------------------------------------------------------------------
 // public_cadenas.php
 //

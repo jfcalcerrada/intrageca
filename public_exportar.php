@@ -1,14 +1,14 @@
 <?php
-// Inicializamos el archivo con el script
-include('common/init.php');
 
-include('common/common_pub.php');
+require_once 'common/init.php';
+
+require_once 'common/common_pub.php';
 
 // fija el contenido como texto plano
-header("Content-Type: text/plain"); 
-  
+header("Content-Type: text/plain");
 
-include "bibtex/funciones_bibtex.php";
+
+require_once "bibtex/funciones_bibtex.php";
 //--------------------------------------------------------------------------
 // public_exportar.php
 //

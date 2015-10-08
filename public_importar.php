@@ -1,10 +1,10 @@
 <?php
-// Inicializamos el archivo con el script
-include('common/init.php');
 
-include('common/common_pub.php');
-include "bibtex/lectura_bibtex.php";
-include "bibtex/inserta_BD_referencias.php";
+require_once 'common/init.php';
+
+require_once 'common/common_pub.php';
+require_once "bibtex/lectura_bibtex.php";
+require_once "bibtex/inserta_BD_referencias.php";
 //--------------------------------------------------------------------------
 // public_importar.php
 //

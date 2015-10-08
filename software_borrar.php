@@ -1,7 +1,7 @@
 <?php
-// Inicializamos el archivo con el script
-include("common/init.php");
-include("autenticacion.php");
+
+require_once 'common/init.php';
+
 // Autenticamos al usuario
 autenticar_usuario();
 
@@ -86,8 +86,7 @@ autenticar_usuario();
 
     if (!$resultado)
     {
-        ERR_muestra_pagina_error("No se pudo eliminar el software." & ç
-          mysql_error(), "");
+        ERR_muestra_pagina_error("No se pudo eliminar el software." & mysql_error(), "");
         exit;          
     }
  }

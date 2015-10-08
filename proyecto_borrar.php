@@ -1,7 +1,6 @@
 <?php
-// Inicializamos el archivo con el script
-include('common/init.php');
 
+require_once 'common/init.php';
 
 //--------------------------------------------------------------------------
 // proyecto_borrar.php
@@ -55,5 +54,3 @@ ERR_muestra_pagina_mensaje("Se ha eliminado el proyecto del grupo.", "");
 
 // cierra descriptor
 mysql_close($conexion);
-
-?>

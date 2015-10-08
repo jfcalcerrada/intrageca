@@ -1,8 +1,10 @@
 <?php
-// Inicializamos el archivo con el script
-include("common/init.php");
 
-include("common/common_pub.php");
+require_once 'common/init.php';
+
+require_once 'common/common_pub.php';
+
+
 //--------------------------------------------------------------------------
 // public_borrar_bib.php
 //

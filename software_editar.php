@@ -1,11 +1,11 @@
 <?php
-// Inicializamos el archivo con el script
-include("common/init.php");
-include("autenticacion.php");
+
+require_once 'common/init.php';
+
 // Autenticamos al usuario
 autenticar_usuario();
 
-include("software_insertar.php");
+require_once "software_insertar.php";
 
 //--------------------------------------------------------------------------
 // software_editar.php
@@ -18,7 +18,7 @@ include("software_insertar.php");
 //   ids : Identidad del software
 //--------------------------------------------------------------------------
 
-$pagina = $contenido;
+$pagina = $_content;
   
  //--------------------------------------------------------------------
  // VERIFICA SI TIENE QUE INSERTAR/ACTUALIZAR REGISTRO TRAS AUTOLLAMADA

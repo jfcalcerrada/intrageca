@@ -1,9 +1,9 @@
 <?php
-// Inicializamos el archivo con el script
-include('common/init.php');
 
-include('common/proyectos.php');
-include("proyecto_insertar.php");
+require_once 'common/init.php';
+
+require_once 'common/proyectos.php';
+require_once 'proyecto_insertar.php';
 
 
 /**

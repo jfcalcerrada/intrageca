@@ -1,14 +1,9 @@
 <?php
-// Inicializamos el archivo con el script
-include('common/init.php');
-include('autenticacion.php');
+
+require_once 'common/init.php';
+
 // Autenticamos al usuario
 autenticar_usuario();
-
-
-/**
- *
- */
 
 /*
  * OBTENEMOS LOS PARAMETROS

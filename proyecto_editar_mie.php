@@ -1,8 +1,8 @@
 <?php
-// Inicializamos el archivo con el script
-include('common/init.php');
 
-include('common/proyectos.php');
+require_once 'common/init.php';
+
+require_once 'common/proyectos.php';
 
 
 //--------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 <?php
-// Inicializamos el archivo con el script
-include("common/init.php");
-include("autenticacion.php");
+
+require_once 'common/init.php';
+
 // Autenticamos al usuario
 autenticar_usuario();
 
@@ -46,10 +46,10 @@ while ($oferta = mysql_fetch_array($resultado_ofertas)) {
     // Controlamos si entramos en los proyectos no publicos
     if($ultima_oferta != $oferta['activa'] && $oferta['activa'] == 0) {
         // Inserta el resto de proyectos activos
-        $contenido->parse("content.ofertas");
+        $_content->parse("content.ofertas");
 
         // Inserta cabecera de no activos
-        $contenido->parse("content.ofertas.cabecera_noactiva");
+        $_content->parse("content.ofertas.cabecera_noactiva");
 
         // Actualiza valor de ultimo proyecto
         $ultima_oferta = $oferta['activa'];
@@ -59,7 +59,7 @@ while ($oferta = mysql_fetch_array($resultado_ofertas)) {
     $oferta = array_change_key_case($oferta, CASE_UPPER);
 
     // Imprime el proyecto
-    $contenido->assign('OFERTA', $oferta);
+    $_content->assign('OFERTA', $oferta);
 
 
 //    // Solo si se es el admin (IDM=0) o responsable, tendremos que hacer una consulta
@@ -81,11 +81,11 @@ while ($oferta = mysql_fetch_array($resultado_ofertas)) {
 //    }
 
     // Lo imprimimos
-    $contenido->parse('content.ofertas.oferta');
+    $_content->parse('content.ofertas.oferta');
 }
 
 // Cierra los ofertas
-$contenido->parse('content.ofertas');
+$_content->parse('content.ofertas');
 
 // Cierra la conexion con mysql
 mysql_close($conexion);
@@ -96,16 +96,14 @@ mysql_close($conexion);
  */
 // Mostramos el boton de añadir oferta si es el administrador
 if($_SESSION['privilegios'] == ADMIN)
-    $contenido->parse('content.anyadir');
+    $_content->parse('content.anyadir');
 
 
 /*
  * MUESTRA LA PAGINA
  */
 // Parsea el contenido
-$contenido->parse("content");
+$_content->parse("content");
 
 // Muestra la pagina final
-mostrar_pagina($archivo, $contenido);
-
-?>
+mostrar_pagina($archivo, $_content);
