@@ -1,13 +1,11 @@
-<?
-include "autenticacion.php";
+<?php
+
+require_once __DIR__ . '/common/init.php';
+
 // ejecuta autenticacion antes que nada
-  autenticar_usuario();
-  
-require "xtpl.php";
-include "config.php";
-include "common/def_spa.php";
-include "common/common_error.php";
-include "colaborador_insertar.php";
+autenticar_usuario();
+require_once "colaborador_insertar.php";
+
 //--------------------------------------------------------------------------
 // colaboradores.php
 //
@@ -16,11 +14,6 @@ include "colaborador_insertar.php";
 // uno de los cuales contiene una serie de miembros y proyectos en los
 // que colabora.
 //--------------------------------------------------------------------------
-
-  // definicion de Config usados
-  global $BASE_DATOS;
-  global $USER_BD;
-  global $PASS_BD;
 
   // declara arrays a usar
   $lista_id_miembros = array();
@@ -172,5 +165,3 @@ include "colaborador_insertar.php";
  //imprime resultado
  $pagina->parse("main");
  $pagina->out("main"); 
-
-?>

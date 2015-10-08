@@ -1,6 +1,6 @@
 <?php
-// Inicializamos el archivo con el script
-include('common/init.php');
+
+require_once 'common/init.php';
 
 
 /**
@@ -13,15 +13,10 @@ include('common/init.php');
  */
 
 // Controla el acceso
-if ($_SESSION['privilegios'] != ADMIN)
-  error($errors['privilegios'], 'No tiene privilegios para acceder',
-    'miembros.php');
+if ($_SESSION['privilegios'] !== ADMIN) {
+  error($errors['privilegios'], 'No tiene privilegios para acceder', 'miembros.php');
+}
 
-/* MUESTRA LA PAGINA */
 // Parsea el contenido
-$contenido->parse('content');
-
-// Muestra la pagina final
-mostrar_pagina($archivo, $contenido);
-
-?>
+$_content->parse("content");
+require_once __DIR__ . '/includes/layout.php';

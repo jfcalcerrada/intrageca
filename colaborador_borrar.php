@@ -1,12 +1,10 @@
-<?
-include "autenticacion.php";
+<?php
+
+require_once __DIR__ . '/common/init.php';
+
 // ejecuta autenticacion antes que nada
-  autenticar_usuario();
-  
-require "xtpl.php";
-include "config.php";
-include "common/def_spa.php";
-include "common/common_error.php";
+autenticar_usuario();
+
 //--------------------------------------------------------------------------
 // colaborador_borrar.php
 //
@@ -17,11 +15,6 @@ include "common/common_error.php";
 //   idp: El identificador del proyecto a borrar.
 //   
 //--------------------------------------------------------------------------
-
-  // definicion de Config usados
-  global $BASE_DATOS;
-  global $USER_BD;
-  global $PASS_BD;
 
   // chequea que el parametro de entrada está definido
   if (!isset($_GET['idc']) OR strlen($_GET['idc'])==0)
@@ -82,5 +75,3 @@ include "common/common_error.php";
    
  // cierra descriptor
  mysql_close($conexion);
-    
-?>

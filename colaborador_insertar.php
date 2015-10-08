@@ -146,5 +146,3 @@ function colaborador_insertar($conexion, $registro)
   
   return $id_grupo;  
 }
-
-?>
