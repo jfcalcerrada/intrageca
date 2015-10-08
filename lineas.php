@@ -1,7 +1,6 @@
 <?php
-// Inicializamos el archivo con el script
-include('common/init.php');
 
+require_once __DIR__ . '/common/init.php';
 
 //--------------------------------------------------------------------------
 // lineas_investigacion.php
@@ -37,39 +36,36 @@ while($linea = mysql_fetch_array($resultado_lineas)) {
     // PUBLICOS??
 
 
-    $contenido->assign("LINEA", $linea);
-    $contenido->assign("STYLE", '');
+    $_content->assign("LINEA", $linea);
+    $_content->assign("STYLE", '');
 
     // Solo si se es el admin (IDM=0)
-    if ($_SESSION['id_usuario'] == 0) {
+    if (isset($_SESSION['privilegios']) == ADMIN) {
         // Mostramos el boton para poder editar
-        $contenido->assign("IDP", $proyectos['id_proyecto']);
-        $contenido->parse("content.lineas.fila.editar");
+        $_content->assign("IDL", $linea['id_linea']);
+        $_content->parse("content.lineas.fila.editar");
 
         // Lo colocamos en el lado derecho
-        $contenido->assign("STYLE", 'style="float: left;"');
+        $_content->assign("STYLE", 'style="float: left;"');
     }
 
     // Lo imprimimos
-    $contenido->parse("content.lineas.fila");
+    $_content->parse("content.lineas.fila");
 
 }
 
 // Cerramos las lineas de investigacion
-$contenido->parse("content.lineas");
+$_content->parse("content.lineas");
 
 // Mostramos el boton de añadir usuario a administrador
-if($_SESSION['id_usuario'] == 0)
-    $contenido->parse("content.anyadir");
+if (isset($_SESSION['privilegios']) && $_SESSION['privilegios'] == ADMIN) {
+    $_content->parse("content.anyadir");
+}
 
 
 // Cierra la conexion con mysql
 mysql_close($conexion);
 
 // Parsea el contenido
-$contenido->parse("content");
-
-// Muestra la pagina final
-mostrar_pagina($archivo, $contenido);
-
-?>
+$_content->parse("content");
+require_once __DIR__ . '/includes/layout.php';

@@ -1,8 +1,8 @@
 <?php
-// Inicializamos el archivo con el script
-include("common/init.php");
-include("autenticacion.php");
-// Autenticamos al usuario
+
+require_once __DIR__ . '/common/init.php';
+
+// ejecuta autenticacion antes que nada
 autenticar_usuario();
 
 //--------------------------------------------------------------------------
@@ -47,14 +47,14 @@ $linea = mysql_fetch_array($resultado_linea);
 
 // *************************
 // MOSTRAMOS EL RESULTADO!!!!
-print_r($linea);
+//print_r($linea);
 echo "<br /><br />";
 
 // CONSULTA DE LOS PROYECTOS DE LA LINEA
 //------------------------------------------------------------------------------
 // Creamos la consulta
 $consulta_proyectos =
-    "SELECT proyectos.id_proyecto, publico, activo, titulo, descrip_corta ".
+    "SELECT linea_proyectos.id_proyecto, publico, estado, titulo, descrip_corta ".
     "FROM linea_proyectos ".
     "LEFT JOIN proyectos ".
         "ON linea_proyectos.id_proyecto = proyectos.id_proyecto ".
@@ -70,10 +70,8 @@ if ( !($resultado_proyectos = mysql_query($consulta_proyectos)))
 
 // Realizamos el bucle para mostrar los proyectos
 while ($proyecto = mysql_fetch_array($resultado_proyectos)) {
-
     print_r($proyecto);
     echo "<br /><br />";
-
 }
 echo "<br />";
 
@@ -81,9 +79,9 @@ echo "<br />";
 // CONSULTA MIEMBROS
 $consulta_gen =
     "SELECT miembros.id_miembro, miembros.nombre, responsable ".
-    "FROM proyecto_miembros LEFT JOIN miembros ".
-    "ON proyecto_miembros.id_miembro = miembros.id_miembro ".
-    "WHERE id_proyecto = {$_GET['idp']} AND categoria =";
+    "FROM linea_miembros LEFT JOIN miembros ".
+    "ON linea_miembros.id_miembro = miembros.id_miembro ".
+    "WHERE id_linea = {$_GET['idl']} AND categoria =";
 
 // Para cada una de las categorias busca los miembros
 foreach ($mbr_rel_grupos as $grupo => $grupo_web) {
@@ -97,10 +95,11 @@ foreach ($mbr_rel_grupos as $grupo => $grupo_web) {
     // Comprueba si hay miembros en el proyecto
     if (mysql_num_rows($resultado_miembros) > 0) {
 
+
         while ($miembro = mysql_fetch_array($resultado_miembros)){
             // Si es el responsable lo mostramos como tal
             if ($miembro['responsable'] == 1)
-                $contenido->parse("content.lista_miembros.fila.responsable");
+                $_content->parse("content.lista_miembros.fila.responsable");
 
             // Crea el array de valores
             $lista_valores = array(
@@ -109,61 +108,19 @@ foreach ($mbr_rel_grupos as $grupo => $grupo_web) {
                 'CATEGORIA' => $grupo_web);
 
             // asigna valores a la pagina
-            $contenido->assign("LISTAM", $lista_valores);
-            $contenido->parse("content.lista_miembros.fila");
+            $_content->assign("LISTAM", $lista_valores);
+            $_content->parse("content.lista_miembros.fila");
         }
     }
 }
 
 // imprime tabla
-$contenido->parse("content.lista_miembros");
+$_content->parse("content.lista_miembros");
 
 
-?>
+// Cierra la conexion con mysql
+mysql_close($conexion);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// Parsea el contenido
+$_content->parse("content");
+require_once __DIR__ . '/includes/layout.php';
