@@ -31,7 +31,8 @@ if (isset($_GET['rol']) && isset($_SESSION['id_miembro'])) {
  *
  * @return void
  */
-function sessionTime() {
+function sessionTime()
+{
     if (!isset($_SESSION['last_access']) || (time() - $_SESSION['last_access']) <= TIEMPO_SESSION) {
         $_SESSION['last_access'] = time();
 
@@ -42,4 +43,16 @@ function sessionTime() {
         unset($_SESSION['id_miembro']);
         unset($_SESSION['privilegios']);
     }
+}
+
+
+
+function autenticar_usuario()
+{
+    if (isset($_SESSION['id_miembro'])) {
+        return;
+    }
+
+    header('Location: ' . url('login.php'));
+    die();
 }

@@ -4,6 +4,8 @@ ini_set('display_errors', true);
 ini_set('display_startup_errors', true);
 error_reporting(E_ALL);
 
+define('ROOT_FOLDER', dirname(__DIR__));
+
 require_once __DIR__ . '/php5/http_build_url.php';
 require_once __DIR__ . '/api/url.php';
 require_once __DIR__ . '/api/api.php';

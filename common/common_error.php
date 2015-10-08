@@ -1,5 +1,4 @@
 <?php
-// Esta funcion requiere require "xtpl.php";
 
 /**
  * Funcion que muestra una pagina con el error producido. Guardar un log con los
@@ -11,9 +10,8 @@
  */
 function error($mensaje, $log = '', $url = '')
 {
-    
-    // Obtenemos el idioma de la web
-    global $idioma;
+    global $_lang;
+
 
     /* GUARDAMOS LOS ERRORES EN LA BASE DE DATOS PARA MOSTRARLOS AL ADMIN */
     // Si hay mensaje para guardar
@@ -40,7 +38,7 @@ function error($mensaje, $log = '', $url = '')
     }
 
     // Creamos el objeto XTemplate para la pagina de error
-    $contenido = new XTemplate ("templates/$idioma/error.html");
+    $contenido = new XTemplate(ROOT_FOLDER . "/templates/$_lang/error.html");
 
 
     /* CREA EL BOTON DE VOLVER EN FUNCIÓN DEL ERROR */
@@ -88,7 +86,7 @@ function error($mensaje, $log = '', $url = '')
 //
 function ERR_muestra_pagina_error($mensaje)
 {
-    GLOBAL $idioma;
+    global $_lang;
     GLOBAL $errors;
 
     // Comprobamos si el mensaje existe en el array
@@ -99,7 +97,7 @@ function ERR_muestra_pagina_error($mensaje)
     $mensaje_html = nl2br(htmlentities($mensaje));
 
     // Creamos el objeto XTemplate para la pagina de error
-    $contenido = new XTemplate ("templates/".$idioma."/error.html");
+    $contenido = new XTemplate(ROOT_FOLDER . "/templates/$_lang/error.html");
 
     // Asigna mensaje
     $contenido->assign("MENSAJE", $mensaje_html);
@@ -122,14 +120,16 @@ function ERR_muestra_pagina_error($mensaje)
 // Parametros de entrada
 //   $mensaje : El mensaje que se muestra.
 //
-function ERR_muestra_pagina_mensaje($mensaje, $dir_idioma) {
-    GLOBAL $idioma;
+function ERR_muestra_pagina_mensaje($mensaje, $dir_idioma)
+{
+    global $_lang;
+    global $errors;
 
     // Convertimos el mensaje a html
     $mensaje_html = nl2br(htmlentities($errors[$mensaje]));
 
     // Creamos el objeto XTemplate para la pagina de error
-    $contenido = new XTemplate ("templates/".$idioma."/error.html");
+    $contenido = new XTemplate (ROOT_FOLDER . "/templates/$_lang/error.html");
 
     // Asigna mensaje
     $contenido->assign("MENSAJE", $mensaje_html);
@@ -143,5 +143,3 @@ function ERR_muestra_pagina_mensaje($mensaje, $dir_idioma) {
     @mysql_close();
     exit;
 }
-
-?>

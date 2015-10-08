@@ -1,8 +1,8 @@
 <?php
-// Inicializamos el archivo con el script
-include("common/init.php");
-include("autenticacion.php");
-// Autenticamos al usuario
+
+require_once __DIR__ . '/common/init.php';
+
+// ejecuta autenticacion antes que nada
 autenticar_usuario();
 
 //--------------------------------------------------------------------------
@@ -39,10 +39,10 @@ while ($grupos = mysql_fetch_array($resultado_grupos)) {
     // Verifica si no es publico
     if (($ultimo_grupo != $grupos['publico']) && ($grupos['publico'] == 0)) {
         // Cierra la lista anterior
-        $contenido->parse("content.grupo_colaboradores.grupo");
+        $_content->parse("content.grupo_colaboradores.grupo");
 
         // Inicia una nueva lista con desactivos
-        $contenido->parse("content.grupo_colaboradores.cab_desactiva");
+        $_content->parse("content.grupo_colaboradores.cab_desactiva");
         
         // Resetea flag para no volver a entrar
         $ultimo_grupo = 0;
@@ -54,15 +54,15 @@ while ($grupos = mysql_fetch_array($resultado_grupos)) {
         'DESCRIPCION' => $grupos['descripcion'],
         'LINK_GRUPO' => $grupos['link_grupo']);
 
-    $contenido->assign("IDC", $grupos['id_grupo']);
-    $contenido->parse("content.grupo_colaboradores.cabecera.editar");
+    $_content->assign("IDC", $grupos['id_grupo']);
+    $_content->parse("content.grupo_colaboradores.cabecera.editar");
 
     // Estilo, para mostrar bien el boton sin tablas
-    $contenido->assign("STYLE", 'style="float: left;"');
+    $_content->assign("STYLE", 'style="float: left;"');
 
     // Los imprime en página
-    $contenido->assign("LISTA", $lista_valores);
-    $contenido->parse("content.grupo_colaboradores.cabecera");
+    $_content->assign("LISTA", $lista_valores);
+    $_content->parse("content.grupo_colaboradores.cabecera");
 
     //-------------------------------------
     // Obtiene todos los miembros del grupo
@@ -102,8 +102,8 @@ while ($grupos = mysql_fetch_array($resultado_grupos)) {
                 'LINK_PERSONA' => $link_persona);
 
             // Los imprime en la página
-            $contenido->assign("LISTA", $lista_valores);
-            $contenido->parse("content.grupo_colaboradores.colaboradores.fila");
+            $_content->assign("LISTA", $lista_valores);
+            $_content->parse("content.grupo_colaboradores.colaboradores.fila");
 
             $directores++;
         }
@@ -112,7 +112,7 @@ while ($grupos = mysql_fetch_array($resultado_grupos)) {
     // Imprime cabecera de colaboradores si hay algún miembro
     //if (mysql_num_rows($resultado_colaboradores) > 0)
     if($directores > 0)
-        $contenido->parse("content.grupo_colaboradores.colaboradores");
+        $_content->parse("content.grupo_colaboradores.colaboradores");
 
     //-------------------------------------------------
     // Obtiene todos los proyectos en los que colaboran
@@ -143,30 +143,27 @@ while ($grupos = mysql_fetch_array($resultado_grupos)) {
             'LINK_PROY' => $proyecto['proyecto_idiomas']);
 
         // Imprimelos en página
-        $contenido->assign("LISTA", $lista_valores);
-        $contenido->parse("content.grupo_colaboradores.proyectos.fila");
+        $_content->assign("LISTA", $lista_valores);
+        $_content->parse("content.grupo_colaboradores.proyectos.fila");
     }
 
     // Imprime cabecera de proyectos si hay alguno
     if (mysql_num_rows($resultado_proy) > 0)
-        $contenido->parse("content.grupo_colaboradores.proyectos");
+        $_content->parse("content.grupo_colaboradores.proyectos");
 
     // Cierra el grupo
-    $contenido->parse("content.grupo_colaboradores");
+    $_content->parse("content.grupo_colaboradores");
 }
 
 // Mostramos el boton de añadir grupo a administrador
-if($_SESSION['id_usuario'] == 0)
-    $contenido->parse("content.anyadir");
+if($_SESSION['privilegios'] == ADMIN) {
+    $_content->parse("content.anyadir");
+}
 
 
 // Cierra la conexion con mysql
 mysql_close($conexion);
 
 // Parsea el contenido
-$contenido->parse("content");
-
-// Muestra la pagina final
-mostrar_pagina($archivo, $contenido);
-
-?>
+$_content->parse("content");
+require_once __DIR__ . '/includes/layout.php';

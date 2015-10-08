@@ -4,31 +4,28 @@
  * de introducirlo y parsearlo al xtemplate, además mira si hay algún archivo
  * javascript asociado a la pagina
  */
-function mostrar_pagina($archivo, $contenido) {
-
-    global $titulos_web;
-    global $nombres_web;
-    global $link_nombres;
-
+function mostrar_pagina($archivo, $contenido)
+{
     global $_lang;
     global $_languages;
     global $_roles;
+    global $_titles;
+
+    $page = array();
+    $page['CONTENT'] = $contenido->text('content');
 
     // Creamos la template de la pagina, y le asignamos el titulo y contenido
-    $pagina = new XTemplate("templates/$_lang/pagina.html");
-    $pagina->assign('TITULO', $titulos_web[$archivo]);
-    $pagina->assign('CONTENIDO', $contenido->text('content'));
+    $pagina = new XTemplate(ROOT_FOLDER . "/templates/$_lang/layout.html");
+    $pagina->assign('PAGE', arrayUpper($page));
+    $pagina->assign('TITULOLINK', arrayUpper($_titles['links']));
+    $pagina->assign('TITULONOMBRE', arrayUpper($_titles['nombres']));
 
-
-    // Carga los nombres y enlaces del grupo, dpto y universidad
-    $pagina->assign('NOMBRES', array_upper($nombres_web));
-    $pagina->assign('LINK', array_upper($link_nombres));
 
 
     // Le asignamos el codigo javascript si lo tiene
     if (file_exists("scripts/$archivo.js")) {
         $pagina->assign('JAVASCRIPT', $archivo);
-        $pagina->parse('main.javascript');
+        $pagina->parse('page.javascript');
     }
 
 
@@ -39,14 +36,14 @@ function mostrar_pagina($archivo, $contenido) {
     foreach ($_languages as $key => $value) {
         // Only for the first language
         if ($i++) {
-            $pagina->parse('main.idioma.siguiente');
+            $pagina->parse('page.idioma.siguiente');
         }
 
         $pagina->assign('LANG', array(
             'VALUE' => $value,
             'URL'   => url(null, array('lang' => $key))
         ));
-        $pagina->parse('main.idioma');
+        $pagina->parse('page.idioma');
     }
 
     // Rellena los datos de la sesiones si está logueado
@@ -59,23 +56,25 @@ function mostrar_pagina($archivo, $contenido) {
 
         $pagina->assign('MIEMBRO', array(
             'ID'    => $_SESSION['id_miembro'],
+            'NOMBRE' => $_SESSION['nombre'],
             'URL'   => url('miembro_ver_ficha.php', array('id_miembro',  $_SESSION['id_miembro'])),
         ));
-        $pagina->parse('main.miembro');
+        $pagina->parse('page.miembro');
 
         if ($_SESSION['privilegios'] === ADMIN) {
-            $pagina->parse('main.administracion');
+            $pagina->parse('page.administracion');
         }
 
     } else {
         // Si no esta logueado muestra el acceso
-        $pagina->parse('main.acceder');
+        $pagina->parse('page.acceder');
     }
 
 
     // Parsea la pagina e imprime la pagina
-    $pagina->parse('main');
-    $pagina->out('main');
+    $pagina->parse('page');
+    $pagina->out('page');
+    die();
 }
 
 /**

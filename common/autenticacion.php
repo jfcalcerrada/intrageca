@@ -7,16 +7,6 @@
  *  haga posible el acceso del usuario al web
  */
 
-function autenticar_usuario() {
-    if (isset($_SESSION['id_miembro'])) {
-        return;
-    }
-
-    header('Location: ' . url('login.php'));
-    die();
-}
-
-
 function cerrar_session() {
 
   // Borra el identificador de usuario
@@ -50,5 +40,3 @@ function control_tiempo_session() {
   }
 
 }
-
-?>
