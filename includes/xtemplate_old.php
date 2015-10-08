@@ -25,7 +25,7 @@ class XTemplate {
 	along with this program; if not, write to the Free Software
 	Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
-	$Id: xtpl.php,v 1.1 2009/10/07 05:52:30 pfcweb3 Exp $
+	$Id: xtemplate.php,v 1.1 2010/06/22 14:10:38 joseferlocal Exp $
 */
 
 /***[ variables ]***********************************************************/
@@ -343,8 +343,11 @@ function r_getfile($file) {
 } /* end of XTemplate class. */
 
 /*
-  	$Log: xtpl.php,v $
-  	Revision 1.1  2009/10/07 05:52:30  pfcweb3
+  	$Log: xtemplate.php,v $
+  	Revision 1.1  2010/06/22 14:10:38  joseferlocal
+  	Actualizaciones del sistema de login, del acceso a la base de datos y del sistema de archivos de PHP (MVC)
+
+  	Revision 1.1  2009-10-07 05:52:30  pfcweb3
   	Sistema de acceso listo, cambio de rol listo, cambio de idiomas listo
 
   	Revision 1.1.1.1  2005/04/20 10:30:13  pfcweb2
