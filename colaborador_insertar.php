@@ -29,7 +29,7 @@ function colaborador_insertar($conexion, $registro)
   $nombre = addslashes($registro['gc_nombre']);
   $descripcion = addslashes($registro['gc_desc']);
   $link = addslashes($registro['gc_link']);
-  $publico = ($registro['gc_publico'] == 1)?  1:0;
+  $publico = (isset($registro['gc_publico']) && $registro['gc_publico'] == 1) ? 1 : 0;
   
   // chequea si hay que insertar un nuevo registro o solo actualizarlo
   if ($registro['idc'] == 0)

@@ -126,7 +126,11 @@ function ERR_muestra_pagina_mensaje($mensaje, $dir_idioma)
     global $errors;
 
     // Convertimos el mensaje a html
-    $mensaje_html = nl2br(htmlentities($errors[$mensaje]));
+    if (isset($errors[$mensaje])) {
+        $mensaje_html = nl2br(htmlentities($errors[$mensaje]));
+    } else {
+        $mensaje_html = nl2br(htmlentities($mensaje));
+    }
 
     // Creamos el objeto XTemplate para la pagina de error
     $contenido = new XTemplate (ROOT_FOLDER . "/templates/$_lang/error.html");

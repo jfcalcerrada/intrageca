@@ -114,34 +114,36 @@ if ($id_grupo !== 0) {
     if (!$resultado) {
       echo "Error en consulta ".$consulta_miembros;
       exit;
-    }  
+    }
+
     // inicializa contador de miembros
-    $numero_miembros = 0;  
-    //imprime para cada miembro del grupo
-    while ($miembro = mysql_fetch_row($resultado2))
-    {
-      // incrementa el numero de miembro
-      $numero_miembros = $numero_miembros + 1;
-      $checked = ($miembro[5] == 1)?  "CHECKED":"";      
-   
-      // asigna valores de grupo
-      $lista_valores = array ( 
-                'MI_BORRAR' => 'mi_borrar_'.$numero_miembros,
-                'MI_NOMBRE' => 'mi_nombre_'.$numero_miembros,
+    $numero_miembros = 0;
+    if ($resultado2 !== false) {
+        //imprime para cada miembro del grupo
+        while ($miembro = mysql_fetch_row($resultado2)) {
+            // incrementa el numero de miembro
+            $numero_miembros = $numero_miembros + 1;
+            $checked = ($miembro[5] == 1) ? "CHECKED" : "";
+
+            // asigna valores de grupo
+            $lista_valores = array(
+                'MI_BORRAR' => 'mi_borrar_' . $numero_miembros,
+                'MI_NOMBRE' => 'mi_nombre_' . $numero_miembros,
                 'NOMBRE' => $miembro[0],
-                'MI_PUESTO' => 'mi_puesto_'.$numero_miembros,
+                'MI_PUESTO' => 'mi_puesto_' . $numero_miembros,
                 'PUESTO' => $miembro[1],
-                'MI_EMAIL' => 'mi_email_'.$numero_miembros,
+                'MI_EMAIL' => 'mi_email_' . $numero_miembros,
                 'EMAIL' => $miembro[2],
-                'MI_LINK' => 'mi_link_'.$numero_miembros,
+                'MI_LINK' => 'mi_link_' . $numero_miembros,
                 'LINK' => $miembro[3],
-                'GC_ID_MI' => 'mi_id_mie_'.$numero_miembros,
+                'GC_ID_MI' => 'mi_id_mie_' . $numero_miembros,
                 'ID_MI' => $miembro[4],
-                'MI_DIRECTOR' => 'mi_dir_'.$numero_miembros,
+                'MI_DIRECTOR' => 'mi_dir_' . $numero_miembros,
                 'ACTIVO' => $checked);
-      // imprimelos en página
-      $_content->assign("LISTA",$lista_valores);
-      $_content->parse("content.form_colaboradores.colaboradores.fila");
+            // imprimelos en página
+            $_content->assign("LISTA", $lista_valores);
+            $_content->parse("content.form_colaboradores.colaboradores.fila");
+        }
     }
 
     // asigna valores de grupo

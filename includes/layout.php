@@ -5,7 +5,7 @@ if (!isset($page['file'])) {
     $page['file'] = $_file;
 }
 
-if (!isset($page['title'])) {
+if (!isset($page['title']) && isset($_titles['titulos'][$_file])) {
     $page['title'] = $_titles['titulos'][$_file];
 }
 
@@ -65,7 +65,7 @@ if (isset($_SESSION['id_miembro'])) {
     $_page->parse('page.miembro');
 
     if ($_SESSION['privilegios'] === ADMIN) {
-        $pagina->parse('main.administracion');
+        $_page->parse('main.administracion');
     }
 
 } else {
