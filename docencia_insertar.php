@@ -25,7 +25,7 @@ function docencia_insertar($registro) {
     $link = '';
 
   // Comprueba el valor de publico
-  $publico = ($publico == 1) ? 1 : 0;
+  $publico = (isset($publico) && $publico == 1) ? 1 : 0;
 
 
     /* INSERTA/ACTUALIZA LOS DATOS NO DEPENDIENTES DEL IDIOMA */
@@ -107,7 +107,7 @@ function docencia_insertar($registro) {
         or error($errors['actualiza'], "Error en la consulta: $consulta_borrar");
     
     } else {
-      $coordinador = ($_POST["coor_$i"] == 1) ? 1 : 0;
+      $coordinador = (isset($_POST["coor_$i"]) && $_POST["coor_$i"] == 1) ? 1 : 0;
 
       $consulta_actualiza =
         "UPDATE asignatura_miembros ".
@@ -124,7 +124,7 @@ function docencia_insertar($registro) {
   if (isset($nuevo_miembro) && strlen($nuevo_miembro) > 0) {
 
     // Si el nuevo miembro esta marcado como coordinador
-    $coordinador = ($_POST['coor_nuevo'] == 1) ? 1 : 0;
+    $coordinador = (isset($_POST['coor_nuevo']) && $_POST['coor_nuevo'] == 1) ? 1 : 0;
 
     // Añade al nuevo miembro
     $inserta_miembro =
