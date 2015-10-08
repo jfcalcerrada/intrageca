@@ -61,13 +61,10 @@ $publicaciones = getEnlaceMiembroPublicaciones($id_miembro);
 
 //TODO: cambiar $curriculum en la vista
 // Comprueba si tiene curriculum
-$hasCurriculum =
-    (!(empty($miembro['link_curriculum'])) || !(empty($miembro['curriculum'])));
+$hasCurriculum = (!(empty($miembro['link_curriculum'])) || !(empty($miembro['curriculum'])));
 
 
 
 // Incluye la vista de la pagin
 require_once 'vista/' . $_file . '.php';
 
-
-?>

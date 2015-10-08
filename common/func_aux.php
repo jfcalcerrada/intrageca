@@ -124,10 +124,7 @@ function lista_fecha ($inicio, $fin, $seleccionado, &$contenido, $bloque)
  * Convierte a mayúsculas las claves del array
  *
  */
-function array_upper($array)
+function array_upper(array $array)
 {
-
-  return array_change_key_case($array, CASE_UPPER);
+    return array_change_key_case($array, CASE_UPPER);
 }
-
-?>

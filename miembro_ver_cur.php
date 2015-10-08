@@ -1,7 +1,6 @@
 <?php
-// Inicializamos el archivo con el script
-include('common/init.php');
 
+require_once 'common/init.php';
 
 
 /**
@@ -51,8 +50,8 @@ $miembro = mysql_fetch_array($resultado_miembro);
 // Comprueba si existe el archivo del curriculum del miembro
 if (file_exists($miembro['link_curriculum'])) {
   // Cremos el link del curriculum y lo parseamos
-  $contenido->assign('LINK_CURRICULUM', $miembro['link_curriculum']);
-  $contenido->parse('content.curriculum');
+  $_content->assign('LINK_CURRICULUM', $miembro['link_curriculum']);
+  $_content->parse('content.curriculum');
 }
 
 
@@ -62,15 +61,13 @@ $miembro['curriculum'] =
   str_replace(array("\n", "\r"), array('<br />', ''),$miembro['curriculum']);
 
 // Asignamos la información de miembro
-$contenido->assign('MIEMBRO', array_upper($miembro));
+$_content->assign('MIEMBRO', array_upper($miembro));
 
 // Cierra la conexion con mysql
 mysql_close($conexion);
 
 // Parsea el contenido
-$contenido->parse('content');
+$_content->parse('content');
 
 // Muestra la pagina final
-mostrar_pagina($archivo, $contenido);
-
-?>
+mostrar_pagina($archivo, $_content);

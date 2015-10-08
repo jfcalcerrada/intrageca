@@ -1,26 +1,22 @@
 <!-- BEGIN: content -->
 <h2>Group Members</h2>
-&nbsp;
-&nbsp;
 
 <!-- BEGIN: grupo -->
-    <!-- BEGIN: cabecera -->
-    <h3>&nbsp;{GRUPO_MIEMBROS}</h3>
-    <!-- END: cabecera -->
+    <!-- BEGIN: nombre -->
+    <h3>&nbsp;{GRUPO}</h3>
+    <!-- END: nombre -->
 
     <!-- BEGIN: cab_noactivos -->
     <h4>&nbsp;No active</h4>
     <!-- END: cab_noactivos -->
 
-    <ul class="sin">
+    <ul>
         <!-- BEGIN: miembro -->
         <li>
-            <a href="miembro_ver_ficha.php?idm={MIEMBRO.ID_MIEMBRO}">
-            {MIEMBRO.NOMBRE} - {MIEMBRO.PUESTO} - {MIEMBRO.AFILIACION}</a>
+            <a href="{MIEMBRO.URL}">{MIEMBRO.DATOS}</a>
         </li>
         <!-- END: miembro -->
     </ul>
-    <br />
 <!-- END: grupo -->
 
 <!-- BEGIN: anyadir -->

@@ -10,7 +10,7 @@ function accessMember()
 
 function accessOwnMember($id_miembro)
 {
-    if (!($_SESSION['id_miembro'] === $id_miembro || $_SESSION['privilegios'] === ADMIN)) {
+    if (!($_SESSION['id_miembro'] == $id_miembro || $_SESSION['privilegios'] == ADMIN)) {
         error();
     }
 }

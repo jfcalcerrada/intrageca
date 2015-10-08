@@ -15,8 +15,14 @@
  *
  * @return array Los datos del miembro
  */
-function getMiembroDatos($id_miembro, $idioma, $activo = 0)
+function getMiembroDatos($id_miembro, $idioma = null, $activo = 0)
 {
+    global $_lang;
+
+    if ($idioma === null) {
+        $idioma = $_lang;
+    }
+
     // Se crea la consulta
     $query = 'SELECT id_miembro, nombre, apellidos, categoria, activo,
                   direccion, telefono, fax, email, link_foto,
@@ -105,6 +111,7 @@ function getMiembroBibtex($id_miembro)
         error('consulta', $error[2] . '; Consulta => ' . $query);
     }
 
+    $bibtex = array();
     // Obtiene todos los identificadores y textos asociados al miembro
     while ($_bibtex = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $bibtex[] = $_bibtex;
@@ -113,6 +120,3 @@ function getMiembroBibtex($id_miembro)
    
     return $bibtex;
 }
-
-
-?>

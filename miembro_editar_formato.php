@@ -1,14 +1,17 @@
 <?php
-// Inicializamos el archivo con el script
-include ("common/init.php");
-include ("autenticacion.php");
-// Autenticamos al usuario
-autenticar_usuario();
 
-include ("common/common_pub.php");
+/**
+ *
+ */
 
-if(isset($_GET['idm'])) {
-    $id_miembro = $_GET['idm'];
+// Carga los includes de la cabecera
+require_once 'common/init.php';
+
+require_once "common/common_pub.php";
+require_once 'model/includes/miembros.php';
+
+if(isset($_GET['id_miembro'])) {
+    $id_miembro = $_GET['id_miembro'];
 } else {
     ERR_muestra_pagina_error($mbr_usuario_desc, "");
     exit;
@@ -33,6 +36,24 @@ if(isset($_POST['modificado']) && $_POST['modificado'] == 1) {
 
 }
 
+$miembro = getMiembroDatos($id_miembro);
+
+// Asigna la variable miembro a la plantilla
+$_content->assign('MIEMBRO', arrayUpper($miembro));
+
+
+// Si es el miembro o si es el ADMIN, carga el submenu
+$isAdmin  = ($_SESSION['privilegios'] == ADMIN);
+
+if ($_SESSION['id_miembro'] == $id_miembro || $isAdmin) {
+    // Si es Administrador, muestra el menu de borrar
+    if ($isAdmin) {
+        $_content->parse('content.submenu.borrar');
+    }
+    $_content->parse('content.submenu');
+}
+
+
 $consulta_formato = "SELECT tipo, author, title, other ".
         "FROM formato_bibtex ".
         "WHERE id_miembro IN (0, ".$id_miembro.") ".
@@ -49,34 +70,28 @@ $campos = array ( 'author' => $fila['author'],
                   'title' => $fila['title'],
                   'other' => $fila['other']);
 
-echo $fila["author"].$fila['title'].$fila['other'];
-
 foreach($campos as $campo => $valor) {
+    // TODO sin implementar
+    break;
 
     foreach($public_formatos as $clave => $tipo) {
-        $contenido->assign('VALUE', $clave);
-        $contenido->assign('MOSTRADO', $tipo['texto']);
+        $_content->assign('VALUE', $clave);
+        $_content->assign('MOSTRADO', $tipo['texto']);
         
         if($clave == $valor) {
-            $contenido->assign('SELECTED', ' selected="selected"');
+            $_content->assign('SELECTED', ' selected="selected"');
         } else {
-            $contenido->assign('SELECTED', '');
+            $_content->assign('SELECTED', '');
         }
-        $contenido->parse("content.fila.opciones");
+        $_content->parse("content.fila.opciones");
     }
     
-    $contenido->assign('CAMPO', $campo);
-    $contenido->parse("content.fila");
+    $_content->assign('CAMPO', $campo);
+    $_content->parse("content.fila");
 
 }
 
-$contenido->assign("IDM", $id_miembro);
-$contenido->parse("content");
-
-$pagina = new XTemplate ("templates/es/pagina.html");
-//$pagina->assign("TITULO", $titulos_web[$archivo]);
-$pagina->assign("CONTENIDO", $contenido->text("content"));
-$pagina->parse("main");
-$pagina->out("main");
-
-?>
+$_content->assign("IDM", $id_miembro);
+// Parsea el contenido
+$_content->parse("content");
+require_once __DIR__ . '/includes/layout.php';

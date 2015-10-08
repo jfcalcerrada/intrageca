@@ -1,6 +1,19 @@
 <!-- BEGIN: content -->
 <h2>Formato de Bibtex Personal</h2>
 
+<!-- BEGIN: submenu -->
+<ul id="submenu">
+    <li><a href="miembro_ver_ficha.php?id_miembro={MIEMBRO.ID_MIEMBRO}">[Ver Ficha]</a></li>
+    <li><a href="miembro_editar.php?id_miembro={MIEMBRO.ID_MIEMBRO}">[Editar Datos]</a></li>
+    <li><a href="miembro_editar_bibtex.php?id_miembro={MIEMBRO.ID_MIEMBRO}">[Referencias Bibtex]</a></li>
+    <li><a href="miembro_editar_formato.php?id_miembro={MIEMBRO.ID_MIEMBRO}">[Editar Formato]</a></li>
+    <li><a href="miembro_editar_web.php?id_miembro={MIEMBRO.ID_MIEMBRO}">[Cuenta de Acceso]</a></li>
+    <!-- BEGIN: borrar -->
+    <li><a href="miembro_borrar.php?id_miembro={MIEMBRO.ID_MIEMBRO}">[Eliminar Miembro]</a></li>
+    <!-- END: borrar -->
+</ul>
+<!-- END: submenu -->
+
 <form action="miembro_editar_formato.php?idm={IDM}" method="post">
 <input type="hidden" name="modificado" value="1" />
 
@@ -15,4 +28,6 @@
 
 <input type="submit" value="Actualizar" />
 </form>
+
+<p>[Sin terminar de implementar]</p>
 <!-- END: content -->

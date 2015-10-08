@@ -1,10 +1,5 @@
 <?php
 
-/**
- *
- */
-
-
 // Carga la plantilla
 $_content = new XTemplate('templates/' . $_lang . '/' . $_file . '.html');
 
@@ -38,21 +33,32 @@ foreach ($miembros as $miembro) {
     }
 
     // Cargamos los datos que existan
-    $miembro['datos'] .= ($miembro['apellidos'])
-        ? $miembro['apellidos'].', ' : '';
+    $miembro['DATOS'] = '';
 
-    $miembro['datos'] .= ($miembro['nombre'])
-        ? $miembro['nombre'] : '';
+    if (isset($miembro['apellidos']) && $miembro['apellidos']) {
+        $miembro['DATOS'] = $miembro['apellidos'];
+    }
 
-    $miembro['datos'] .= ($miembro['puesto'])
-        ? ' - '.$miembro['puesto'] : '';
-        
-    $miembro['datos'] .= ($miembro['afiliacion'])
-        ? ' - '.$miembro['afiliacion'] : '';
-        
+    if (isset($miembro['nombre']) && $miembro['nombre']) {
+        if (strlen($miembro['DATOS'])) {
+            $miembro['DATOS'] .= ', ';
+        }
+
+        $miembro['DATOS'] .= $miembro['nombre'];
+    }
+
+    if (isset($miembro['puesto']) && $miembro['puesto']) {
+        $miembro['DATOS'] .= ' - ' . $miembro['puesto'];
+    }
+
+    if (isset($miembro['afiliacion']) && $miembro['afiliacion']) {
+        $miembro['DATOS'] .= ' - ' . $miembro['afiliacion'];
+    }
+
+    $miembro['URL'] = url('miembro_ver_ficha.php', array('id_miembro' => $miembro['id_miembro']));
 
     // Imprimimos el miembro
-    $_content->assign('MIEMBRO', arrayUpper($miembro));
+    $_content->assign('MIEMBRO', $miembro);
     $_content->parse('content.grupo.miembro');
 }
 
@@ -72,6 +78,3 @@ $_content->parse('content');
 
 // Incluye el Layout
 require_once 'includes/layout.php';
-
-
-?>

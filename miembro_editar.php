@@ -55,7 +55,7 @@ if (isset($_GET['idioma'])) {
 
 } else {
     // Obtiene el idioma si no ha cambiado
-    $idioma = (isset($_languages[$idioma])) ? $idioma : $_lang;
+    $idioma = (isset($idioma) && isset($_languages[$idioma])) ? $idioma : $_lang;
 }
 
 

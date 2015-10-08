@@ -2,21 +2,21 @@
 <h2>Miembros del grupo</h2>
 
 <!-- BEGIN: grupo -->
-<!-- BEGIN: nombre -->
-<h3>&nbsp;{GRUPO}</h3>
-<!-- END: nombre -->
+    <!-- BEGIN: nombre -->
+    <h3>&nbsp;{GRUPO}</h3>
+    <!-- END: nombre -->
 
-<!-- BEGIN: noactivos -->
-<h4>&nbsp;No activos</h4>
-<!-- END: noactivos -->
+    <!-- BEGIN: noactivos -->
+    <h4>&nbsp;No activos</h4>
+    <!-- END: noactivos -->
 
-<ul>
-    <!-- BEGIN: miembro -->
-    <li>
-        <a href="miembro_ver_ficha.php?id_miembro={MIEMBRO.ID_MIEMBRO}">{MIEMBRO.DATOS}</a>
-    </li>
-    <!-- END: miembro -->
-</ul>
+    <ul>
+        <!-- BEGIN: miembro -->
+        <li>
+            <a href="{MIEMBRO.URL}">{MIEMBRO.DATOS}</a>
+        </li>
+        <!-- END: miembro -->
+    </ul>
 <!-- END: grupo -->
 
 <!-- BEGIN: anyadir -->

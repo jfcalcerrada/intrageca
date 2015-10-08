@@ -53,11 +53,11 @@ if ($borrar == false) {
   $miembro = mysql_fetch_array($resultado_miembro);
 
   // Asigna los valores y lo parsea
-  $contenido->assign('MIEMBRO', array_upper($miembro));
-  $contenido->parse('content.confirmar');
+  $_content->assign('MIEMBRO', array_upper($miembro));
+  $_content->parse('content.confirmar');
 
   // Muestra el submenú, y si es el administrador el botón de borrar
-  $contenido = menu_miembros($contenido, $id_miembro);
+  $_content = menu_miembros($_content, $id_miembro);
 
 
 // Si el usuario ha confirmado, realiza el borrado
@@ -79,18 +79,13 @@ if ($borrar == false) {
         or error($errors['consulta'], "Error en la consulta: $borrado_miembro");
 
     // Muestra el mensaje de borrado
-    $contenido->parse('content.borrado');
+    $_content->parse('content.borrado');
 }
 
 // Cierra la conexion
 mysql_close($conexion);
 
 
-/* MUESTRA LA PAGINA */
 // Parsea el contenido
-$contenido->parse('content');
-
-// Muestra la pagina final
-mostrar_pagina($archivo, $contenido);
-
-?>
+$_content->parse("content");
+require_once __DIR__ . '/includes/layout.php';

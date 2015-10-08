@@ -98,6 +98,3 @@ function setMiembroDatos(array $miembro)
 
     return $miembro['id_miembro'];
 }
-
-
-?>

@@ -1,18 +1,18 @@
 <!-- BEGIN: content -->
 <h2>Informaci&oacute;n de Miembro</h2>
 
-<!-- BEGIN: menu -->
+<!-- BEGIN: submenu -->
 <ul id="submenu">
-  <li><a href="miembro_ver_ficha.php?idm={ID_MIEMBRO}">[Ver Ficha]</a></li>
-  <li><a href="miembro_editar.php?idm={ID_MIEMBRO}">[Editar Datos]</a></li>
-  <li><a href="miembro_editar_bibtex.php?idm={ID_MIEMBRO}">[Referencias Bibtex]</a></li>
-  <!-- <a href="miembro_editar_formato.php?idm={IDM}">[Editar Formato]</a>&nbsp; -->
-  <li><a href="miembro_editar_web.php?idm={ID_MIEMBRO}">[Cuenta de Acceso]</a></li>
+  <li><a href="miembro_ver_ficha.php?id_miembro={MIEMBRO.ID_MIEMBRO}">[Ver Ficha]</a></li>
+  <li><a href="miembro_editar.php?id_miembro={MIEMBRO.ID_MIEMBRO}">[Editar Datos]</a></li>
+  <li><a href="miembro_editar_bibtex.php?id_miembro={MIEMBRO.ID_MIEMBRO}">[Referencias Bibtex]</a></li>
+  <li><a href="miembro_editar_formato.php?id_miembro={MIEMBRO.ID_MIEMBRO}">[Editar Formato]</a></li>
+  <li><a href="miembro_editar_web.php?id_miembro={MIEMBRO.ID_MIEMBRO}">[Cuenta de Acceso]</a></li>
   <!-- BEGIN: borrar -->
-  <li><a href="miembro_borrar.php?idm={ID_MIEMBRO}">[Eliminar Miembro]</a></li>
+  <li><a href="miembro_borrar.php?id_miembro={MIEMBRO.ID_MIEMBRO}">[Eliminar Miembro]</a></li>
   <!-- END: borrar -->
 </ul>
-<!-- END: menu -->
+<!-- END: submenu -->
 
 <h3>&nbsp;Eliminar Miembro</h3>
 
@@ -24,7 +24,7 @@
     <input type="hidden" name="id_miembro" value="{MIEMBRO.ID_MIEMBRO}" />
     <input type="hidden" name="borrar" value="1" />
     <input type="button" value="Volver"
-           onclick="javascript:document.location = 'miembro_ver_ficha.php?idm={MIEMBRO.ID_MIEMBRO}'" />
+           onclick="javascript:document.location = 'miembro_ver_ficha.php?id_miembro={MIEMBRO.ID_MIEMBRO}'" />
     <input type="submit" value="Eliminar Miembro" />
   </form>
   <!-- END: confirmar -->

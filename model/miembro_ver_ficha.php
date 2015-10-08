@@ -73,5 +73,3 @@ function getEnlaceMiembroPublicaciones($id_miembro)
     return http_build_query($htmlQuery);
 }
 
-
-?>

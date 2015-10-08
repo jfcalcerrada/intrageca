@@ -5,12 +5,10 @@
  */
 
  // Carga los includes de la cabecera
-require_once 'includes/bootstrap.php';
+require_once 'common/init.php';
 
 // Carga el modelo
 require_once 'model/includes/miembros.php';
-require_once 'model/' . $_file . '.php';
-
 
 /**
  * @name  miembro_editar_web.php
@@ -35,7 +33,6 @@ $id_miembro = validateId($id_miembro);
 
 // Controla el acceso a la pagina
 accessOwnMember($id_miembro);
-
 
 
 // Comprueba si hay que actualizar los datos
@@ -98,12 +95,23 @@ if (isset($_POST['id_miembro'])) {
 
 
 // Controla si tiene que actualizar
-$actualizar =
-  (isset($_POST['actualizar']) && $_POST['actualizar'] == 1) ? true : false;
+$actualizar = (isset($_POST['actualizar']) && $_POST['actualizar'] == 1) ? true : false;
 
+
+
+// Obtiene los datos del miembro
+$miembro = getMiembroDatos($id_miembro);
 
 // Muestra el submenú, y si es el administrador el botón de borrar
-$contenido = menu_miembros($contenido, $id_miembro);
+// Asigna la variable miembro a la plantilla
+$_content->assign('MIEMBRO', arrayUpper($miembro));
+// Carga el submenu, puesto que sólo puede entrar el miembro o el admin
+$isAdmin  = ($_SESSION['privilegios'] == ADMIN);
+if ($isAdmin) {
+    $_content->parse('content.submenu.borrar');
+}
+$_content->parse('content.submenu');
+
 
 // Mensaje de informacion
 $mensaje = '';
@@ -243,6 +251,9 @@ $resultado_usuario = mysql_query($consulta_usuario)
 
 // Obtiene el array de usuario
 $usuario = mysql_fetch_array($resultado_usuario);
+if (!is_array($usuario)) {
+    $usuario = array();
+}
 
 // Cierra la conexion con mysql
 mysql_close($conexion);
@@ -250,25 +261,20 @@ mysql_close($conexion);
 
 /* MUESTRA LOS VALORES EN LA PAGINA */
 // Asigna los parametros
-$contenido->assign('USUARIO', array_upper($usuario));
+$_content->assign('USUARIO', array_upper($usuario));
 
 // Si la contraseña es la solicitada por defecto, no es necesario insertarla
 if ($_SESSION['privilegios'] != ADMIN && $usuario['password_web'] != MD5(PASSWORD_DEFECTO))
-  $contenido->parse('content.acceso.anterior');
+  $_content->parse('content.acceso.anterior');
 
 // Parse los datos
-$contenido->parse('content.acceso');
+$_content->parse('content.acceso');
 
 
 // Asigna el mensaje de actualizacion
-$contenido->assign('MENSAJE', $mensaje);
+$_content->assign('MENSAJE', $mensaje);
 
 
-/* MUESTRA LA PAGINA */
 // Parsea el contenido
-$contenido->parse('content');
-
-// Muestra la pagina final
-mostrar_pagina($archivo, $contenido);
-
-?>
+$_content->parse("content");
+require_once __DIR__ . '/includes/layout.php';

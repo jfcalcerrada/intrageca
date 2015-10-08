@@ -15,8 +15,14 @@
  * 
  * @return array  Con todos los datos de los miembros
  */
-function getMiembros($activo, $idioma, array $grupos)
+function getMiembros($activo, $idioma = null, array $grupos = array())
 {
+    global $_lang;
+
+    if ($idioma === null) {
+        $idioma = $_lang;
+    }
+
     // Consulta de los miembros
     $query = 'SELECT id_miembro, nombre, apellidos, categoria, activo 
               FROM miembros
@@ -87,6 +93,3 @@ function getMiembros($activo, $idioma, array $grupos)
 
     return $miembros;
 }
-
-
-?>
