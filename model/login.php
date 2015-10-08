@@ -15,8 +15,8 @@ function getMiembroAutentica($usuario, $password)
     $query = 'SELECT miembros.id_miembro, nombre, privilegios
               FROM miembros LEFT JOIN miembro_autentica
                   ON miembros.id_miembro = miembro_autentica.id_miembro
-              WHERE usuario = :usuario
-                  AND password = MD5(:password)';
+              WHERE usuario_web = :usuario
+                  AND password_web = MD5(:password)';
 
 
     // Prepara la consulta
@@ -43,6 +43,3 @@ function getMiembroAutentica($usuario, $password)
 
     return $session;
 }
-
-
-?>

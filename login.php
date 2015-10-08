@@ -12,7 +12,7 @@
 
 
 // Carga los includes de la cabecera
-require_once 'includes/bootstrap.php' ;
+require_once 'common/init.php' ;
 
 // Carga el modelo
 require_once 'model/' . $_file . '.php' ;
