@@ -4,9 +4,8 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
     <title>Grupo GRF: {TITULO}</title>
-
-    <link rel="stylesheet" href="estilo.css" type="text/css" media="screen" />
-    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />
+    
+    <link rel="stylesheet" href="css/styles.css" type="text/css" media="screen" />
 
     <!-- BEGIN: javascript -->
     <script type="text/javascript" src="javascript/jquery.js"></script>
@@ -18,31 +17,28 @@
 
 <div id="idioma">
     <!-- BEGIN: idioma -->
-        <!-- BEGIN: siguiente -->
-        &nbsp;/&nbsp;
-        <!-- END: siguiente -->
-    <a href="{URL}lang={CLAVE}">{IDIOMA}</a>
+    <!-- BEGIN: siguiente --> / <!-- END: siguiente -->
+    <a href="{LANG.URL}">{LANG.VALUE}</a>
     <!-- END:  idioma -->
 </div>
 
-<!-- @nota: Titulos de la web linkeables -->
 <h1>
-  <a href="{LINK.GRUPO}">{NOMBRES.GRUPO}</a><br />
-  <a href="{LINK.DPTO}">{NOMBRES.DPTO}</a><br />
-  <a href="{LINK.UNIV}">{NOMBRES.UNIV}</a><br />
+    <a href="{LINK.GRUPO}">{NOMBRES.GRUPO}</a><br />
+    <a href="{LINK.DPTO}">{NOMBRES.DPTO}</a><br />
+    <a href="{LINK.UNIV}">{NOMBRES.UNIV}</a><br />
 </h1>
 
 <div id="usuario">
     <!-- BEGIN: miembro -->
-    <a href="miembro_ver_ficha.php?idm={USUARIO.ID_MIEMBRO}">{USUARIO.NOMBRE}</a>
+    <a href="{MIEMBRO.URL}">{MIEMBRO.NOMBRE}</a>
     &nbsp;-&nbsp;
-    <a href="{URL}rol=1">Cambiar rol a {ROL}</a>
+    <a href="{ROL.URL}">Cambiar rol a {ROL.NAME}</a>
     &nbsp;-&nbsp;
     <a href="salir.php">Salir</a>
     <!-- END:  miembro -->
-    
+
     <!-- BEGIN: acceder -->
-    <a href="{URL}login=1">Acceder Intranet</a>
+    <a href="login.php">Acceder Intranet</a>
     <!-- END: acceder -->
 </div>
 
@@ -52,16 +48,15 @@
 <ul id="menu" style="margin-left: 0;">
     <li><a href="presentacion.php">Presentación</a></li>
     <li><a href="docencia.php">Docencia</a></li>
-    <li><a href="#" class="disabled">Ofertas</a></li>
+    <li><a href="ofertas.php">Ofertas</a></li>
     <li><a href="miembros.php">Miembros</a></li>
     <li><a href="publicaciones.php">Publicaciones</a></li>
     <li><a href="lineas.php">Líneas de investigación</a></li>
     <li><a href="proyectos.php">Proyectos</a></li>
-    <li><a href="#" class="disabled">Colaboradores</a></li>
-    <li><a href="#" class="disabled">Software</a></li>
+    <li><a href="coladoradores.php">Software</a></li>
+    <li><a href="software.php">Software</a></li>
     <!-- BEGIN: intranet -->
-    <!--<li><a href="#" class="disabled">Memoria del grupo</a></li>-->
-    <li><a href="#" class="disabled">Features</a></li>
+    <li><a href="#" class="disabled">Memoria del grupo</a></li>
     <!-- END: intranet -->
     <!-- BEGIN: administracion -->
     <li><a href="memoria_grupo.php">Memoria del grupo</a></li>
