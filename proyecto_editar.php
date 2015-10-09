@@ -37,14 +37,15 @@ if (isset($_POST['actualizar']) && $_POST['actualizar'] == 1)
 
 // Seleccionamos el idioma en que se esta mostrando el
 if (isset($_POST['idioma_cambio']) && strlen($_POST['idioma_cambio'])
-  && array_key_exists($_POST['idioma_cambio'], $gen_idiomas_disp)) {
+  && array_key_exists($_POST['idioma_cambio'], $gen_idiomas_disp)
+) {
   $proyecto_idioma = $_POST['idioma_cambio'];
 } else {
-  $proyecto_idioma = $idioma;
+  $proyecto_idioma = $_lang;
 }
 
 // Muestra el submenú, y si es el administrador el botón de borrar
-$contenido = menu_proyectos($contenido, $id_proyecto);
+$_content = menu_proyectos($_content, $id_proyecto);
 
 
 /* CONSULTA DE DATOS DEL PROYECTO */
@@ -106,7 +107,7 @@ mysql_close($conexion);
 
 /* MUESTRA LOS VALORES EN LA PÁGINA */
 // Asigna el campo oculto con el codigo actual, en el que se muestran los datos
-$contenido->assign('COD_IDIOMA', $proyecto_idioma);
+$_content->assign('COD_IDIOMA', $proyecto_idioma);
 
 // Imprime los idiomas disponibles
 foreach($gen_idiomas_disp as $clave_idioma => $texto_idioma) {
@@ -120,8 +121,8 @@ foreach($gen_idiomas_disp as $clave_idioma => $texto_idioma) {
     'SELECCIONADO' => $selected);
 
   // insertalo en página
-  $contenido->assign('IDIOMA', $idioma_lista);
-  $contenido->parse('content.ficha.idioma');
+  $_content->assign('IDIOMA', $idioma_lista);
+  $_content->parse('content.ficha.idioma');
 }
 
 // Asigna estado a select box de estado
@@ -136,8 +137,8 @@ foreach ($proy_estado_proyecto as $clave_estado => $texto_estado) {
     'SELECCIONADO' => $selected);
 
   // Asigna a la página el elemento de la lista
-  $contenido->assign('ESTADO', $estado);
-  $contenido->parse('content.ficha.estado');
+  $_content->assign('ESTADO', $estado);
+  $_content->parse('content.ficha.estado');
 }
 
 
@@ -161,9 +162,9 @@ foreach ($proy_tipos_monedas as $clave_moneda=> $texto_moneda) {
     'NOMBRE'    => $texto_moneda,
     'SELECCION' => $selected);
 
-  $contenido->assign('MONEDA', $moneda);
+  $_content->assign('MONEDA', $moneda);
 
-  $contenido->parse('content.ficha.select_moneda');
+  $_content->parse('content.ficha.select_moneda');
 }
 
 // Publicar importe en la Web pública
@@ -174,15 +175,10 @@ $proyecto['publicar_importe'] = ($proyecto['publicar_importe'] == 1) ? 'checked=
 $proyecto = array_change_key_case($proyecto, CASE_UPPER);
 
 // Imprime los datos del proyecto
-$contenido->assign('PROYECTO', $proyecto);
-$contenido->parse('content.ficha');
+$_content->assign('PROYECTO', $proyecto);
+$_content->parse('content.ficha');
 
 
-/* MUESTRA LA PAGINA */
 // Parsea el contenido
-$contenido->parse('content');
-
-// Muestra la pagina final
-mostrar_pagina($archivo, $contenido);
-
-?>
+$_content->parse("content");
+require_once __DIR__ . '/includes/layout.php';

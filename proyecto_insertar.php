@@ -27,7 +27,6 @@
 
 function proyecto_insertar($registro)
 {
-
     GLOBAL $errors;
 
     /*
@@ -53,11 +52,15 @@ function proyecto_insertar($registro)
         (strlen($registro['anyo_fin']) < 0) ? $registro['anyo_fin'] : '0000';
 
     // Comprueba si la fecha son válidas
-    if (checkdate($mes_ini, $dia_ini, $anyo_ini))
+    $fecha_ini = '';
+    if (checkdate($mes_ini, $dia_ini, $anyo_ini)) {
         $fecha_ini = "$anyo_ini-$mes_ini-$dia_ini";
-    
-    if (checkdate($mes_fin, $dia_fin, $anyo_fin))
+    }
+
+    $fecha_fin = '';
+    if (checkdate($mes_fin, $dia_fin, $anyo_fin)) {
         $fecha_fin = "$anyo_fin-$mes_fin-$dia_fin";
+    }
 
 
     // Comprobamos a partir de las fechas el estado del proyecto
@@ -75,7 +78,7 @@ function proyecto_insertar($registro)
         $importe = 0;
 
     $moneda = $registro['moneda'];
-    $publicar_importe = ($registro['publicar_importe'] == 1) ? 1 : 0;
+    $publicar_importe = (isset($registro['publicar_importe']) && $registro['publicar_importe'] == 1) ? 1 : 0;
 
     $homepage = addslashes($registro['homepage']);
     $id_bibtex =  addslashes($registro['id_bibtex']);

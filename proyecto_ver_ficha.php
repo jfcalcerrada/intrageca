@@ -1,8 +1,8 @@
 <?php
-// Inicializamos el archivo con el script
-include('common/init.php');
 
-include('common/proyectos.php');
+require_once 'common/init.php';
+
+require_once 'common/proyectos.php';
 
 
 /**
@@ -27,7 +27,7 @@ $id_proyecto = validar_id($_GET['idp']);
 
 
 // Muestra el submenú si es el administrador o responsable del proyecto
-$contenido = menu_proyectos($contenido, $id_proyecto);
+$_content = menu_proyectos($_content, $id_proyecto);
 
 
 /* CONSULTA LOS DATOS DEL PROYECTO */
@@ -61,7 +61,7 @@ $proyecto = mysql_fetch_array($resultado_proyecto);
 // Muestra los datos del financiador si existen
 if (strlen($proyecto['financiador']) > 0) {
     // Imprime los datos de la empresa financiadora
-    $contenido->assign('FINANCIA', $proyecto['financiador']);
+    $_content->assign('FINANCIA', $proyecto['financiador']);
 
     // NOTA! mostar importe solo para la publica o ambas??
     // Muestra, si procede, el importe de la financiacion
@@ -69,17 +69,17 @@ if (strlen($proyecto['financiador']) > 0) {
             && $proyecto['importe'] > 0) {
 
         // Introduce la cantidad
-        $contenido->assign('VALOR_FINANCIA', number_format($proyecto['importe'], 2, ',', '.'));
+        $_content->assign('VALOR_FINANCIA', number_format($proyecto['importe'], 2, ',', '.'));
 
         // Introduce la moneda
-        $contenido->assign('VALOR_MONEDA', $proy_tipos_monedas[$proyecto['moneda']]);
+        $_content->assign('VALOR_MONEDA', $proy_tipos_monedas[$proyecto['moneda']]);
 
         // Parsea el importe de la financiacion
-        $contenido->parse('content.datos_proyecto.financiacion.importe');
+        $_content->parse('content.datos_proyecto.financiacion.importe');
     }
 
     // Parsea los datos de la financiacion
-    $contenido->parse('content.datos_proyecto.financiacion');
+    $_content->parse('content.datos_proyecto.financiacion');
 }
 
 // NOTA! implementar correctamente esta parte
@@ -88,8 +88,8 @@ $estado = $proy_estado_proyecto[$proyecto['estado']];
 
 // Verifica si hay que poner fecha de fin
 if ($proyecto['estado'] == 1) {
-    $contenido->assign('FECHA_FIN', $proyecto['fecha_fin']);
-    $contenido->parse('content.datos_proyecto.fecha_fin');
+    $_content->assign('FECHA_FIN', $proyecto['fecha_fin']);
+    $_content->parse('content.datos_proyecto.fecha_fin');
 }
 
 // Prepara el array para el parser
@@ -103,8 +103,8 @@ $proyecto_datos['DOCUMENTOS'] =
     "campo1=OPTproyecto&valor1={$proyecto['id_pr_bibtex']}";
 
 // Introduce e imprime los valores en página
-$contenido->assign('DATOS', $proyecto_datos);
-$contenido->parse('content.datos_proyecto');
+$_content->assign('DATOS', $proyecto_datos);
+$_content->parse('content.datos_proyecto');
 
 
 /* CONSULTA DE LOS MIEMBROS DEL PROYECTO */
@@ -136,10 +136,10 @@ foreach ($mbr_rel_grupos as $grupo => $grupo_web) {
 
             // Si es el responsable o administrador principal lo mostramos
             if ($miembro['investigador_principal'] == 1) {
-                $contenido->parse('content.miembros.miembro.investigador_principal');
+                $_content->parse('content.miembros.miembro.investigador_principal');
 
             } elseif ($miembro['responsable'] == 1) {
-                $contenido->parse('content.miembros.miembro.responsable');
+                $_content->parse('content.miembros.miembro.responsable');
             }
 
             // Preparamos el array para el template
@@ -149,92 +149,86 @@ foreach ($mbr_rel_grupos as $grupo => $grupo_web) {
             $miembro['CATEGORIA'] = $grupo_web;
 
             // Asigna los valores y los imprime
-            $contenido->assign('MIEMBRO', $miembro);
-            $contenido->parse('content.miembros.miembro');
+            $_content->assign('MIEMBRO', $miembro);
+            $_content->parse('content.miembros.miembro');
 
         }
     }
 }
 
 // Umprime los miembros
-$contenido->parse('content.miembros');
+$_content->parse('content.miembros');
 
 
 /*
  * CONSULTA DE LOS COLABORADORES DEL PROYECTO
  */
 // Consulta los datos de los colaboradores
-//$consulta_colaboradores =
-//    "SELECT nombre, link_colaborador, nombre_grupo, link_grupo ".
-//    "FROM colaboradores LEFT JOIN grupos_colaboradores ".
-//        "ON colaboradores.grupo_pertenece = grupos_colaboradores.id_grupo ".
-//    "WHERE id_colaborador IN (".
-//        "SELECT id_colaborador ".
-//        "FROM colaborador_proyectos ".
-//        "WHERE id_proyecto = $id_proyecto".
-//    ") ".
-//    "ORDER BY nombre_grupo ASC";
-//
-//// Realizamos la consulta y comprobamos que no da errores
-//$resultado_colaboradores = mysql_query($consulta_colaboradores)
-//    or error($errors['consulta'],
-//        "Error en la consulta: $consulta_colaboradores");
-//
-//// Asignamos los colaboradores
-//while ($colaborador = mysql_fetch_array($resultado_colaboradores)) {
-//    // Creamos el array del template
-//    $colaborador = array_change_key_case($colaborador, CASE_UPPER);
-//
-//    // Lo asigna y lo imprime
-//    $contenido->assign('COLABORADOR', $colaborador);
-//    $contenido->parse('content.colaboradores.colaborador');
-//}
-//
-//// Imprime los colaboradores si ha habido alguno
-//if (mysql_num_rows($resultado_colaboradores) > 0)
-//    $contenido->parse('content.colaboradores');
+$consulta_colaboradores =
+    "SELECT nombre, link_colaborador, nombre_grupo, link_grupo ".
+    "FROM colaboradores LEFT JOIN grupos_colaboradores ".
+        "ON colaboradores.grupo_pertenece = grupos_colaboradores.id_grupo ".
+    "WHERE id_colaborador IN (".
+        "SELECT id_colaborador ".
+        "FROM colaborador_proyectos ".
+        "WHERE id_proyecto = $id_proyecto".
+    ") ".
+    "ORDER BY nombre_grupo ASC";
+
+// Realizamos la consulta y comprobamos que no da errores
+$resultado_colaboradores = mysql_query($consulta_colaboradores)
+    or error($errors['consulta'],
+        "Error en la consulta: $consulta_colaboradores");
+
+// Asignamos los colaboradores
+while ($colaborador = mysql_fetch_array($resultado_colaboradores)) {
+    // Creamos el array del template
+    $colaborador = array_change_key_case($colaborador, CASE_UPPER);
+
+    // Lo asigna y lo imprime
+    $contenido->assign('COLABORADOR', $colaborador);
+    $contenido->parse('content.colaboradores.colaborador');
+}
+
+// Imprime los colaboradores si ha habido alguno
+if (mysql_num_rows($resultado_colaboradores) > 0)
+    $contenido->parse('content.colaboradores');
 
 
 /*
  * CONSULTA DE LOS SOFTWARE RELACIONADOS CON EL PROYECTO
  */
 // Consulta los datos de los software relacionados con el proyecto
-//$consulta_software =
-//    "SELECT software_idiomas.id_software, titulo,descrip_corta ".
-//    "FROM software_idiomas LEFT JOIN software_proyectos ".
-//        "ON software_idiomas.id_software = software_proyectos.id_software ".
-//    "WHERE idioma = '$idioma' ".
-//        "AND id_proyecto = $id_proyecto";
-//
-//// Realizamos la consulta y comprobamos que no da errores
-//$resultado_software = mysql_query($consulta_software)
-//    or error($errors['consulta'], "Error en la consulta: $consulta_software");
-//
-//// Recorremos los diferentes software
-//while ($software = mysql_fetch_array($resultado_software)) {
-//    // Preparamos el array para el templace
-//    $software = array_change_key_case($software, CASE_UPPER);
-//
-//    // Asignalo a la página
-//    $contenido->assign('SOFTWARE', $software);
-//    $contenido->parse('content.softwares.software');
-//}
-//
-//// Imprime si hay alguno presente
-//if (mysql_num_rows($resultado_software) > 0)
-//    $contenido->parse('content.softwares');
+$consulta_software =
+    "SELECT software_idiomas.id_software, titulo,descrip_corta ".
+    "FROM software_idiomas LEFT JOIN software_proyectos ".
+        "ON software_idiomas.id_software = software_proyectos.id_software ".
+    "WHERE idioma = '$idioma' ".
+        "AND id_proyecto = $id_proyecto";
+
+// Realizamos la consulta y comprobamos que no da errores
+$resultado_software = mysql_query($consulta_software)
+    or error($errors['consulta'], "Error en la consulta: $consulta_software");
+
+// Recorremos los diferentes software
+while ($software = mysql_fetch_array($resultado_software)) {
+    // Preparamos el array para el templace
+    $software = array_change_key_case($software, CASE_UPPER);
+
+    // Asignalo a la página
+    $contenido->assign('SOFTWARE', $software);
+    $contenido->parse('content.softwares.software');
+}
+
+// Imprime si hay alguno presente
+if (mysql_num_rows($resultado_software) > 0) {
+    $contenido->parse('content.softwares');
+}
 
 // Cierra la conexion con mysql
 mysql_close($conexion);
 
 
-/*
- * MUESTRA LA PAGINA
- */
 // Parsea el contenido
-$contenido->parse('content');
-
-// Muestra la pagina final
-mostrar_pagina($archivo, $contenido);
-
-?>
+$_content->parse("content");
+require_once __DIR__ . '/includes/layout.php';

@@ -1,15 +1,16 @@
 <!-- BEGIN: content -->
 <h2>Project Information</h2>
 
-    <!-- BEGIN: menu -->
-    <p>
-    <a href="proyecto_ver_ficha.php?idp={IDP}">[Ver Ficha]</a>&nbsp;
-    <a href="proyecto_editar.php?idp={IDP}">[Editar Datos]</a>&nbsp;
-    <a href="proyecto_editar_mie.php?idp={IDP}">[Miembros]</a>&nbsp;
-    <!-- <a href="proyecto_editar_col.php?idp={IDP}">[Colaboradores]</a>&nbsp; -->
-    <!-- <a href="proyecto_editar_sof.php?idp={IDP}">[Software]</a>&nbsp; -->
-    </p>
-    <!-- END: menu -->
+<!-- BEGIN: menu -->
+<ul id="submenu">
+    <li><a href="proyecto_ver_ficha.php?idp={ID_PROYECTO}">[Ver Ficha]</a></li>
+    <li><a href="proyecto_editar.php?idp={ID_PROYECTO}">[Editar Datos]</a></li>
+    <li><a href="proyecto_editar_mie.php?idp={ID_PROYECTO}">[Miembros]</a></li>
+    <li><a href="proyecto_editar_col.php?idp={ID_PROYECTO}">[Colaboradores]</a></li>
+    <li><a href="proyecto_editar_sof.php?idp={ID_PROYECTO}">[Software]</a></li>
+    <li><a href="proyecto_borrar.php?idp={ID_PROYECTO}">[Eliminar Proyecto]</a></li>
+</ul>
+<!-- END: menu -->
 
     <!-- BEGIN: datos_proyecto -->
     <h3>&nbsp;{DATOS.TITULO}</h3>

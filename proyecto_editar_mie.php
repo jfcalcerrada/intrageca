@@ -28,7 +28,7 @@ $actualizar = (isset($_POST['actualizar']) && $_POST['actualizar'] == 1) ? true 
 
 
 // Muestra el submenú, y si es el administrador el botón de borrar
-$contenido = menu_proyectos($contenido, $id_proyecto);
+$_content = menu_proyectos($_content, $id_proyecto);
 
 
 /* INSERT LOS ELEMENTOS NUEVOS */
@@ -57,7 +57,7 @@ if ($actualizar) {
     $id_miembro = $_POST["id_miembro_$i"];
 
     // Comprueba si esta marcado para borrar
-    if ($_POST["borrar_$i"] && strlen($_POST["id_miembro_$i"]) > 0) {
+    if (isset($_POST["borrar_$i"]) && $_POST["borrar_$i"] && strlen($_POST["id_miembro_$i"]) > 0) {
       // Prepara el borrado
       $borra_miembro =
         "DELETE FROM proyecto_miembros ".
@@ -121,8 +121,8 @@ while ($miembro = mysql_fetch_array($resultado_miembros)) {
     $miembro = array_change_key_case($miembro, CASE_UPPER);
 
     //Asigna y parse
-    $contenido->assign('MIEMBRO', $miembro);
-    $contenido->parse('content.miembros.miembro');
+    $_content->assign('MIEMBRO', $miembro);
+    $_content->parse('content.miembros.miembro');
 }
 
 
@@ -146,28 +146,23 @@ while ($miembro = mysql_fetch_array($resultado_miembros)) {
   $miembro = array_change_key_case($miembro, CASE_UPPER);
 
   //Asigna y parse
-  $contenido->assign('MIEMBRO', $miembro);
-  $contenido->parse('content.miembros.select_miembro');
+  $_content->assign('MIEMBRO', $miembro);
+  $_content->parse('content.miembros.select_miembro');
 }
 
 
 // Asigna el identificador y el numero
-$contenido->assign('ID_PROYECTO', $id_proyecto);
-$contenido->assign('NUMERO_MIEMBROS', $indice);
+$_content->assign('ID_PROYECTO', $id_proyecto);
+$_content->assign('NUMERO_MIEMBROS', $indice);
 
 // Parse las referencias
-$contenido->parse('content.miembros');
+$_content->parse('content.miembros');
 
 
 // Cierra la conexion con mysql
 mysql_close($conexion);
 
 
-/* MUESTRA LA PAGINA */
 // Parsea el contenido
-$contenido->parse('content');
-
-// Muestra la pagina final
-mostrar_pagina($archivo, $contenido);
-
-?>
+$_content->parse("content");
+require_once __DIR__ . '/includes/layout.php';

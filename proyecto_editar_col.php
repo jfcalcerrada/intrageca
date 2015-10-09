@@ -15,43 +15,16 @@ autenticar_usuario();
 //   idp : Identidad del proyecto
 //--------------------------------------------------------------------------
 
-  // definicion de Config usados
-  global $BASE_DATOS;
-  global $USER_BD;
-  global $PASS_BD;
+//--------------------------------------------------------------------
+// OBTIENE/VERIFICA ID DE PROYECTO
+//--------------------------------------------------------------------
+// le hemos dado a actualizar al formulario, sin modificar valores
+if (isset($_POST['idp']) && strlen($_POST['idp']) > 0) {
+    $id_proyecto = $_POST['idp'];
+} else{ // para el caso de un enlace a la página de editar
+    $id_proyecto = $_GET['idp'];
+}
 
-  // definicion de globales miembro
-  // $pry_proyecto_desc -- mensaje de proyecto desconocido
-  
-  // crea parser de la página
-  $pagina=new XTemplate ("templates/es/proyecto_editar_col.html");
-  
-  // conecta a Base de Datos MySQL
-  $conexion = mysql_connect("localhost",$USER_BD,$PASS_BD);
-  // verifica si se abrió conexion
-  if (!$conexion)
-  {
-     ERR_muestra_pagina_error($gen_error_conexion, "");
-     return;
-  }
-
-  // selecciona base de datos
-  mysql_select_db($BASE_DATOS,$conexion);  
-
- //--------------------------------------------------------------------
- // OBTIENE/VERIFICA ID DE PROYECTO
- //--------------------------------------------------------------------
- // le hemos dado a actualizar al formulario, sin modificar valores
- if (strlen($_POST['idp']) > 0) // 
- {
-   $id_proyecto = $_POST['idp'];
- } 
- // para el caso de un enlace a la página de editar
- else
- {
-   $id_proyecto = $_GET['idp'];
- }
- 
  // verifica que tras identificacion, tenemos un identificado valido
  if ((strlen($id_proyecto)==0) || ($id_proyecto == 0))
  {
@@ -61,11 +34,10 @@ autenticar_usuario();
  //--------------------------------------------------------------------
  // VERIFICA SI TIENE QUE INSERTAR/ACTUALIZAR REGISTRO TRAS AUTOLLAMADA
  //--------------------------------------------------------------------
- if ($_POST['modificado'])
- {
+ if (isset($_POST['modificado']) && $_POST['modificado']) {
+
    // verifica si tenemos que borrar algun miembro
-   for ($i=1; $i<=$_POST['numero_col']; $i++)
-   {
+   for ($i = 1; $i <= $_POST['numero_col']; $i++) {
       if (($_POST["id_proy_b_$i"] == 1) && ($_POST["id_proy_i_$i"]>0 ))
       {
          // prepara consulta de borrado
@@ -122,27 +94,26 @@ autenticar_usuario();
  }
  mysql_free_result($resultado);
  
- // obtiene la lista de colaboradores que estan en el proyecto
- $consulta_todos = 'SELECT id_colaborador, nombre, nombre_grupo FROM '.
+// obtiene la lista de colaboradores que estan en el proyecto
+$consulta_todos = 'SELECT id_colaborador, nombre, nombre_grupo FROM '.
     'colaboradores LEFT JOIN grupos_colaboradores '.
     'ON colaboradores.grupo_pertenece=grupos_colaboradores.id_grupo '.
     'ORDER BY nombre_grupo ASC';
-    
- // ejecuta la consulta para obtener datos
- $resultado = mysql_query($consulta_todos, $conexion);
+
+// ejecuta la consulta para obtener datos
+$resultado = mysql_query($consulta_todos, $conexion);
  
- if (!$resultado)
- {
-     echo "Error al realizar la consulta ".$consulta_todos;
- } 
+if (!$resultado) {
+    echo "Error al realizar la consulta ".$consulta_todos;
+}
  
- $num_col_incluidos = 0;
+$num_col_incluidos = 0;
  
- while ($colaborador = mysql_fetch_row($resultado))
- {
+while ($colaborador = mysql_fetch_row($resultado)) {
     // verifica si lo tengo que insertar en la lista de incluidos
-    if ($lista_col_incluidos[$colaborador[0]] == 1)
-    {
+    if (isset($lista_col_incluidos[$colaborador[0]])
+        && $lista_col_incluidos[$colaborador[0]] == 1
+    ) {
       $num_col_incluidos = $num_col_incluidos + 1;
       // asigna valores a lista
       $lista_valores = array(
@@ -151,8 +122,8 @@ autenticar_usuario();
              'NOMBRE' => $colaborador[1],
              'GRUPO_COL' => $colaborador[2]);
       // insertalo en página
-      $pagina->assign('LISTA',$lista_valores);
-      $pagina->parse("main.form_proyecto.fila_colaborador");
+      $_content->assign('LISTA',$lista_valores);
+      $_content->parse("content.form_proyecto.fila_colaborador");
     }
     // o en el select de no incluidos
     else
@@ -161,21 +132,21 @@ autenticar_usuario();
        $lista = array ( 'IDC' => $colaborador[0],
                         'NOMBRE' => $colaborador[2]."/".$colaborador[1]);
        // imprimelos
-       $pagina->assign('LISTA', $lista);
-       $pagina->parse("main.form_proyecto.selec_col");      
+       $_content->assign('LISTA', $lista);
+       $_content->parse("content.form_proyecto.selec_col");
     } 
- }
+}
 
- // imprime los valores en página
- $pagina->assign("IDP",$id_proyecto);
- $pagina->assign("NUM_COL",$num_col_incluidos);
- $pagina->assign('MENSAJE_ACTUALIZACION',$mensaje_aviso);
- $pagina->parse("main.form_proyecto");
 
- //imprime resultado
- $pagina->parse("main");
- $pagina->out("main"); 
+if (isset($mensaje_aviso)) {
+    $_content->assign('MENSAJE_ACTUALIZACION', $mensaje_aviso);
+}
 
-  // cierra descriptor
-  mysql_close($conexion);
-?>
+// imprime los valores en página
+$_content->assign("IDP",$id_proyecto);
+$_content->assign("NUM_COL",$num_col_incluidos);
+$_content->parse("content.form_proyecto");
+
+// Parsea el contenido
+$_content->parse("content");
+require_once __DIR__ . '/includes/layout.php';

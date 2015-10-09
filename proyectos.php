@@ -1,6 +1,6 @@
 <?php
-// Inicializamos el archivo con el script
-include('common/init.php');
+
+require_once 'common/init.php';
 
 
 /**
@@ -94,22 +94,22 @@ while ($proyecto = mysql_fetch_array($resultado_proyectos)) {
         // Si ha imprimido alguno
         if ($proyectos_por_estado != 0) {
             // Inserta el resto de proyectos activos
-            $contenido->parse("content.proyectos");
+            $_content->parse("content.proyectos");
         }
 
         // Inserta la cabecera correspondiente
         switch ($proyecto['estado']) {
             case 0:
                 // Inserta la cabecera
-                $contenido->parse('content.proyectos.concedido');
+                $_content->parse('content.proyectos.concedido');
                 break;
             case 1:
                 // Inserta la cabecera
-                $contenido->parse('content.proyectos.encurso');
+                $_content->parse('content.proyectos.encurso');
                 break;
             case 2:
                 // Inserta la cabecera
-                $contenido->parse('content.proyectos.terminado');
+                $_content->parse('content.proyectos.terminado');
                 break;
         }
 
@@ -123,10 +123,10 @@ while ($proyecto = mysql_fetch_array($resultado_proyectos)) {
     // Controlamos si entramos en los proyectos no publicos
     if($proyecto_publico != $proyecto['publico'] && $proyecto['publico'] == 0) {
         // Inserta el resto de proyectos activos
-        $contenido->parse("content.proyectos");
+        $_content->parse("content.proyectos");
 
         // Inserta cabecera de no activos
-        $contenido->parse("content.proyectos.cab_nopublico");
+        $_content->parse("content.proyectos.cab_nopublico");
         
         // Actualiza valor de ultimo proyecto
         $proyecto_publico = $proyecto['publico'];
@@ -136,7 +136,7 @@ while ($proyecto = mysql_fetch_array($resultado_proyectos)) {
     $proyecto = array_change_key_case($proyecto, CASE_UPPER);
 
     // Imprime el proyecto
-    $contenido->assign('PROYECTO', $proyecto);
+    $_content->assign('PROYECTO', $proyecto);
 
     // Aumenta el contador
     $proyectos_por_estado++;
@@ -161,11 +161,11 @@ while ($proyecto = mysql_fetch_array($resultado_proyectos)) {
 //    }
 
     // Lo imprimimos
-    $contenido->parse("content.proyectos.proyecto");
+    $_content->parse("content.proyectos.proyecto");
 }
 
 // Cierra los proyectos
-$contenido->parse("content.proyectos");
+$_content->parse("content.proyectos");
 
 // Cierra la conexion con mysql
 mysql_close($conexion);
@@ -176,16 +176,9 @@ mysql_close($conexion);
  */
 // Mostramos el boton de añadir proyecto si es el administrador
 if($_SESSION['privilegios'] == ADMIN)
-    $contenido->parse("content.anyadir");
+    $_content->parse("content.anyadir");
 
 
-/*
- * MUESTRA LA PAGINA
- */
 // Parsea el contenido
-$contenido->parse("content");
-
-// Muestra la pagina final
-mostrar_pagina($archivo, $contenido);
-
-?>
+$_content->parse("content");
+require_once __DIR__ . '/includes/layout.php';

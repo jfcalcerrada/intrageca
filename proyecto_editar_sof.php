@@ -28,7 +28,7 @@ autenticar_usuario();
   $idioma =  key($gen_idiomas_disp);
 
   // crea parser de la página
-  $pagina=new XTemplate ("templates/es/proyecto_editar_sof.html");
+  $_content=new XTemplate ("templates/es/proyecto_editar_sof.html");
   
   // conecta a Base de Datos MySQL
   $conexion = mysql_connect("localhost",$USER_BD,$PASS_BD);
@@ -153,8 +153,8 @@ autenticar_usuario();
              'IDENTIFICADOR' => $software[0],
              'TITULO' => $software[1]);
       // insertalo en página
-      $pagina->assign('LISTA',$lista_valores);
-      $pagina->parse("main.form_proyecto.fila_software");
+      $_content->assign('LISTA',$lista_valores);
+      $_content->parse("main.form_proyecto.fila_software");
     }
     // o en el select de no incluidos
     else
@@ -163,20 +163,17 @@ autenticar_usuario();
        $lista = array ( 'IDS' => $software[0],
                         'TITULO' => $software[1]);
        // imprimelos
-       $pagina->assign('LISTA', $lista);
-       $pagina->parse("main.form_proyecto.selec_software");      
+       $_content->assign('LISTA', $lista);
+       $_content->parse("main.form_proyecto.selec_software");      
     } 
  }
      
  // imprime los valores en página
- $pagina->assign("IDP",$id_proyecto);
- $pagina->assign("NUM_PAQUETES",$num_soft_incluidos);
- $pagina->parse("main.form_proyecto");
+ $_content->assign("IDP",$id_proyecto);
+ $_content->assign("NUM_PAQUETES",$num_soft_incluidos);
+ $_content->parse("main.form_proyecto");
 
- //imprime resultado
- $pagina->parse("main");
- $pagina->out("main"); 
 
-  // cierra descriptor
-  mysql_close($conexion);
-?>
+// Parsea el contenido
+$_content->parse("content");
+require_once __DIR__ . '/includes/layout.php';

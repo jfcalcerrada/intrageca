@@ -1,43 +1,18 @@
-<!-- BEGIN: main -->
-<html>
-<head>
-<title>Grupo GECA: Editar Software de proyecto</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<LINK REL=StyleSheet HREF="estilo.css" TYPE="text/css" MEDIA=screen>
-</head>
-<body>
-<table>
-<tr>
- <th colspan=2> <H2> Grupo de Electromagnetismo Computacional Avanzado (G.E.C.A.) </H2></th>
-</tr>
-<tr valign="top">
-<!-- Menu lateral -->
-<td align="left" class="menu">
-<h4>INTRANET</h4>
-<ul type=disc>
- <li><a href="miembros.php">Miembros</a></li>
- <li><a href="publicaciones.php">Publicaciones</a></li>
- <li><a href="proyectos.php">Proyectos</a></li>
- <li><a href="colaboradores.php">Colaboradores</a></li>
- <li><a href="software.php">Software</a></li>
+<!-- BEGIN: content -->
+<h2>Informaci&oacute;n de proyecto</h2>
+
+<!-- BEGIN: menu -->
+<ul id="submenu">
+    <li><a href="proyecto_ver_ficha.php?idp={ID_PROYECTO}">[Ver Ficha]</a></li>
+    <li><a href="proyecto_editar.php?idp={ID_PROYECTO}">[Editar Datos]</a></li>
+    <li><a href="proyecto_editar_mie.php?idp={ID_PROYECTO}">[Miembros]</a></li>
+    <li><a href="proyecto_editar_col.php?idp={ID_PROYECTO}">[Colaboradores]</a></li>
+    <li><a href="proyecto_editar_sof.php?idp={ID_PROYECTO}">[Software]</a></li>
+    <li><a href="proyecto_borrar.php?idp={ID_PROYECTO}">[Eliminar Proyecto]</a></li>
 </ul>
-</td>
-<!-- Pagina principal -->
-<td class="principal">
-<table width="100%">
- <tr>
-  <td>
-   <H3>Informaci&oacute;n de proyecto</H3>
-  </td>
- </tr>
-</table>    
-<hr>
-<!-- BEGIN: form_proyecto --> 
-<a href="proyecto_editar.php?idp={IDP}">[Datos Proyecto]</a> &nbsp;
-<a href="proyecto_editar_mie.php?idp={IDP}">[Miembros]</a> &nbsp;
-<a href="proyecto_editar_col.php?idp={IDP}">[Colaboradores]</a> &nbsp;
-<a href="proyecto_editar_sof.php?idp={IDP}">[Software]</a> 
-<br><br>
+<!-- END: menu -->
+
+<!-- BEGIN: form_proyecto -->
 <form action="proyecto_editar_sof.php" name="editar" method=POST>
 <input type=hidden name="idp" value="{IDP}">
 <table width="100%">
@@ -81,9 +56,5 @@
 </table>
 </form>
 <!-- END: form_proyecto -->
-<br>
-</td>
-</tr>
-</body>
-</html>
-<!-- END: main -->
+
+<!-- END: content -->
