@@ -13,14 +13,12 @@ include "bibtex/inserta_BD_referencias.php";
 //
 function AUX_campo_renombrado($campo)
 {
-   if ((strpos($campo,'OPT')==0) AND !(strpos($campo,'OPT')=== false))
-   {
+   if ((strpos($campo,'OPT')==0) AND !(strpos($campo,'OPT')=== false)) {
      $campo_modificado = substr($campo,3);
-   }
-   else
-   {
+   } else {
      $campo_modificado = "OPT".$campo;
-   }  
+   }
+
    return $campo_modificado; 
 }
 
@@ -38,13 +36,11 @@ function AUX_verifica_campos_especiales($campo, $valor, &$fecha, &$tipo)
 {
   global $public_rel_tipos;
   // verifica si es mes o año para guardar los valores
-  if (($campo == 'year')||($campo == 'month'))
-  {
+  if (($campo == 'year')||($campo == 'month')) {
      $fecha[$campo] = addslashes($valor);
   }
   // si es el nuevo campo es OPTtipopub sobreescribe tipo de busqueda
-  if ($campo == 'OPTtipopub')
-  {
+  if ($campo == 'OPTtipopub') {
      // chequea que el valor está dentro de los permitidos
      $tipo_formateado = trim(strtoupper($valor));
      
@@ -52,8 +48,7 @@ function AUX_verifica_campos_especiales($campo, $valor, &$fecha, &$tipo)
           $tipo_web = key($public_rel_tipos);
           next($public_rel_tipos))
      {
-        if (in_array($tipo_formateado,$public_rel_tipos[$tipo_web]))
-        {
+        if (in_array($tipo_formateado,$public_rel_tipos[$tipo_web])) {
           $tipo = $tipo_formateado;
         }
      }     
@@ -95,7 +90,7 @@ function public_insertar($conexion, $registro)
   // definicion de globales
   global $public_tipo_links; 
   global $public_dir_docs;
-  global $HTTP_POST_FILES;
+  global $_FILES;
 
   //--------------------------------------------------------------------
   // COPIA/BORRA DOCUMENTO SI ESTÁ DEFINIDO
@@ -104,13 +99,11 @@ function public_insertar($conexion, $registro)
   $nombre_fichero = $public_dir_docs.$registro['id_ref_bibtex'].'.pdf';
   
   // verifica si insertamos uno nuevo
-  if (strlen($HTTP_POST_FILES['fichero_pub']['name'])>0) 
-  {
+  if (isset($_FILES['fichero_pub']) && strlen($_FILES['fichero_pub']['name'])>0) {
    // admite solo pdfs
-   if ($HTTP_POST_FILES['fichero_pub']['type']=='application/pdf')
-   {    
+   if ($_FILES['fichero_pub']['type']=='application/pdf') {
      // copia fichero a directorio de curriculum renombrandolo
-     copy($HTTP_POST_FILES['fichero_pub']['tmp_name'],$nombre_fichero);
+     copy($_FILES['fichero_pub']['tmp_name'],$nombre_fichero);
    }  
   }
   // verifica si existe interno y lo borramos si procede
@@ -124,8 +117,7 @@ function public_insertar($conexion, $registro)
   //---------------------------------------------
   // prepara datos para insertar desde web
   $id_ref_bibtex = addslashes($registro['id_ref_bibtex']);
-  if ($registro['tipo_link'] == $public_tipo_links['Externo'])
-    {
+  if ($registro['tipo_link'] == $public_tipo_links['Externo']) {
       $link_refer = addslashes($registro['link_refer']);
     }
   else if (($registro['tipo_link'] == $public_tipo_links['Interno'])&&
@@ -137,8 +129,7 @@ function public_insertar($conexion, $registro)
   $publicar = (AUX_estado_es_visible($registro['estado']) == 1)?  1:0;
   
   // chequea si hay que insertar un nuevo registro o solo actualizarlo
-  if ($registro['id_ref'] == 0)
-  {
+  if ($registro['id_ref'] == 0) {
      // construye la consulta de Insercion
      $consulta_public ='INSERT INTO referencias(id_ref_bibtex, tipo, visible,'.
        ' tipo_link, link_referencia, idioma, estado, tipo_bibtex) VALUES("'.
@@ -146,8 +137,7 @@ function public_insertar($conexion, $registro)
        $registro['tipo_link'].'", "'.$link_refer.'","'.$registro['idioma'].
        '","'.$registro['estado'].'", "'.$registro['tipo'].'")';
   }
-  else
-  {
+  else {
      // construye la consulta de actualizacion
      $consulta_public = 'UPDATE referencias SET id_ref_bibtex="'.
        $id_ref_bibtex.'", tipo="'.$registro['tipo'].'", tipo_bibtex="'.
@@ -161,15 +151,13 @@ function public_insertar($conexion, $registro)
   $resultado = mysql_query($consulta_public, $conexion);
 
   // si da error, devuelve 0
-  if (!$resultado)
-  {
+  if (!$resultado) {
    echo "Error de consulta ".$consulta_public;
    return 0;
   }
 
   // obtiene el valor del elemento insertado/actualizado
-  if ($registro['id_ref'] == 0)
-  {
+  if ($registro['id_ref'] == 0) {
      $id_referencia = mysql_insert_id(); 
      
      // inserta una referencia de campo nueva
@@ -184,14 +172,12 @@ function public_insertar($conexion, $registro)
       
      $resultado =  mysql_query($consulta_cross, $conexion);
      
-     if (! $resultado)
-     {
+     if (! $resultado) {
       echo "Error de consulta ".$consulta_cross;
       return 0;           
      }         
   }  
-  else
-  {
+  else {
      $id_referencia = $registro['id_ref'];
      
      // obtiene el id_campos para el registro actualizado
@@ -213,8 +199,7 @@ function public_insertar($conexion, $registro)
   $lista_campos = array();
 
   // insertar toda la informacion de los campos en un array
-  for ($i=1; $i<= $registro['numero_campos'];$i++)
-  {
+  for ($i=1; $i<= $registro['numero_campos'];$i++) {
     $campo = $registro["id_campo_c_$i"];
     $lista_campos[$campo]['borrar'] = $registro["id_campo_b_$i"];
     $lista_campos[$campo]['modificar'] = $registro["id_campo_m_$i"];
@@ -223,13 +208,10 @@ function public_insertar($conexion, $registro)
   
   // recorremos lista borrando todos los marcados como 'borrar' o 'modificar'
   // y actualizando el valor del resto
-  foreach ($lista_campos as $campo => $valor)
-  {
-    if ($lista_campos[$campo]['borrar'] == 1)
-    {
+  foreach ($lista_campos as $campo => $valor) {
+    if ($lista_campos[$campo]['borrar'] == 1) {
        // si campo es crossref, borramos el enlace
-       if ($campo == 'crossref')
-       {
+       if ($campo == 'crossref') {
           Borra_Crossref($id_referencia, $conexion);
        }
        
@@ -237,9 +219,7 @@ function public_insertar($conexion, $registro)
        $consulta_campo='DELETE FROM ref_campos WHERE id_campo_ref='.
          $id_campo.' AND campo="'.$campo.'"';
              
-    }
-    elseif ($lista_campos[$campo]['modificar'] == 1)
-    {
+    } elseif ($lista_campos[$campo]['modificar'] == 1) {
         $campo_modificado = AUX_campo_renombrado($campo);
 
         // realiza consulta de borrado de las dos posibilidades de campo
@@ -247,12 +227,9 @@ function public_insertar($conexion, $registro)
         $consulta_campo='DELETE FROM ref_campos WHERE id_campo_ref='.
          $id_campo.' AND (campo="'.$campo.'" OR '.'campo="'.
          $campo_modificado.'")';
-    }
-    else
-    {
+    } else {
        // si campo es crossref, actualizamos su valor
-       if ($campo == 'crossref')
-       {
+       if ($campo == 'crossref') {
           Borra_Crossref($id_referencia, $conexion);
           Inserta_Crossref($lista_campos[$campo]['valor'], $id_referencia, $conexion);
        }
@@ -269,27 +246,22 @@ function public_insertar($conexion, $registro)
     $resultado = mysql_query($consulta_campo, $conexion);
       
     // si da error, saca un mensaje
-    if (!$resultado)
-    {
+    if (!$resultado) {
          echo "No se pudo ejecutar la consulta ".$consulta_campo;
     }    
   }  
   
   // por ultimo, recorre una ultima vez la lista para insertar
   // con el nuevo nombre aquellos campos que hayan sido renombrados
-  foreach ($lista_campos as $campo => $valor)
-  {
-    if ($lista_campos[$campo]['modificar'] == 1)
-    {
+  foreach ($lista_campos as $campo => $valor) {
+    if ($lista_campos[$campo]['modificar'] == 1) {
       $campo_modificado = AUX_campo_renombrado($campo); 
       
       // Verificamos gestion de crossref
-      if ($campo_modificado == 'crossref')
-      {
+      if ($campo_modificado == 'crossref') {
         Inserta_Crossref($lista_campos[$campo]['valor'], $id_referencia, $conexion);
-      }
-      else if ($campo_modificado == 'OPTcrossref')
-      {
+
+      } else if ($campo_modificado == 'OPTcrossref') {
          Borra_Crossref($id_referencia, $conexion);
       }
 
@@ -301,8 +273,7 @@ function public_insertar($conexion, $registro)
       $resultado = mysql_query($consulta_campo, $conexion);
       
       // si da error, saca un mensaje
-      if (!$resultado)
-      {
+      if (!$resultado) {
          echo "No se pudo ejecutar la consulta ".$consulta_campo;
       }
 
@@ -317,8 +288,7 @@ function public_insertar($conexion, $registro)
   // para poder chequear que no existe ya el nombre a insertar
   //------------------------------------------------------------
   
-  if (strlen($registro["nuevo_campo"])>0)
-  {
+  if (strlen($registro["nuevo_campo"]) > 0) {
      $campo_existe = false;
      $nuevo_campo = $registro["nuevo_campo"];
      $campo_modificado = AUX_campo_renombrado($nuevo_campo);   
@@ -426,5 +396,3 @@ function public_insertar($conexion, $registro)
   // devuelve el valor del elemento insertado
   return $id_referencia;
 } 
-
-?>

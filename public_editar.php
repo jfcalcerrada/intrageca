@@ -1,9 +1,9 @@
 <?php
-// Inicializamos el archivo con el script
-include('common/init.php');
 
-include('common/common_pub.php');
-include('public_insertar.php');
+require_once 'common/init.php';
+
+require_once 'common/common_pub.php';
+require_once 'public_insertar.php';
 
 
 //--------------------------------------------------------------------------
@@ -65,8 +65,8 @@ if ($id_referencia >0)
 //-------------------------------------------------------------------- 
 if ($id_referencia != 0)
 {
-    $contenido->assign("ID_REFERENCIA", $id_referencia);
-    $contenido->parse("content.form_borrar");
+    $_content->assign("ID_REFERENCIA", $id_referencia);
+    $_content->parse("content.form_borrar");
 }
 //--------------------------------------------------------------------
 // RELLENA LOS VALORES DE PUBLICACION
@@ -86,10 +86,10 @@ for (reset($public_rel_tipos);
         // chequea si es el tipo de la publicacion
         $selected = ($tipo_bibtex == $registros[1])? "SELECTED":"";
 
-        $contenido->assign("TIPO_SELEC", $tipo_bibtex);
-        $contenido->assign("TIPO_LARGO_SELEC",$tipo_web." (".$tipo_bibtex.")");
-        $contenido->assign("SELECTED",$selected);
-        $contenido->parse("content.form_publicacion.datos_pub.select_tipo");
+        $_content->assign("TIPO_SELEC", $tipo_bibtex);
+        $_content->assign("TIPO_LARGO_SELEC",$tipo_web." (".$tipo_bibtex.")");
+        $_content->assign("SELECTED",$selected);
+        $_content->parse("content.form_publicacion.datos_pub.select_tipo");
     }
 }
 
@@ -101,9 +101,9 @@ for (reset($public_estados_visibles);
     // chequea si es el estado seleccionado
     $selected = ($estado == $registros[7])? "SELECTED":"";
 
-    $contenido->assign("ESTADO_SELEC",$estado);
-    $contenido->assign("SELECTED",$selected);
-    $contenido->parse("content.form_publicacion.datos_pub.select_estado");
+    $_content->assign("ESTADO_SELEC",$estado);
+    $_content->assign("SELECTED",$selected);
+    $_content->parse("content.form_publicacion.datos_pub.select_estado");
 }
 
 // imprime los idiomas disponibles
@@ -116,8 +116,8 @@ foreach($gen_idiomas_disp as $cod => $texto_idioma)
                              'IDIOMA_WEB'   => $texto_idioma,
                              'SELECTED'     => $selected);
     // insertalo en página
-    $contenido->assign('LISTA',$lista_idioma);
-    $contenido->parse('content.form_publicacion.datos_pub.select_idioma');
+    $_content->assign('LISTA',$lista_idioma);
+    $_content->parse('content.form_publicacion.datos_pub.select_idioma');
 }    
 
 // Rellena los valores de tipo de links
@@ -128,24 +128,24 @@ for (reset($public_tipo_links);
     // chequea si es el estado seleccionado
     $selected = ($public_tipo_links[$tipo_link] == $registros[3])? "SELECTED":"";
 
-    $contenido->assign("V_TIPO_LINK",$public_tipo_links[$tipo_link]);
-    $contenido->assign("TIPO_LINK",$tipo_link);
-    $contenido->assign("SELECTED",$selected);
-    $contenido->parse("content.form_publicacion.datos_pub.select_tipo_link");
+    $_content->assign("V_TIPO_LINK",$public_tipo_links[$tipo_link]);
+    $_content->assign("TIPO_LINK",$tipo_link);
+    $_content->assign("SELECTED",$selected);
+    $_content->parse("content.form_publicacion.datos_pub.select_tipo_link");
 }
 
 // asigna link interno, externo o ninguno
 if ($registros[3] == $public_tipo_links['Externo'])
 {
-    $contenido->assign("LINK_REFER",$registros[4]);
-    $contenido->parse("content.form_publicacion.datos_pub.link_externo");
+    $_content->assign("LINK_REFER",$registros[4]);
+    $_content->parse("content.form_publicacion.datos_pub.link_externo");
 }
 else if ($registros[3] == $public_tipo_links['Interno'])
 {
     $nombre_fichero = substr($id_referencia[4],
         strrpos($id_referencia[4],"/"));
-    $contenido->assign("LINK_REFER",'docs/'.$registros[4]);
-    $contenido->parse("content.form_publicacion.datos_pub.link_interno");
+    $_content->assign("LINK_REFER",'docs/'.$registros[4]);
+    $_content->parse("content.form_publicacion.datos_pub.link_interno");
 }
 
 // verifica la visibilidad
@@ -162,8 +162,8 @@ $valores_lista = array (
          "AVISO" => $aviso);
 
 // inserta los valores en página
-$contenido->assign("LISTA",$valores_lista);
-$contenido->parse("content.form_publicacion.datos_pub");
+$_content->assign("LISTA",$valores_lista);
+$_content->parse("content.form_publicacion.datos_pub");
 
 //--------------------------------------------------------------------
 // RELLENA LOS VALORES DE CAMPOS
@@ -249,19 +249,19 @@ if ((strlen($id_referencia) > 0) AND ($id_referencia > 0))
               'WARNING' => $warning);
 
             // Inserta campo en la página
-            $contenido->assign("LISTA",$lista_valores);
-            $contenido->parse("content.form_publicacion.campos_pub.fila");
+            $_content->assign("LISTA",$lista_valores);
+            $_content->parse("content.form_publicacion.campos_pub.fila");
         }
 
     }
 }
 
 // Cierra tabla para con el número de registros
-$contenido->assign("NUM_CAMPOS", $num_campos);
-$contenido->parse("content.form_publicacion.campos_pub");
+$_content->assign("NUM_CAMPOS", $num_campos);
+$_content->parse("content.form_publicacion.campos_pub");
 
 //imprime resultado
-$contenido->parse("content.form_publicacion");
+$_content->parse("content.form_publicacion");
 
 // Cierra la conexion con mysql
 mysql_close($conexion);
@@ -271,9 +271,9 @@ mysql_close($conexion);
  * MUESTRA LA PAGINA
  */
 // Parsea el contenido
-$contenido->parse("content");
+$_content->parse("content");
 
 // Muestra la pagina final
-mostrar_pagina($archivo, $contenido);
+mostrar_pagina($archivo, $_content);
 
 ?>

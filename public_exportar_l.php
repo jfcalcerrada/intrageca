@@ -42,22 +42,8 @@ $public_marcacion_campos = cargar_formatos($public_marcacion_campos, $id_miembro
 
   // definicion de variables usadas en todo el script
   $cadena_busqueda = "";
-  $numero_pagina = (strlen($_GET['pagina'])>0)?  $_GET['pagina'] : 1;
+  $numero_pagina = (isset($_GET['pagina']) && strlen($_GET['pagina']) > 0) ? $_GET['pagina'] : 1;
 
-  // crea parser de la página
-  $pagina=new XTemplate ("templates/es/public_exportar_l.html");
-
-  // conecta a Base de Datos MySQL
-  $conexion = mysql_connect("localhost",$USER_BD,$PASS_BD);
-  // verifica si se abrió conexion
-  if (!$conexion)
-  {
-     ERR_muestra_pagina_error($gen_error_conexion, "");
-     return;
-  }
-
-  // selecciona base de datos
-  mysql_select_db($BASE_DATOS,$conexion);
  //--------------------------------------------------------------------
  // LEE LOS SINONIMOS DE LA TABLA
  //--------------------------------------------------------------------
@@ -96,17 +82,14 @@ $public_marcacion_campos = cargar_formatos($public_marcacion_campos, $id_miembro
  $resultado = mysql_query($cons_tipos_referencias, $conexion);
 
  // si la consulta fue bien
- if ($resultado)
- {
+ if ($resultado) {
    // recorre resultados y registra tipos
    while ($tipo_obtenido = mysql_fetch_row($resultado))
    {
      $tipo_web = AUX_convertir_tipos($tipo_obtenido[0]);
      $tipos_presentes[$tipo_web] = 1;
    }
- }
- else
- {
+ } else {
    echo "Error al realizar la consulta : ".$cons_tipos_referencias."\n";
  }
 
@@ -115,21 +98,20 @@ $public_marcacion_campos = cargar_formatos($public_marcacion_campos, $id_miembro
        $tipo_consultado = key($public_rel_tipos);
        next($public_rel_tipos))
   {
-     if ($tipos_presentes[$tipo_consultado] == 1)
-     {
+     if ($tipos_presentes[$tipo_consultado] == 1) {
          // si hay más de uno, inserta elemento en la tabla
          $valores_lista['VAL1']=$tipo_consultado;
          $valores_lista['VAL2']="[".$public_tipos_refer[$tipo_consultado]."]";
          // metelos en el navegador de la página
-         $pagina->assign("LISTA1",$valores_lista);
-         $pagina->parse("main.tabla_direc.fila");
+         $_content->assign("LISTA1",$valores_lista);
+         $_content->parse("content.tabla_direc.fila");
      }
   }
   // limpia array de insercion en página
   unset($valores_lista);
 
   // termina tabla
-  $pagina->parse("main.tabla_direc");
+  $_content->parse("content.tabla_direc");
 
 //--------------------------------------------------------------------
 // LISTA DE PARAMETROS DE BUSQUEDA
@@ -142,17 +124,17 @@ $public_marcacion_campos = cargar_formatos($public_marcacion_campos, $id_miembro
   // inserta lógica en cabecera
   if (strlen($_GET['logica'])>0)
   {
-    $pagina->assign("LOGICA",$public_logica_busqueda[$_GET['logica']]);
+    $_content->assign("LOGICA",$public_logica_busqueda[$_GET['logica']]);
     $cadena_busqueda .= "logica=".$_GET['logica']."&";
   }
   else
   {
-    $pagina->assign("LOGICA",$public_logica_busqueda['AND']);
+    $_content->assign("LOGICA",$public_logica_busqueda['AND']);
     $cadena_busqueda .= "logica=AND&";
   }
 
   // inserta en página
-  $pagina->parse("main.tabla_parametros.logica_busqueda");
+  $_content->parse("content.tabla_parametros.logica_busqueda");
 
   // para cada uno de los parámetros de busqueda validos.
   for ($i=1; $i< $public_num_campos+1; $i++)
@@ -163,8 +145,8 @@ $public_marcacion_campos = cargar_formatos($public_marcacion_campos, $id_miembro
      $lista_parametros['CAMPO'] = htmlentities($_GET["campo$i"]);
      $lista_parametros['VALOR'] = $_GET["valor$i"];
      // insertalos en página
-     $pagina->assign("LISTA_PARAMETROS",$lista_parametros);
-     $pagina->parse("main.tabla_parametros.lista_parametros");
+     $_content->assign("LISTA_PARAMETROS",$lista_parametros);
+     $_content->parse("content.tabla_parametros.lista_parametros");
      // reconstruye cadena de busqueda
      $cadena_busqueda .= "campo$i=".$_GET["campo$i"]."&valor$i=".$_GET["valor$i"]."&";
    }
@@ -176,8 +158,8 @@ $public_marcacion_campos = cargar_formatos($public_marcacion_campos, $id_miembro
      $lista_parametros['CAMPO'] = $_GET['campo_aux'];
      $lista_parametros['VALOR'] = $_GET['valor_aux'];
      // insertalo en página
-     $pagina->assign("LISTA_PARAMETROS",$lista_parametros);
-     $pagina->parse("main.tabla_parametros.lista_parametros");
+     $_content->assign("LISTA_PARAMETROS",$lista_parametros);
+     $_content->parse("content.tabla_parametros.lista_parametros");
      // reconstruye cadena de busqueda
      $cadena_busqueda .= "campo_aux=".$_GET["campo_aux"]."&valor_aux=".$_GET["valor_aux"]."&";
   }
@@ -185,8 +167,8 @@ $public_marcacion_campos = cargar_formatos($public_marcacion_campos, $id_miembro
   if (strlen($_GET['tipo'])>0)
   {
      // insertalo en página
-     $pagina->assign("VALOR",$public_tipos_refer[$_GET['tipo']]);
-     $pagina->parse("main.tabla_parametros.tipo_publicacion");
+     $_content->assign("VALOR",$public_tipos_refer[$_GET['tipo']]);
+     $_content->parse("content.tabla_parametros.tipo_publicacion");
      // reconstruye cadena de busqueda
      $cadena_busqueda .= "tipo=".$_GET['tipo']."&";
   }
@@ -194,8 +176,8 @@ $public_marcacion_campos = cargar_formatos($public_marcacion_campos, $id_miembro
   if (strlen($_GET['id_ref_bibtex']))
   {
      // insertalo en página
-     $pagina->assign("VALOR",$_GET['id_ref_bibtex']);
-     $pagina->parse("main.tabla_parametros.id_bibtex");
+     $_content->assign("VALOR",$_GET['id_ref_bibtex']);
+     $_content->parse("content.tabla_parametros.id_bibtex");
      // reconstruye cadena de busqueda
      $cadena_busqueda .= "id_ref_bibtex=".$_GET['id_ref_bibtex']."&";
   }
@@ -217,14 +199,14 @@ $public_marcacion_campos = cargar_formatos($public_marcacion_campos, $id_miembro
   if (strlen($estados_definidos) > 0)
   {
        // insertalo en página
-       $pagina->assign("VALOR",$estados_definidos);
-       $pagina->parse("main.tabla_parametros.estado_pub");
+       $_content->assign("VALOR",$estados_definidos);
+       $_content->parse("content.tabla_parametros.estado_pub");
   }
   // insertalo en página
-  $pagina->assign("VALOR",$numero_pagina);
-  $pagina->parse("main.tabla_parametros.pagina");
+  $_content->assign("VALOR",$numero_pagina);
+  $_content->parse("content.tabla_parametros.pagina");
   // finaliza tabla
-  $pagina->parse("main.tabla_parametros");
+  $_content->parse("content.tabla_parametros");
 
 //------------------------------------------------------------------
 // LISTA PUBLICACIONES ENCONTRADAS
@@ -315,15 +297,15 @@ $public_marcacion_campos = cargar_formatos($public_marcacion_campos, $id_miembro
           	 // termina tabla anterior si no es la primera
           	 if (strlen($tipo_cabecera)>0)
           	 {
-          	   $pagina->parse("main.tipo_grupo.lista");
+          	   $_content->parse("content.tipo_grupo.lista");
           	   
           	 }
             // asigna tipo
           	 $tipo_cabecera = $tipo_web_actual;
             // mete tipo en la página
-            $pagina->assign("TIPO_PUBLICACION",
+            $_content->assign("TIPO_PUBLICACION",
                                            $public_tipos_refer[$tipo_cabecera]);
-            $pagina->parse("main.tipo_grupo.cabecera_tipo");
+            $_content->parse("content.tipo_grupo.cabecera_tipo");
           }
           // construye segunda consulta para obtener campos de la publicacion
           $consulta_campos = "SELECT campo,valor FROM ref_campos WHERE ".
@@ -377,41 +359,41 @@ $public_marcacion_campos = cargar_formatos($public_marcacion_campos, $id_miembro
             if ($id_referencia[5] != $anyo_publicacion)
             {
                // cierra la lista anterior
-               $pagina->parse("main.tipo_grupo.lista");
+               $_content->parse("content.tipo_grupo.lista");
                // asigna nuevo año
                $anyo_publicacion = $id_referencia[5];
                $anyo_public_str = str_replace("9999","---",$anyo_publicacion);
                // inserta cabecera de año y cierra lista
-               $pagina->assign("ANYO_PUBLICACION",$anyo_public_str);
-               $pagina->parse("main.tipo_grupo.lista.cabecera_anyo");
+               $_content->assign("ANYO_PUBLICACION",$anyo_public_str);
+               $_content->parse("content.tipo_grupo.lista.cabecera_anyo");
             }
 
             // inserta la cadena formateada en la pagina
-            $pagina->assign("REFERENCIA",
+            $_content->assign("REFERENCIA",
                AUX_campos_formateados($campos_public,"",$gen_separador_campos));
-            $pagina->assign("ID_REFERENCIA",$id_referencia[0]);
+            $_content->assign("ID_REFERENCIA",$id_referencia[0]);
 
             if ($id_referencia[3] == $public_tipo_links['Interno'])
 	    {
 	     $nombre_fichero = substr($id_referencia[4],
 	       strrpos($id_referencia[4],"/"));
-	     $pagina->assign("LINK_PUB",'docs/'.$id_referencia[4]);
+	     $_content->assign("LINK_PUB",'docs/'.$id_referencia[4]);
 	    }
 	    else
 	    {
-             $pagina->assign("LINK_PUB",$id_referencia[4]);
+             $_content->assign("LINK_PUB",$id_referencia[4]);
             }
             // asigna Link a publicacion si lo tiene
             if ($id_referencia[3] != $public_tipo_links['No Disponible'])
             {
                 $extension = strtoupper(
                   substr($id_referencia[4],strrpos($id_referencia[4],".")+1));
-                $pagina->assign("EXT","[".$extension."]");
+                $_content->assign("EXT","[".$extension."]");
             }
-            else $pagina->assign("EXT","");
+            else $_content->assign("EXT","");
 
             // escribe resultados en página
-            $pagina->parse("main.tipo_grupo.lista.fila");
+            $_content->parse("content.tipo_grupo.lista.fila");
 
             // libera resultados de la consulta
             mysql_free_result ($resul_campos);
@@ -422,15 +404,15 @@ $public_marcacion_campos = cargar_formatos($public_marcacion_campos, $id_miembro
   } // Cierra el bucle FOR de cada tipo consultado
 
    // cierra la lista de publicaciones
-   $pagina->parse("main.tipo_grupo.lista");
-   $pagina->parse("main.tipo_grupo");
+   $_content->parse("content.tipo_grupo.lista");
+   $_content->parse("content.tipo_grupo");
 
 
   mysql_close($conexion);
 
   // imprime pagina completa
-  $pagina->parse("main");
-  $texto = $pagina->text("main");
+  $_content->parse("content");
+  $texto = $_content->text("content");
 
   if(isset($_GET['rtf'])) {
         $texto = str_replace("<html>", "{\\rtf1\\ansi{\\fonttbl\\f0\\fswiss Helvetica;}\\f0\\pard
@@ -468,5 +450,3 @@ $public_marcacion_campos = cargar_formatos($public_marcacion_campos, $id_miembro
   } else {
       echo $texto;
   }
-
-?>

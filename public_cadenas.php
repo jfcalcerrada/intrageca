@@ -21,64 +21,40 @@ require_once 'public_insertar.php';
 //  nuevo_texto : Valor del nuevo sinonimo
 //--------------------------------------------------------------------------
 
-  // definicion de Config usados
-  global $BASE_DATOS;
-  global $USER_BD;
-  global $PASS_BD;
-  
-  // crea parser de la página
-  $pagina=new XTemplate ("templates/es/public_cadenas.html");
-  
-  // conecta a Base de Datos MySQL
-  $conexion = mysql_connect("localhost",$USER_BD,$PASS_BD);
-  // verifica si se abrió conexion
-  if (!$conexion)
-  {
-     ERR_muestra_pagina_error($gen_error_conexion, "");
-     return;
-  }
-
-  // selecciona base de datos
-  mysql_select_db($BASE_DATOS,$conexion);  
 
  //--------------------------------------------------------------------
  // VERIFICA SI TIENE QUE INSERTAR/ACTUALIZAR REGISTROS TRAS AUTOLLAMADA
  //--------------------------------------------------------------------
  // le hemos dado a actualizar al formulario, modificando valores
- if ($_POST['modificado'] == 1) 
- {
+ if (isset($_POST['modificado']) && $_POST['modificado'] == 1) {
    // recorremos lista de cadenas y actualizamos o borramos
    // segun se haya marcado el campo borrar
-   for ($i=1; $i<=$_POST['numero_cadenas']; $i++)
-   {
-      if ($_POST["b_$i"] == 1)  // orden de borrado
-      {
+   for ($i=1; $i<=$_POST['numero_cadenas']; $i++) {
+       // orden de borrado
+      if (isset($_POST["b_$i"]) && $_POST["b_$i"] == 1) {
         $consulta_mod = 'DELETE FROM ref_cadenas WHERE cadena="'.
          $_POST["i_$i"].'"'; 
       }
-      else  // orden de actualizacion
-      {
+      // orden de actualizacion
+      else {
          $consulta_mod = 'UPDATE ref_cadenas SET valor="'.$_POST["t_$i"].
           '" WHERE cadena="'.$_POST["i_$i"].'"';
       }
       // ejecuta consulta
       $resultado = mysql_query($consulta_mod, $conexion);
-      if (!$resultado)
-      {
+      if (!$resultado) {
          echo "No se pudo ejecutar la consulta ".$consulta_mod;
       }
    }
    
    // verifica si hay un nuevo campo
-   if (strlen($_POST['nuevo_campo'])>0)
-   {
+   if (isset($_POST['nuevo_campo']) && strlen($_POST['nuevo_campo']) > 0) {
       $consulta_mod = 'INSERT INTO ref_cadenas(cadena,valor) VALUES("'.
        $_POST['nuevo_campo'].'","'.$_POST['nuevo_texto'].'")';
 
       // ejecuta consulta
       $resultado = mysql_query($consulta_mod, $conexion);
-      if (!$resultado)
-      {
+      if (!$resultado) {
          ERR_muestra_pagina_error("Sinónimo ya definido","");
          return;
       }
@@ -96,8 +72,7 @@ require_once 'public_insertar.php';
  
  $resultado = mysql_query($consulta_cadenas, $conexion);
  
- while ($fila = mysql_fetch_row($resultado))
- {
+ while ($fila = mysql_fetch_row($resultado)) {
    $numero_cadenas = $numero_cadenas + 1;
    
    $lista_valores = array (
@@ -107,16 +82,17 @@ require_once 'public_insertar.php';
        'B_SIN'    => "b_$numero_cadenas",
        'TEXTO_SIN'=> $fila[1]);
    
-   $pagina->assign('LISTA',$lista_valores);
-   $pagina->parse("main.fila_cadena");
+   $_content->assign('LISTA',$lista_valores);
+   $_content->parse("content.fila_cadena");
  }
  
  // cierra descriptor
  mysql_close($conexion);
  
  //imprime resultado
- $pagina->assign("NUM_CADENAS",$numero_cadenas); 
- $pagina->parse("main");
- $pagina->out("main"); 
+ $_content->assign("NUM_CADENAS",$numero_cadenas);
 
-?>
+
+// Parsea el contenido
+$_content->parse("content");
+require_once __DIR__ . '/includes/layout.php';

@@ -1,14 +1,14 @@
 <!-- BEGIN: content -->
+<h2>Datos de publicaci&oacute;n</h2>
+
 <a href="publicaciones.php">[Buscador]</a> &nbsp;
 <a href="public_editar.php">[A&ntilde;adir Publicaci&oacute;n]</a> &nbsp;
 <a href="public_importar.php">[Importaci&oacute;n]</a> &nbsp;
-<a href="public_borrar_bib.php">[Borrar Bibliograf&iacute;as]</a> &nbsp;
 <a href="public_cadenas.php">[Sin&oacute;nimos]</a> &nbsp;
-<hr>
+<a href="public_borrar_bib.php">[Borrar Bibliograf&iacute;as]</a>
+
+
 <table width="100%"><tr>
-  <td>
-   <H3>Datos de publicaci&oacute;n</H3>
-  </td>
 <!-- BEGIN: form_borrar -->
   <td align=right>
    <form action="public_borrar.php" method="POST" >
@@ -18,7 +18,7 @@
   </td>
 <!-- END: form_borrar -->
 </table>    
-<hr> 
+
 <!-- BEGIN: form_publicacion -->
 <form action="public_editar.php" enctype="multipart/form-data" name="editar" method=POST>
 <!-- BEGIN: datos_pub -->
@@ -83,7 +83,8 @@
    <!-- END: link_interno -->
  <input type=hidden name="id_ref" value={LISTA.ID_REFERENCIA}>
 <!-- END: datos_pub -->
-<H3>Campos de la publicaci&oacute;n</H3><hr>
+
+<h3>Campos de la publicaci&oacute;n</h3>
 <!-- BEGIN: campos_pub -->
 <table>
    <!-- BEGIN: fila -->

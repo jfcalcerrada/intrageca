@@ -1,8 +1,8 @@
 <?php
-// Inicializamos el archivo con el script
-include('common/init.php');
 
-include('common/common_pub.php');
+require_once 'common/init.php';
+
+require_once 'common/common_pub.php';
 
 //--------------------------------------------------------------------------
 // publicaciones.php
@@ -41,10 +41,10 @@ if ($_SESSION['privilegios'] != INVITADO) {
 
     // Si es el administrador, carga el boton de borrar
     if ($_SESSION['privilegios'] == ADMIN)
-        $contenido->parse('content.menu.borrar');
+        $_content->parse('content.menu.borrar');
 
     // Carga el menu
-    $contenido->parse('content.menu');
+    $_content->parse('content.menu');
 }
 
 
@@ -88,13 +88,13 @@ for (reset($public_rel_tipos); $tipo_consultado = key($public_rel_tipos);
             $valores_lista['VAL2'] = $public_tipos_refer[$tipo_consultado].
                                                  " ({$numero_registros['numero']})";
             // metelos en el directorio de la página
-            $contenido->assign('LISTA1', $valores_lista);
-            $contenido->parse('content.publicaciones.tipo');
+            $_content->assign('LISTA1', $valores_lista);
+            $_content->parse('content.publicaciones.tipo');
 
             // metelos en el SELECT del buscador de la página
             $valores_lista['VAL2'] = $public_tipos_refer[$tipo_consultado];
-            $contenido->assign('LISTA2',$valores_lista);
-            $contenido->parse('content.select_tipos');
+            $_content->assign('LISTA2',$valores_lista);
+            $_content->parse('content.select_tipos');
         }
 
     } else {
@@ -103,9 +103,9 @@ for (reset($public_rel_tipos); $tipo_consultado = key($public_rel_tipos);
 }
 
 // inserta el total
-$contenido->assign('NUM_PUBLICACIONES', $numero_publicaciones);
+$_content->assign('NUM_PUBLICACIONES', $numero_publicaciones);
 // termina tabla
-$contenido->parse('content.publicaciones');
+$_content->parse('content.publicaciones');
 
 // limpia array de insercion en página
 unset($valores_lista);
@@ -115,7 +115,7 @@ unset($valores_lista);
  * BUSQUEDA POR IDENTIFICADOR BIBTEXT, SOLO USUARIOS
  */
 if ($_SESSION['privilegios'] != INVITADO)
-    $contenido->parse('content.id_bibtex');
+    $_content->parse('content.id_bibtex');
 
 
 //--------------------------------------------------------------------
@@ -127,11 +127,11 @@ if ($_SESSION['privilegios'] != INVITADO) {
 
         $valores_lista['VAL1'] = $estado_pub;
         $valores_lista['VAL2'] = strtolower($estado_pub);
-        $contenido->assign("LISTA2", $valores_lista);
-        $contenido->parse("content.estado_public.select_estados");
+        $_content->assign("LISTA2", $valores_lista);
+        $_content->parse("content.estado_public.select_estados");
     }
     
-    $contenido->parse('content.estado_public');
+    $_content->parse('content.estado_public');
 }
 
 //--------------------------------------------------------------------
@@ -180,16 +180,16 @@ for ($i = 1; $i < $public_num_campos+1; $i++) {
 
         // procesa select dentro de lista
         foreach ($valores_lista as $lista) {
-            $contenido->assign("LISTA3",$lista);
-            $contenido->parse("content.select_campo.lista");
+            $_content->assign("LISTA3",$lista);
+            $_content->parse("content.select_campo.lista");
         }
 
         // inserta el nombre de los campos
         $id_campos = array('CAMPO'    => "Campo",
                            'NOMBRE_C' => "campo$i",
                            'NOMBRE_V' => "valor$i");
-        $contenido->assign("LISTA3", $id_campos);
-        $contenido->parse("content.select_campo");
+        $_content->assign("LISTA3", $id_campos);
+        $_content->parse("content.select_campo");
     }
 }
 
@@ -197,30 +197,22 @@ for ($i = 1; $i < $public_num_campos+1; $i++) {
 if (count($valores_prv_lista) > 0) {
 
     foreach ($valores_prv_lista as $lista) {
-        $contenido->assign("LISTA3",$lista);
-        $contenido->parse("content.select_campo.lista");
+        $_content->assign("LISTA3",$lista);
+        $_content->parse("content.select_campo.lista");
     }
 
     // inserta el nombre de los campos
     $id_campos = array('CAMPO'    => 'Campo Auxiliar',
                        'NOMBRE_C' => "campo_aux",
                        'NOMBRE_V' => "valor_aux");
-    $contenido->assign("LISTA3", $id_campos);
-    $contenido->parse("content.select_campo");
+    $_content->assign("LISTA3", $id_campos);
+    $_content->parse("content.select_campo");
 }                     
 
 
 // Cierra la conexion con mysql
 mysql_close($conexion);
 
-
-/*
- * MUESTRA LA PAGINA
- */
 // Parsea el contenido
-$contenido->parse("content");
-
-// Muestra la pagina final
-mostrar_pagina($archivo, $contenido);
-
-?>
+$_content->parse("content");
+require_once __DIR__ . '/includes/layout.php';

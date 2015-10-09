@@ -4,7 +4,6 @@ require_once 'common/init.php';
 
 require_once 'common/common_pub.php';
 
-
 //--------------------------------------------------------------------------
 // public_borrar_bib.php
 //
@@ -27,17 +26,13 @@ if ($_SESSION['privilegios'] != ADMIN) {
   global $public_dir_backup;
 
   // chequea parametro de entrada
-  if (!isset($_GET['borrar']) OR $_GET['borrar']!=1)
-  {
-     // crea parser de la página
-     $pagina=new XTemplate ("templates/es/public_borrar.html");
-     //imprime resultado
-     $pagina->parse("main");
-     $pagina->out("main"); 
-     return;        
+  if (!isset($_GET['borrar']) || $_GET['borrar'] != 1) {
+      // Parsea el contenido
+      $_content->parse("content");
+      require_once __DIR__ . '/includes/layout.php';
+      exit();
   }
 
-    
 
  // construye nombre de fichero
  $nombre_fichero_bck = $public_dir_backup."backup_bib_".date("YmdHis").".bib";
@@ -46,8 +41,7 @@ if ($_SESSION['privilegios'] != ADMIN) {
  $desc = fopen ($nombre_fichero_bck,'w');
  
  // si no puede abrir fichero, da mensaje de error
- if (!$desc)
- {
+ if (!$desc) {
        ERR_muestra_pagina_error("No se pudo crear fichero de backup".
           " Fichero: ".$nombre_fichero_bck, "");
        exit;         
@@ -59,9 +53,8 @@ if ($_SESSION['privilegios'] != ADMIN) {
  $consulta_sinonimos = 'SELECT cadena, valor FROM ref_cadenas';
  $resultado = mysql_query($consulta_sinonimos, $conexion);
  
- while ($fila = mysql_fetch_row($resultado))
- {
-   fwrite($desc,"\n@string{".$fila[0]." = ".$fila[1]."}");
+ while ($fila = mysql_fetch_row($resultado)) {
+     fwrite($desc,"\n@string{".$fila[0]." = ".$fila[1]."}");
  }
  
  mysql_free_result($resultado);
@@ -79,17 +72,14 @@ if ($_SESSION['privilegios'] != ADMIN) {
  $resultado=mysql_query($consulta_ref, $conexion); 
 
  // chequea si ha habido error
- if (!$resultado)
- {
+ if (!$resultado) {
        ERR_muestra_pagina_error("No se pudo consultar tabla.".
           " Error de consulta: ".$consulta_ref, "");
        exit;         
  }
  
  // para cada una de ellas
- while ($referencia = mysql_fetch_row($resultado))
- {
- 
+ while ($referencia = mysql_fetch_row($resultado)) {
    // escribe cabecera en el fichero
    fwrite($desc,'@'.$referencia[2].'{'.$referencia[1]);
  
@@ -103,16 +93,14 @@ if ($_SESSION['privilegios'] != ADMIN) {
     $resultado2=mysql_query($consulta_campos, $conexion); 
 
     // chequea si ha habido error
-   if (!$resultado2)
-   {
+   if (!$resultado2) {
        ERR_muestra_pagina_error("No se pudo consultar tabla.".
           " Error de consulta: ".$consulta_campos, "");
        exit;         
    }
 
    // obtiene todos los campos y escribelos en el fichero
-   while ($ref_campos = mysql_fetch_row($resultado2))
-   {
+   while ($ref_campos = mysql_fetch_row($resultado2)) {
      fwrite($desc,",\n  ".$ref_campos[0]." = ".$ref_campos[1]);
    }
    // imprime el campo OPTidioma, OPTestado y OPTenlace
@@ -142,14 +130,12 @@ if ($_SESSION['privilegios'] != ADMIN) {
      "DELETE FROM referencias " );
   
   // ejecuta todas las consultas
-  foreach ($consultas_borrar as $consulta)
-  {
+  foreach ($consultas_borrar as $consulta) {
      // ejecuta consulta
      $resultado=mysql_query($consulta, $conexion);
      
      // chequea si ha habido error
-     if (!$resultado)
-     {
+     if (!$resultado) {
        ERR_muestra_pagina_error("No se pudo borrar tabla.".
           " Error de consulta: ".$consulta, "");
        exit;         
@@ -160,5 +146,3 @@ if ($_SESSION['privilegios'] != ADMIN) {
   
   // muestra mensaje de todo OK
   ERR_muestra_pagina_mensaje("Se han eliminado todas las referencias de las tablas.", "");   
-  
-?>

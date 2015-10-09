@@ -1,44 +1,22 @@
-<!-- BEGIN: main -->
-<html>
-<head>
-<title>Grupo GECA: Editar Sin&oacute;nimos Bibtex</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<LINK REL=StyleSheet HREF="estilo.css" TYPE="text/css" MEDIA=screen>
-</head>
-<body>
-<table>
-<tr>
- <th colspan=2> <H2> Grupo de Electromagnetismo Computacional Avanzado (G.E.C.A.) </H2></th>
-</tr>
-<tr valign="top">
-<!-- Menu lateral -->
-<td align="left" class="menu">
-<h4>INTRANET</h4>
-<ul type=disc>
- <li><a href="miembros.php">Miembros</a></li>
- <li><a href="publicaciones.php">Publicaciones</a></li>
- <li><a href="proyectos.php">Proyectos</a></li>
- <li><a href="colaboradores.php">Colaboradores</a></li>
- <li><a href="software.php">Software</a></li>
-</ul>
-</td>
+<!-- BEGIN: content -->
+<h2>Editar Sin&oacute;nimos Bibtex</h2>
+
 <!-- Pagina principal -->
-<td class="principal">
 <a href="publicaciones.php">[Buscador]</a> &nbsp;
 <a href="public_editar.php">[A&ntilde;adir Publicaci&oacute;n]</a> &nbsp;
 <a href="public_importar.php">[Importaci&oacute;n]</a> &nbsp;
-<a href="public_borrar_bib.php">[Borrar Bibliograf&iacute;as]</a> &nbsp;
 <a href="public_cadenas.php">[Sin&oacute;nimos]</a> &nbsp;
-<hr>
+<a href="public_borrar_bib.php">[Borrar Bibliograf&iacute;as]</a>
+
 <form action="public_cadenas.php" name="cadenas" method=POST>
-<h3>Editar Sin&oacute;nimos Bibtex</h3>    
-<hr> 
+
 <table>
 <tr>
   <td><h4>Sin&oacute;nimo</h4></td>
   <td><h4>Cadena Sustituta</h4></td>
   <td><h4>Borrar</h4></td>
 </tr>
+
 <!-- BEGIN: fila_cadena -->
 <tr>
   <td><b>{LISTA.SINONIMO}</b></td>
@@ -68,10 +46,6 @@
     </td>
    </tr>  
 </table>
-<br>
 </form>
-</td>
-</tr>
-</body>
-</html>
-<!-- END: main -->
+
+<!-- END: content -->

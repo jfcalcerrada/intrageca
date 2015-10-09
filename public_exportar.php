@@ -204,5 +204,3 @@ require_once "bibtex/funciones_bibtex.php";
 
   // cierra descriptor
   mysql_close($conexion);
-
-?>

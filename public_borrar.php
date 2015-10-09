@@ -14,30 +14,12 @@ require_once 'common/init.php';
 //   id_ref: Identificador del registro a editar
 //--------------------------------------------------------------------------
 
-  // definicion de Config usados
-  global $BASE_DATOS;
-  global $USER_BD;
-  global $PASS_BD;
-
   // verifica si id_ref está definido, si no lo está, crea página
   // de error
-  if (!isset($_POST['id_ref']) OR strlen($_POST['id_ref'])==0)
-  {
+  if (!isset($_POST['id_ref']) OR strlen($_POST['id_ref'])==0) {
      ERR_muestra_pagina_error("Identificador de referencia no válido", "");
      exit;          
-  }  
-  
-  // conecta a Base de Datos MySQL
-  $conexion = mysql_connect("localhost",$USER_BD,$PASS_BD);
-  // verifica si se abrió conexion
-  if (!$conexion)
-  {
-     ERR_muestra_pagina_error($gen_error_conexion, "");
-     return;
   }
-
-  // selecciona base de datos
-  mysql_select_db($BASE_DATOS,$conexion);    
 
 //--------------------------------------------------------------
 //  REALIZA EL BACKUP DE LAS REFERENCIAS
@@ -82,6 +64,3 @@ require_once 'common/init.php';
 
   // muestra mensaje de todo OK
   ERR_muestra_pagina_mensaje("Se ha eliminado la referencia.", "");
-
-
-?>
