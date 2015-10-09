@@ -112,7 +112,7 @@ $_content->assign('COD_IDIOMA', $proyecto_idioma);
 // Imprime los idiomas disponibles
 foreach($gen_idiomas_disp as $clave_idioma => $texto_idioma) {
 // Selecciona el idioma que se esta editanto
-  $selected = ($proyecto_idioma == $clave_idioma) ? 'selected="selected"': '';
+  $selected = ($proyecto_idioma == $clave_idioma)? 'selected="selected"': '';
 
   // Asigna la lista
   $idioma_lista = array (
@@ -128,7 +128,8 @@ foreach($gen_idiomas_disp as $clave_idioma => $texto_idioma) {
 // Asigna estado a select box de estado
 foreach ($proy_estado_proyecto as $clave_estado => $texto_estado) {
 // Selecciona el estado del proyecto
-  $selected = ($proyecto['estado'] == $clave_estado) ? 'selected="selected"' :  '';
+  $selected = (isset($proyecto['estado']) && $proyecto['estado'] == $clave_estado)
+      ? 'selected="selected"' :  '';
 
   // Selecciona elementos
   $estado = array(
@@ -143,19 +144,22 @@ foreach ($proy_estado_proyecto as $clave_estado => $texto_estado) {
 
 
 // Extrae los valores de la fecha de inicio del proyecto
-$proyecto['anyo_inicio'] = strtok($proyecto['fecha_inicio'], '-');
-$proyecto['mes_inicio']= strtok('-');
-$proyecto['dia_inicio'] = strtok('-');
+$fecha_inicio = isset($proyecto['fecha_inicio']) ? $proyecto['fecha_inicio'] : '';
+$proyecto['anyo_inicio'] = strtok($fecha_inicio, '-');
+$proyecto['mes_inicio']  = strtok('-');
+$proyecto['dia_inicio']  = strtok('-');
 
 // Extrae los valores de la fecha de fin del proyecto
-$proyecto['anyo_fin'] = strtok($proyecto['fecha_fin'], '-');
+$fecha_fin = isset($proyecto['fecha_fin']) ? $proyecto['fecha_fin'] : '';
+$proyecto['anyo_fin'] = strtok($fecha_fin, '-');
 $proyecto['mes_fin']= strtok('-');
 $proyecto['dia_fin'] = strtok('-');
 
 // asigna monedas
 foreach ($proy_tipos_monedas as $clave_moneda=> $texto_moneda) {
 
-  $selected = ($proyecto['moneda'] == $clave_moneda) ? 'selected="selected"' : '';
+  $selected = (isset($proyecto['moneda']) && $proyecto['moneda'] == $clave_moneda)
+      ? 'selected="selected"' : '';
 
   $moneda = array(
     'CLAVE'     => $clave_moneda,
@@ -168,7 +172,8 @@ foreach ($proy_tipos_monedas as $clave_moneda=> $texto_moneda) {
 }
 
 // Publicar importe en la Web pública
-$proyecto['publicar_importe'] = ($proyecto['publicar_importe'] == 1) ? 'checked="checked"' : '';
+$proyecto['publicar_importe'] = (isset($proyecto['publicar_importe']) && $proyecto['publicar_importe'] == 1)
+    ? 'checked="checked"' : '';
 
 
 // Preparamos el array para parsearlo

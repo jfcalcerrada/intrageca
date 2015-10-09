@@ -2,6 +2,8 @@
 
 require_once 'common/init.php';
 
+require_once 'common/proyectos.php';
+
 // ejecuta autenticacion antes que nada
 autenticar_usuario();
 
@@ -15,58 +17,27 @@ autenticar_usuario();
 //   idp : Identidad del proyecto
 //--------------------------------------------------------------------------
 
-  // definicion de Config usados
-  global $BASE_DATOS;
-  global $USER_BD;
-  global $PASS_BD;
-
-  // definicion de globales miembro
-  // $pry_proyecto_desc -- mensaje de proyecto desconocido
-
-  // coge el primero de la lista
-  reset($gen_idiomas_disp);
-  $idioma =  key($gen_idiomas_disp);
-
-  // crea parser de la página
-  $_content=new XTemplate ("templates/es/proyecto_editar_sof.html");
-  
-  // conecta a Base de Datos MySQL
-  $conexion = mysql_connect("localhost",$USER_BD,$PASS_BD);
-  // verifica si se abrió conexion
-  if (!$conexion)
-  {
-     ERR_muestra_pagina_error($gen_error_conexion, "");
-     return;
-  }
-
-  // selecciona base de datos
-  mysql_select_db($BASE_DATOS,$conexion);  
-   
  //--------------------------------------------------------------------
  // OBTIENE/VERIFICA ID DE PROYECTO
  //--------------------------------------------------------------------
  // le hemos dado a actualizar al formulario, sin modificar valores
- if (strlen($_POST['idp']) > 0) // 
- {
+if (isset($_POST['idp']) && strlen($_POST['idp']) > 0) { //
    $id_proyecto = $_POST['idp'];
- } 
- // para el caso de un enlace a la página de editar
- else
- {
+}
+// para el caso de un enlace a la página de editar
+else {
    $id_proyecto = $_GET['idp'];
- }
+}
  
  // verifica que tras identificacion, tenemos un identificado valido
- if ((strlen($id_proyecto)==0) || ($id_proyecto == 0))
- {
-        ERR_muestra_pagina_error($pry_proyecto_desc, "");
-        exit;     
- }  
+if ((strlen($id_proyecto)==0) || ($id_proyecto == 0)) {
+    ERR_muestra_pagina_error($pry_proyecto_desc, "");
+    exit;
+}
  //--------------------------------------------------------------------
  // VERIFICA SI TIENE QUE INSERTAR/ACTUALIZAR REGISTRO TRAS AUTOLLAMADA
  //--------------------------------------------------------------------
- if ($_POST['modificado'])
- {
+ if (isset($_POST['modificado']) && $_POST['modificado']) {
    // verifica si tenemos que borrar algun miembro
    for ($i=1; $i<=$_POST['numero_paquetes']; $i++)
    {
@@ -102,6 +73,12 @@ autenticar_usuario();
    }
    
  }
+
+
+// Muestra el submenú, y si es el administrador el botón de borrar
+$_content = menu_proyectos($_content, $id_proyecto);
+
+
  //--------------------------------------------------------------------
  // OBTIENE LOS PAQUETES DEL PROYECTO DE LA BASE DE DATOS
  //--------------------------------------------------------------------
@@ -141,11 +118,9 @@ autenticar_usuario();
  
  $num_soft_incluidos = 0;
  
- while ($software = mysql_fetch_row($resultado))
- {
+while ($software = mysql_fetch_row($resultado))  {
     // verifica si lo tengo que insertar en la lista de incluidos
-    if ($array_software[$software[0]] == 1)
-    {
+    if (isset($array_software[$software[0]])) {
       $num_soft_incluidos = $num_soft_incluidos + 1;
       // asigna valores a lista
       $lista_valores = array(
@@ -154,24 +129,22 @@ autenticar_usuario();
              'TITULO' => $software[1]);
       // insertalo en página
       $_content->assign('LISTA',$lista_valores);
-      $_content->parse("main.form_proyecto.fila_software");
+      $_content->parse("content.fila_software");
     }
     // o en el select de no incluidos
-    else
-    {
+    else {
        // asigna valores
        $lista = array ( 'IDS' => $software[0],
                         'TITULO' => $software[1]);
        // imprimelos
        $_content->assign('LISTA', $lista);
-       $_content->parse("main.form_proyecto.selec_software");      
-    } 
- }
+       $_content->parse("content.selec_software");
+    }
+}
      
- // imprime los valores en página
- $_content->assign("IDP",$id_proyecto);
- $_content->assign("NUM_PAQUETES",$num_soft_incluidos);
- $_content->parse("main.form_proyecto");
+// imprime los valores en página
+$_content->assign("IDP",$id_proyecto);
+$_content->assign("NUM_PAQUETES",$num_soft_incluidos);
 
 
 // Parsea el contenido

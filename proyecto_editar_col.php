@@ -2,6 +2,8 @@
 
 require_once 'common/init.php';
 
+require_once 'common/proyectos.php';
+
 // ejecuta autenticacion antes que nada
 autenticar_usuario();
 
@@ -69,29 +71,31 @@ if (isset($_POST['idp']) && strlen($_POST['idp']) > 0) {
                             $_POST["nuevo_col"]."\n"; 
       }        
    }
- } 
- //--------------------------------------------------------------------
- // OBTIENE LOS COLABORADORES DEL PROYECTO DE LA BASE DE DATOS
- //--------------------------------------------------------------------
- $lista_col_incluidos = array();
- // obtiene colaboradores que pertenecen al proyecto
- $consulta_rel = 'SELECT id_colaborador FROM colaborador_proyectos WHERE '.
-                 'id_proyecto='.$id_proyecto;
-                 
- // ejecuta la consulta para obtener datos
- $resultado = mysql_query($consulta_rel, $conexion);
- 
- if (!$resultado)
- {
-     echo "Error al realizar la consulta ".$consulta_rel;
- } 
- else
- { 
-   while($id_col = mysql_fetch_row($resultado))
-   {
-      $lista_col_incluidos[$id_col[0]] = 1;
-   }
  }
+
+// Muestra el submenú, y si es el administrador el botón de borrar
+$_content = menu_proyectos($_content, $id_proyecto);
+
+//--------------------------------------------------------------------
+// OBTIENE LOS COLABORADORES DEL PROYECTO DE LA BASE DE DATOS
+//--------------------------------------------------------------------
+$lista_col_incluidos = array();
+// obtiene colaboradores que pertenecen al proyecto
+$consulta_rel = 'SELECT id_colaborador FROM colaborador_proyectos WHERE '.
+             'id_proyecto='.$id_proyecto;
+
+// ejecuta la consulta para obtener datos
+$resultado = mysql_query($consulta_rel, $conexion);
+
+if (!$resultado) {
+ echo "Error al realizar la consulta ".$consulta_rel;
+
+} else {
+    while($id_col = mysql_fetch_row($resultado)) {
+        $lista_col_incluidos[$id_col[0]] = 1;
+    }
+}
+
  mysql_free_result($resultado);
  
 // obtiene la lista de colaboradores que estan en el proyecto
@@ -108,12 +112,10 @@ if (!$resultado) {
 }
  
 $num_col_incluidos = 0;
- 
 while ($colaborador = mysql_fetch_row($resultado)) {
+
     // verifica si lo tengo que insertar en la lista de incluidos
-    if (isset($lista_col_incluidos[$colaborador[0]])
-        && $lista_col_incluidos[$colaborador[0]] == 1
-    ) {
+    if (isset($lista_col_incluidos[$colaborador[0]])) {
       $num_col_incluidos = $num_col_incluidos + 1;
       // asigna valores a lista
       $lista_valores = array(
@@ -123,17 +125,16 @@ while ($colaborador = mysql_fetch_row($resultado)) {
              'GRUPO_COL' => $colaborador[2]);
       // insertalo en página
       $_content->assign('LISTA',$lista_valores);
-      $_content->parse("content.form_proyecto.fila_colaborador");
+      $_content->parse("content.fila_colaborador");
     }
     // o en el select de no incluidos
-    else
-    {
+    else {
        // asigna valores
        $lista = array ( 'IDC' => $colaborador[0],
                         'NOMBRE' => $colaborador[2]."/".$colaborador[1]);
        // imprimelos
        $_content->assign('LISTA', $lista);
-       $_content->parse("content.form_proyecto.selec_col");
+       $_content->parse("content.selec_col");
     } 
 }
 
