@@ -5,7 +5,6 @@ require_once 'common/init.php';
 // Autenticamos al usuario
 autenticar_usuario();
 
-$pagina = $_content;
 //--------------------------------------------------------------------------
 // software.php
 //
@@ -34,9 +33,9 @@ $pagina = $_content;
     if (($ultimo_soft != $software[3]) && ($software[3] == 0))
     {
       // imprime todos los publicos
-      $pagina->parse("main.tabla_software");
+      $_content->parse("content.tabla_software");
       // imprime cabecera de no activos
-      $pagina->parse("main.tabla_software.cab_desactiva");
+      $_content->parse("content.tabla_software.cab_desactiva");
       // actualiza el valor de proyecto
       $ultimo_soft = $software[3];
     }
@@ -46,18 +45,16 @@ $pagina = $_content;
                        'TITULO' => $software[1],
                        'DESC_CORTA' => $software[2]);
     // imprimelos en página
-    $pagina->assign("LISTA1",$lista_valores);
-    $pagina->parse("main.tabla_software.fila");
+    $_content->assign("LISTA1",$lista_valores);
+    $_content->parse("content.tabla_software.fila");
   }
   
   // cierra tabla
-  $pagina->parse("main.tabla_software");
+  $_content->parse("content.tabla_software");
 
   // cierra descriptor
   mysql_close($conexion);
 
-  //imprime resultado
-  $pagina->parse("main");
-  $pagina->out("main"); 
-
-?>
+// Parsea el contenido
+$_content->parse("content");
+require_once __DIR__ . '/includes/layout.php';

@@ -45,19 +45,17 @@ function software_insertar($conexion, $registro)
   $email = addslashes($registro['email']);
   $id_bibtex =  addslashes($registro['id_bibtex']);
   $homepage = addslashes($registro['homepage']);
-  $publicar = ($registro['publico'] == 1)? 1:0;
+  $publicar = (isset($registro['publico']) && $registro['publico'] == 1) ? 1 : 0;
   
   // chequea si hay que insertar un nuevo registro o solo actualizarlo
-  if ($registro['ids'] == 0)
-  {
+  if ($registro['ids'] == 0) {
      // construye la consulta de Insercion
      $consulta_software ='INSERT INTO software( sistema_operativo, licencia,'.
        ' link_licencia, email_soporte, link_homepage, publico) VALUES("'.
        $sist_oper.'","'.$licencia.'","'.$link_licencia.'","'.$email.'","'.
        $homepage.'",'.$publicar.')';
-  }
-  else
-  {
+
+  } else {
      // construye la consulta de actualizacion
      $consulta_software = 'UPDATE software SET '.
        ' id_sw_bibtex="'.$id_bibtex.'", sistema_operativo="'.
@@ -70,15 +68,13 @@ function software_insertar($conexion, $registro)
   $resultado = mysql_query($consulta_software, $conexion);
 
   // si da error, devuelve 0
-  if (!$resultado)
-  {
-   echo "Error en la consulta ".$consulta_software;
-   return 0;
+  if (!$resultado) {
+     echo "Error en la consulta ".$consulta_software;
+    return 0;
   }
 
   // obtiene el valor del elemento insertado/actualizado
-  if ($registro['ids'] == 0)
-  {
+  if ($registro['ids'] == 0) {
      $id_software = mysql_insert_id();
      // crea directorio nuevo para almacenar paquetes
      mkdir($software_dir_paquetes.'paq_'.$id_software,0777);
@@ -92,15 +88,12 @@ function software_insertar($conexion, $registro)
          ', titulo) VALUES('.$id_software.',"'.$idioma_def.'","SIN DEFINIR")';
        
      $resultado = mysql_query($consulta_idiomas, $conexion);  
-     if (!$resultado)
-     {
+     if (!$resultado) {
          echo "No se pudo ejecutar consulta ".$consulta_idiomas;
-         return 0;      
-     }   
+         return 0;
+     }
      
-  }  
-  else
-  {
+  } else {
      $id_software = $registro['ids'];
   }
 
@@ -115,24 +108,21 @@ function software_insertar($conexion, $registro)
   $resultado = mysql_query($consulta, $conexion);
 
   // si da error, devuelve 0
-  if (!$resultado)
-  {
-   echo "Error en la consulta ".$consulta;
-   return 0;
+  if (!$resultado) {
+      echo "Error en la consulta ".$consulta;
+      return 0;
   }
   
   // verifica si ya hay uno insertado o no para insertarlo
   $ya_insertado = mysql_fetch_row($resultado);
   
-  if (! $ya_insertado[0])
-  {
+  if (!$ya_insertado[0]) {
      $consulta_idiomas = 'INSERT INTO software_idiomas(id_software, idioma,'.
          'titulo, descrip_corta, descripcion) VALUES('.$id_software.',"'.
          $registro['idioma'].'","'.$titulo.'", "'.$desc_corta.'", "'.
          $descripcion.'")';
-  }
-  else
-  {
+
+  } else {
      $consulta_idiomas = 'UPDATE software_idiomas SET titulo="'.$titulo.
        '", descrip_corta="'.$desc_corta.'", descripcion="'.$descripcion.
        '" WHERE idioma="'.$registro['idioma'].'" AND id_software='.$id_software;
@@ -142,14 +132,10 @@ function software_insertar($conexion, $registro)
   $resultado = mysql_query($consulta_idiomas, $conexion);
 
   // si da error, devuelve 0
-  if (!$resultado)
-  {
-   echo "Error en la consulta ".$consulta_idiomas;
+  if (!$resultado) {
+      echo "Error en la consulta ".$consulta_idiomas;
   }
   
   
   return $id_software;
-
-} 
-
-?>
+}

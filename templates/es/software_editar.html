@@ -1,50 +1,20 @@
-<!-- BEGIN: main -->
-<html>
-<head>
-<title>Grupo GECA: Editar software</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<LINK REL=StyleSheet HREF="estilo.css" TYPE="text/css" MEDIA=screen>
-</head>
-<body>
-<table>
-<tr>
- <th colspan=2> <H2> Grupo de Electromagnetismo Computacional Avanzado (G.E.C.A.) </H2></th>
-</tr>
-<tr valign="top">
-<!-- Menu lateral -->
-<td align="left" class="menu">
-<h4>INTRANET</h4>
-<ul type=disc>
- <li><a href="miembros.php">Miembros</a></li>
- <li><a href="publicaciones.php">Publicaciones</a></li>
- <li><a href="proyectos.php">Proyectos</a></li>
- <li><a href="colaboradores.php">Colaboradores</a></li>
- <li><a href="software.php">Software</a></li>
-</ul>
-</td>
-<!-- Pagina principal -->
-<td class="principal">
-<table width="100%"><tr>
-  <td>
-   <H3>Informaci&oacute;n de Software</H3>
-  </td>
+<!-- BEGIN: content -->
+<h2>Informaci&oacute;n de Software</h2>
+
 <!-- BEGIN: form_borrar -->
-  <td align=right width=20>
-       <form action="software_borrar.php" method=GET>
-        <input type=hidden name=ids value={IDS}>
-        <BUTTON type="submit">Eliminar Software</BUTTON>
-       </form>
-  </td>
+<form action="software_borrar.php" method=GET>
+    <input type=hidden name=ids value={IDS} />
+    <input type="submit" value="Eliminar Software" />
+</form>
 <!-- END: form_borrar -->
-</tr>
-</table>    
-<hr> 
+
 <!-- BEGIN: form_software -->
-<a href="software_editar.php?ids={LISTA.IDS}">[Datos]</a> &nbsp;
+<a href="software_ver_ficha.php?ids={LISTA.IDS}">[Datos]</a> &nbsp;
+<a href="software_editar.php?ids={IDS}">[Editar]</a> &nbsp;
 <!-- BEGIN: acceso_relaciones -->
 <a href="software_editar_paq.php?ids={IDS}">[Paquetes]</a> &nbsp;
 <!-- END: acceso_relaciones -->
-<br><br>
+
 <form action="software_editar.php" name="editar" method=POST>
 <input type=hidden name="ids" value="{LISTA.IDS}">
 <table width="100%">
@@ -134,9 +104,5 @@
 </table>
 </form>
 <!-- END: form_software -->
-<br>
-</td>
-</tr>
-</body>
-</html>
-<!-- END: main -->
+
+<!-- END: content -->

@@ -1,38 +1,16 @@
-<!-- BEGIN: main -->
-<html>
-<head>
-<title>Grupo GECA: Informaci&oacute;n de Software</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<LINK REL=StyleSheet HREF="estilo.css" TYPE="text/css" MEDIA=screen>
-</head>
-<body>
-<table>
-<tr>
- <th colspan=2> <H2> Grupo de Electromagnetismo Computacional Avanzado (G.E.C.A.) </H2></th>
-</tr>
-<tr valign="top">
-<!-- Menu lateral -->
-<td align="left" class="menu">
-<h4>INTRANET</h4>
-<ul type=disc>
- <li><a href="miembros.php">Miembros</a></li>
- <li><a href="publicaciones.php">Publicaciones</a></li>
- <li><a href="proyectos.php">Proyectos</a></li>
- <li><a href="colaboradores.php">Colaboradores</a></li>
- <li><a href="software.php">Software</a></li>
-</ul>
-</td>
-<!-- Pagina principal -->
-<td class="principal">
-<H3>Informaci&oacute;n de Software</H3>
-<hr>
+<!-- BEGIN: content -->
+<h2>Informaci&oacute;n de Software</h2>
+
+<a href="software_ver_ficha.php?ids={IDS}">[Ver Ficha]</a> &nbsp;
+<a href="software_editar.php?ids={IDS}">[Editar]</a> &nbsp;
+<a href="software_editar_paq.php?ids={IDS}">[Paquetes]</a> &nbsp;
+
 <!-- BEGIN: tabla_ficha -->
-<br>
+
+
 <table width="100%">
    <!-- BEGIN: datos_software -->
-   <tr>
-     <td colspan=4 class="cabecera1">{LISTA.TITULO}</td>
-   </tr>
+    <h3>{LISTA.TITULO}</h3>
    <tr>
      <td colspan=4>{LISTA.DESCRIPCION}</td>
    </tr>
@@ -59,6 +37,7 @@
    </tr>
    <tr><td colspan=4></td></tr>   
    <!-- END: datos_software -->
+
    <!-- BEGIN: lista_paquetes -->
    <tr><td colspan=4></td></tr>
    <tr>
@@ -91,9 +70,5 @@
 </table>
 <br>
 <!-- END: tabla_ficha -->
-</td>
-</tr>
-</table>
-</body>
-</html>
-<!-- END: main -->
+
+<!-- END: content -->

@@ -5,7 +5,7 @@ require_once 'common/init.php';
 // Autenticamos al usuario
 autenticar_usuario();
 
-$pagina = $_content;
+$_content = $_content;
 //--------------------------------------------------------------------------
 // software_ver_ficha.php
 //
@@ -48,28 +48,33 @@ $pagina = $_content;
          'LINK_HOMEPAGE' => $software[7]); 
   
   // imprime los valores en página
-  $pagina->assign("LISTA",$lista_valores);
-  $pagina->parse("main.tabla_ficha.datos_software");
+  $_content->assign("LISTA",$lista_valores);
+  $_content->parse("content.tabla_ficha.datos_software");
 
   //--------------------------------------------------------------------
   // CONSULTA DE PAQUETES DE SOFTWARE
   //--------------------------------------------------------------------   
   // verifica si hay ordenacion
-  if ((strlen($_GET['ordtype'])>0) && (strlen($_GET['order'])>0))
-  {
-    if ($_GET['order'] == 'up')    $orden_busqueda = 'ASC';
-    else  $orden_busqueda = 'DESC';
+$ordenacion = '';
+  if (isset($_GET['ordtype']) && isset($_GET['order'])
+      && (strlen($_GET['ordtype']) > 0) && (strlen($_GET['order']) > 0)
+  ) {
+    $orden_busqueda = (isset($_GET['order']) && $_GET['order'] == 'down') ? 'DESC' : 'ASC';
+
+    $tipo_orden = 'FECHA';
+    if (isset($_GET['ordtype'])) {
+        if ($_GET['ordtype'] == 'nombre') {
+            $tipo_orden = 'NOMBRE';
+        } else if ($_GET['ordtype'] == 'version') {
+            $tipo_orden = 'VERSION';
+        }
+    }
     
-    if ($_GET['ordtype'] == 'nombre') $tipo_orden = 'NOMBRE';
-    else if ($_GET['ordtype'] == 'version') $tipo_orden = 'VERSION';
-    else $tipo_orden = 'FECHA';
-    
-    $ordenacion = ' ORDER BY '.$tipo_orden.' '.$orden_busqueda;
+    $ordenacion = ' ORDER BY ' . $tipo_orden . ' ' . $orden_busqueda;
   }
    
-  $consulta_paquetes = 
-             'SELECT nombre, version, fecha, link_software '.
-             'FROM paquetes_software WHERE id_software='.$_GET['ids'].
+  $consulta_paquetes = 'SELECT nombre, version, fecha, link_software '.
+             'FROM paquetes_software WHERE id_software= ' . $_GET['ids'] .
              $ordenacion;
 
   // realiza consulta de paquetes relacionados con software
@@ -92,21 +97,19 @@ $pagina = $_content;
              'LINK_SW' => $paquete[3],
              'NOMBRE_SW' => $nombre_fichero);
        // asigna valores a la pagina
-       $pagina->assign("LISTA", $lista_valores);
-       $pagina->parse("main.tabla_ficha.lista_paquetes.fila");
+       $_content->assign("LISTA", $lista_valores);
+       $_content->parse("content.tabla_ficha.lista_paquetes.fila");
      }
      // imprime tabla paquetes
-     $pagina->assign("IDS", $_GET['ids']);
-     $pagina->parse("main.tabla_ficha.lista_paquetes");
+     $_content->assign("IDS", $_GET['ids']);
+     $_content->parse("content.tabla_ficha.lista_paquetes");
   }  
   
-  $pagina->parse("main.tabla_ficha");
+  $_content->parse("content.tabla_ficha");
    
   // cierra descriptor
   mysql_close($conexion);
 
-  //imprime resultado
-  $pagina->parse("main");
-  $pagina->out("main"); 
-
-?>
+// Parsea el contenido
+$_content->parse("content");
+require_once __DIR__ . '/includes/layout.php';

@@ -11,16 +11,16 @@ autenticar_usuario();
 // Esta funcion asigna a un select box de una página un rango incremental
 // seleccionando aquel elemento indicado
 //
-function asigna_select_box ($inicio, $fin, $v_selec, &$pagina, $nom_fila)
+function asigna_select_box($inicio, $fin, $v_selec, &$_content, $nom_fila)
 {
   for ($ind=$inicio; $ind<=$fin; $ind++)
   {
      if ("$ind" == $v_selec) $selected = 'SELECTED';
      else $selected = '';
      // asigna a la página el elemento de la lista
-     $pagina->assign('VAL',$ind);
-     $pagina->assign('SELEC',$selected);
-     $pagina->parse($nom_fila);                                          
+     $_content->assign('VAL',$ind);
+     $_content->assign('SELEC',$selected);
+     $_content->parse($nom_fila);                                          
   }   
 }
 
@@ -44,22 +44,21 @@ function asigna_select_box ($inicio, $fin, $v_selec, &$pagina, $nom_fila)
 //   
 //--------------------------------------------------------------------------
 
-   $pagina = $_content;
+
 
  //--------------------------------------------------------------------
  // VERIFICA SI TIENE QUE INSERTAR/ACTUALIZAR REGISTRO TRAS AUTOLLAMADA
  //--------------------------------------------------------------------
  // le hemos dado a actualizar al formulario, modificando valores
- if ($_POST['modificado'] == 1) 
- {
+ if (isset($_POST['modificado']) && $_POST['modificado'] == 1) {
    //---------------------------------------
    // actualiza todos los presentes
    //---------------------------------------
-   for ($i=1; $i<=$_POST['numero_paq'];$i++)
-   {
+   for ($i = 1; $i <= $_POST['numero_paq']; $i++) {
       // verifica si hay que eliminar fichero anterior
-      if ((($_POST["pq_borrar_$i"]==1) || 
-          (strlen($HTTP_POST_FILES["pq_file_$i"]['name'])>0)) &&
+      if ((
+          (isset($_POST["pq_borrar_$i"]) && ($_POST["pq_borrar_$i"] == 1)) ||
+          (strlen($_FILES["pq_file_$i"]['name'])>0)) &&
           (strlen($_POST["pq_link_$i"])>0))
       {
          $fichero_anterior = $software_dir_paquetes.'paq_'.$_POST["ids"].'/'.
@@ -71,7 +70,7 @@ function asigna_select_box ($inicio, $fin, $v_selec, &$pagina, $nom_fila)
          }         
       }
       // verifica si hay que borrar registro
-      if ($_POST["pq_borrar_$i"]==1)
+      if (isset($_POST["pq_borrar_$i"]) && $_POST["pq_borrar_$i"] == 1)
       { 
          // construye consulta de borrado
          $consulta_borrado = 'DELETE FROM paquetes_software '.
@@ -88,17 +87,16 @@ function asigna_select_box ($inicio, $fin, $v_selec, &$pagina, $nom_fila)
       {
          $condicion_link = "";
          // verifica si insertamos un fichero nuevo
-         if (strlen($HTTP_POST_FILES["pq_file_$i"]['name'])>0) 
-         {
+         if (isset($_FILES["pq_file_$i"]) && strlen($_FILES["pq_file_$i"]['name']) > 0) {
             $nombre_local = $software_dir_paquetes."paq_".$_POST['ids']."/".
-                            $HTTP_POST_FILES["pq_file_$i"]['name'];
+                            $_FILES["pq_file_$i"]['name'];
                             
             // copia fichero a directorio de curriculum renombrandolo
-            copy($HTTP_POST_FILES["pq_file_$i"]['tmp_name'],$nombre_local); 
+            copy($_FILES["pq_file_$i"]['tmp_name'],$nombre_local); 
             
             // construye link y condicion SQL
             $link = 'sw/paq_'.$_POST['ids'].'/'.
-                      $HTTP_POST_FILES["pq_file_$i"]['name'];
+                      $_FILES["pq_file_$i"]['name'];
             $condicion_link = ', link_software="'.$link.'"';
          } 
          
@@ -136,25 +134,24 @@ function asigna_select_box ($inicio, $fin, $v_selec, &$pagina, $nom_fila)
       }  
    }
  }
+
+
  //--------------------------------------------------------------------
  // CHEQUEA LA IDENTIDAD DEL SOFTWARE
  //--------------------------------------------------------------------
  // le hemos dado a actualizar al formulario, sin modificar valores
- if (strlen($_POST['ids']) > 0) // 
- {
+ if (isset($_POST['ids']) && strlen($_POST['ids']) > 0) {
    $id_software = $_POST['ids'];
  } 
  // para el caso de un enlace a la página de editar
- else
- {
+ else {
    $id_software = $_GET['ids'];
  }
  
  // verifica que tras identificacion, tenemos un identificado valido
- if ((strlen($id_software)==0) || ($id_software == 0))
- {
-        ERR_muestra_pagina_error("Software desconocido", "");
-        exit;     
+ if ((strlen($id_software) == 0) || ($id_software == 0)) {
+     ERR_muestra_pagina_error("Software desconocido", "");
+     exit;
  }  
 
  //--------------------------------------------------------------------
@@ -168,8 +165,9 @@ function asigna_select_box ($inicio, $fin, $v_selec, &$pagina, $nom_fila)
  // ejecuta la consulta para obtener datos
  $resultado = mysql_query($consulta_software, $conexion);
    
- if (! $resultado)
-     {echo "Error al realizar la consulta ".$consulta_software;}
+ if (!$resultado) {
+     echo "Error al realizar la consulta ".$consulta_software;
+ }
 
  //--------------------------------------------------------------------
  // RELLENA LOS VALORES DE LOS PAQUETES DE SOFTWARE
@@ -178,12 +176,12 @@ function asigna_select_box ($inicio, $fin, $v_selec, &$pagina, $nom_fila)
  while ($registros = mysql_fetch_row($resultado))
  {  
    // rellena la fecha
-   asigna_select_box (1, 31, $registros[5], $pagina, 
-                    "main.form_paquetes.fila_paquete.fila_dia_inc");
-   asigna_select_box (1, 12, $registros[4], $pagina, 
-                    "main.form_paquetes.fila_paquete.fila_mes_inc");
-   asigna_select_box (1990, 2010, $registros[3], $pagina, 
-                    "main.form_paquetes.fila_paquete.fila_anyo_inc");
+   asigna_select_box (1, 31, $registros[5], $_content, 
+                    "content.form_paquetes.fila_paquete.fila_dia_inc");
+   asigna_select_box (1, 12, $registros[4], $_content, 
+                    "content.form_paquetes.fila_paquete.fila_mes_inc");
+   asigna_select_box (1990, 2010, $registros[3], $_content, 
+                    "content.form_paquetes.fila_paquete.fila_anyo_inc");
    
    // obtiene el nombre del fichero de link
    $inicio = strrpos($registros[6],'/');
@@ -207,17 +205,16 @@ function asigna_select_box ($inicio, $fin, $v_selec, &$pagina, $nom_fila)
          'FILE' => $nombre_fichero); 
   
   // imprime los valores en página
-  $pagina->assign("LISTA",$lista_valores);
-  $pagina->parse("main.form_paquetes.fila_paquete");
+  $_content->assign("LISTA",$lista_valores);
+  $_content->parse("content.form_paquetes.fila_paquete");
   
   $numero_paquetes ++;
  }
  // asigna el número de paquetes
- $pagina->assign("IDS",$id_software);
- $pagina->assign("NUM_PAQUETES",$numero_paquetes - 1);
- $pagina->parse("main.form_paquetes");
- //imprime resultado
- $pagina->parse("main");
- $pagina->out("main"); 
+ $_content->assign("IDS",$id_software);
+ $_content->assign("NUM_PAQUETES",$numero_paquetes - 1);
+ $_content->parse("content.form_paquetes");
 
-?>
+// Parsea el contenido
+$_content->parse("content");
+require_once __DIR__ . '/includes/layout.php';

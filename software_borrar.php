@@ -16,10 +16,6 @@ autenticar_usuario();
 //   
 //--------------------------------------------------------------------------
 
-  // definicion de Config usados
-  global $BASE_DATOS;
-  global $USER_BD;
-  global $PASS_BD;
   global $software_dir_paquetes;
 
   // chequea que el parametro de entrada está definido
@@ -28,18 +24,6 @@ autenticar_usuario();
      ERR_muestra_pagina_error("Identificador de software no válido", "");
      exit;          
   }
-
-  // conecta a Base de Datos MySQL
-  $conexion = mysql_connect("localhost",$USER_BD,$PASS_BD);
-  // verifica si se abrió conexion
-  if (!$conexion)
-  {
-     ERR_muestra_pagina_error($gen_error_conexion, "");
-     return;
-  }
-
-  // selecciona base de datos
-  mysql_select_db($BASE_DATOS,$conexion);  
   
  //--------------------------------------------------------------------
  // BORRA EL DIRECTORIO QUE CONTIENE LOS PAQUETES
@@ -80,8 +64,7 @@ autenticar_usuario();
  }
  
  // realiza las consultas de borrado de miembro
- for ($i=1;$i<6;$i++)
- {
+ for ($i=1;$i<6;$i++) {
     $resultado=mysql_query($consultas[$i], $conexion);
 
     if (!$resultado)
@@ -97,5 +80,3 @@ autenticar_usuario();
    
  // cierra descriptor
  mysql_close($conexion);
-    
-?>
