@@ -64,8 +64,8 @@ if (isset($_SESSION['id_miembro'])) {
     ));
     $_page->parse('page.miembro');
 
-    if ($_SESSION['privilegios'] === ADMIN) {
-        $_page->parse('main.administracion');
+    if ($_SESSION['privilegios'] == ADMIN) {
+        $_page->parse('page.administracion');
     }
 
 } else {

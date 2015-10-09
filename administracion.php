@@ -13,7 +13,7 @@ require_once 'common/init.php';
  */
 
 // Controla el acceso
-if ($_SESSION['privilegios'] !== ADMIN) {
+if ($_SESSION['privilegios'] != ADMIN) {
   error($errors['privilegios'], 'No tiene privilegios para acceder', 'miembros.php');
 }
 

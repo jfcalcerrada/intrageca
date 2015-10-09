@@ -1,6 +1,6 @@
 <?php
-// Inicializamos el archivo con el script
-include "common/init.php" ;
+
+require_once 'common/init.php';
 
 //--------------------------------------------------------------------------
 // presentacion.php
@@ -16,9 +16,5 @@ include "common/init.php" ;
 mysql_close($conexion);
 
 // Parsea el contenido
-$contenido->parse("content");
-
-// Muestra la pagina final
-mostrar_pagina($archivo, $contenido);
-
-?>
+$_content->parse("content");
+require_once __DIR__ . '/includes/layout.php';

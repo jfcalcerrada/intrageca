@@ -1,8 +1,8 @@
 <?php
-// Inicializamos el archivo con el script
-include('common/init.php');
 
-include("common/common_mbr.php");
+require_once __DIR__ . '/common/init.php';
+
+require_once "common/common_mbr.php";
 
 // Si existen parámetros
 if(count($_GET) > 0) {
@@ -59,9 +59,9 @@ if(count($_GET) > 0) {
   } else {
   // Los mostramos
     for($i = 0; $miembro = mysql_fetch_array($resultado_miembros); $i++) {
-      $contenido->assign("MIEMBRO", array_change_key_case($miembro, CASE_UPPER));
-      $contenido->assign("NUMERO", $i);
-      $contenido->parse("content.miembro");
+      $_content->assign("MIEMBRO", array_change_key_case($miembro, CASE_UPPER));
+      $_content->assign("NUMERO", $i);
+      $_content->parse("content.miembro");
     }
 
   }
@@ -75,9 +75,9 @@ if(count($_GET) > 0) {
   } else {
   // Los mostramos
     for($i = 0; $proyecto = mysql_fetch_array($resultado_proyectos); $i++) {
-      $contenido->assign("PROYECTO", $proyecto);
-      $contenido->assign("NUMERO", $i);
-      $contenido->parse("content.proyecto");
+      $_content->assign("PROYECTO", $proyecto);
+      $_content->assign("NUMERO", $i);
+      $_content->parse("content.proyecto");
     }
 
   }
@@ -90,10 +90,5 @@ if(count($_GET) > 0) {
 // Cierra la conexion con mysql
 mysql_close($conexion);
 
-// Parsea el contenido
-$contenido->parse("content");
-
-// Muestra la pagina final
-mostrar_pagina($archivo, $contenido);
-
-?>
+$_content->parse("content");
+require_once __DIR__ . '/includes/layout.php';
